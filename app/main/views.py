@@ -7,9 +7,6 @@ from .models import ToDo, Item
 def home(response):
     return render(response, 'home.html')
 
-def search(response):
-    return render(response, 'index.html')
-
 def about(response):
     return render(response, 'aboutUs.html')
 
