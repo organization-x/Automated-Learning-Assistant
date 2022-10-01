@@ -1,4 +1,4 @@
-var searchQuery, redirectLink="result.html";
+var searchQuery, redirectLink="/resultPage";
 
 // Function executed whwn submitting the form
 function execute(){
@@ -9,7 +9,7 @@ function execute(){
     console.log(searchQuery);
     alert(search2Param(searchQuery));
     // Redirect URL
-    changeURL("result.html", searchQuery);
+    changeURL("/resultPage", searchQuery);
 }
 
 // Event Listerners

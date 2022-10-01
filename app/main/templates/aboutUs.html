@@ -2,31 +2,32 @@
 <html lang="en">
 
 <head>
+    {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ALA-Website</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Roboto.css">
-    <link rel="stylesheet" href="assets/css/Roboto%20Slab.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/Background-Image---Parallax---No-Text.css">
-    <link rel="stylesheet" href="assets/css/Navbar-Right-Links-Dark-icons.css">
-    <link rel="stylesheet" href="assets/css/Search-Input-Responsive-with-Icon.css">
-    <link rel="stylesheet" href="assets/css/Search-Input-responsive.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/Team-with-rotating-cards.css">
+    <title>ALA - About Us</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/Roboto.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/Roboto%20Slab.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/all.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ion.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/override.css' %}">
+    <link rel="stylesheet" href="{% static 'background.css' %}">
+    <link rel="stylesheet" href="{% static 'navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'icons.css' %}">
+    <link rel="stylesheet" href="{% static 'responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'rotate.css' %}">
 </head>
 
 <body style="margin-left: 8;color: #000000;">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3 sticky-top" style="box-shadow: 0px 0px 7px 5px;margin-bottom: 0px;">
-        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: transparent;"><img src="assets/img/ALA%20Logo%201%20BOLD%20Transparent.png" width="1002" height="1299" style="transform: scale(0.04);"></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: transparent;"><img src="{% static 'img/ALA.png' %}" width="1002" height="1299" style="transform: scale(0.04);"></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-5">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="aboutUs.html">About Us</a></li>
-                </ul><a class="btn btn-outline-primary ms-md-2" role="button" href="index.html">Try Now</a>
+                    <li class="nav-item"><a class="nav-link active" href="/aboutUs">About Us</a></li>
+                </ul><a class="btn btn-outline-primary ms-md-2" role="button" href="/search">Try Now</a>
             </div>
         </div>
     </nav>
@@ -42,7 +43,7 @@
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
-                                <div class="user-imagia"><img src="assets/img/Paul.png"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Paul.png' %}"></div>
                                 <div class="content-imagia">
                                     <h3 class="name-imagia">Paul Li</h3>
                                     <p class="subtitle-imagia">Frontend Developer</p>
@@ -69,7 +70,7 @@
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia cover-gradient"></div>
-                                <div class="user-imagia"><img src="assets/img/Aashish.png"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Aashish.png' %}"></div>
                                 <div class="content-imagia">
                                     <h3 class="name-imagia">Aashish Anantharaman</h3>
                                     <p class="subtitle-imagia">Frontend Developer</p>
@@ -96,7 +97,7 @@
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
-                                <div class="user-imagia"><img src="assets/img/Ayush.png"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Ayush.png' %}"></div>
                                 <div class="content-imagia">
                                     <h3 class="name-imagia">Ayush Shah</h3>
                                     <p class="subtitle-imagia">Backend Developer</p>
@@ -123,7 +124,7 @@
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia cover-gradient"></div>
-                                <div class="user-imagia"><img src="assets/img/Sameer.png"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Sameer.png' %}"></div>
                                 <div class="content-imagia">
                                     <h3 class="name-imagia">Sameer Chawla</h3>
                                     <p class="subtitle-imagia">Backend Developer</p>
@@ -150,7 +151,7 @@
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
-                                <div class="user-imagia"><img src="assets/img/Aryaman.png"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Aryaman.png' %}"></div>
                                 <div class="content-imagia">
                                     <h3 class="name-imagia">Aryaman Gupta</h3>
                                     <p class="subtitle-imagia">Product Manager</p>
@@ -177,7 +178,7 @@
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia cover-gradient"></div>
-                                <div class="user-imagia"><img src="assets/img/Ishaan.png"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Ishaan.png' %}"></div>
                                 <div class="content-imagia">
                                     <h3 class="name-imagia">Ishaan Variava</h3>
                                     <p class="subtitle-imagia">Team Leader</p>
@@ -206,7 +207,7 @@
         <div class="row d-xl-flex justify-content-xl-center">
             <div class="col-md-12 col-xl-5">
                 <h3 style="text-align: center;">What is our Purpose of this Project?<br></h3>
-                <p style="text-align: center;">This is just a simple explanation:<br> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Odio euismod lacinia at quis risus. Auctor eu augue ut lectus. Montes nascetur ridiculus mus mauris vitae ultricies leo. Cursus mattis molestie a iaculis at erat. Neque volutpat ac tincidunt vitae semper quis lectus. Nibh venenatis cras sed felis eget velit. Dolor purus non enim praesent elementum facilisis leo vel. Quam viverra orci sagittis eu. Non consectetur a erat nam.<br></p>
+                <p style="text-align: center;">This is just a simple explanation:<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Odio euismod lacinia at quis risus. Auctor eu augue ut lectus. Montes nascetur ridiculus mus mauris vitae ultricies leo. Cursus mattis molestie a iaculis at erat. Neque volutpat ac tincidunt vitae semper quis lectus. Nibh venenatis cras sed felis eget velit. Dolor purus non enim praesent elementum facilisis leo vel. Quam viverra orci sagittis eu. Non consectetur a erat nam.<br></p>
             </div>
         </div>
         <div class="row d-xl-flex justify-content-xl-center">
@@ -216,11 +217,11 @@
             </div>
         </div>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/autotype.js"></script>
-    <script src="assets/js/behavior.js"></script>
-    <script src="assets/js/formSubmisison.js"></script>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <script src="{% static 'behavior.js' %}"></script>
+    <script src="{% static 'autotype.js' %}"></script>
+    <script src="{% static 'formSubmisison.js' %}"></script>
 </body>
 
 </html>

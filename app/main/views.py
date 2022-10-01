@@ -8,7 +8,7 @@ def about(response):
     return render(response, 'aboutUs.html')
 
 def results(response):
-    return render(response, 'results.html')
+    return render(response, 'result.html')
 
 def search(request):
     return render(request, 'index.html')
