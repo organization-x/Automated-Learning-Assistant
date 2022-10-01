@@ -12,7 +12,7 @@ function execute(){
     changeURL("/resultPage", searchQuery);
 }
 
-// Event Listerners
+// Event Listeners
 function submitButton() {
     var buttonPress = document.getElementById("searchButton");
     buttonPress.addEventListener("click", function(event) {

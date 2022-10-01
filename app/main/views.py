@@ -12,3 +12,7 @@ def results(response):
 
 def search(request):
     return render(request, 'index.html')
+
+def query(request):
+    if request.method == 'POST':
+        print(request.POST)
