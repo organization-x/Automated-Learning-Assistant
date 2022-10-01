@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>ALA - Search</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/Roboto.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/Roboto%20Slab.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/all.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/ion.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/override.css' %}">
+    <link rel="stylesheet" href="{% static 'background.css' %}">
+    <link rel="stylesheet" href="{% static 'navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'icons.css' %}">
+    <link rel="stylesheet" href="{% static 'responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'rotate.css' %}">
+</head>
+
+<body style="backdrop-filter: blur(100px);">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3 sticky-top" id="navbar" style="box-shadow: 0px 0px 7px 5px;margin-bottom: 15px;">
+        <div class="container"><a class="navbar-brand d-flex align-items-center" href="#"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: transparent;"><img src="{% static 'img/ALA.png' %}" width="1002" height="1299" style="transform: scale(0.04);"></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navcol-5">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="/aboutUs">About Us</a></li>
+                </ul><a class="btn btn-outline-primary ms-md-2" role="button" href="index.html">Try Now</a>
+            </div>
+        </div>
+    </nav>
+    <div class="row">
+        <div class="col-md-10 offset-md-1" style="margin-top: 84;">
+            <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
+                <div class="card-body" style="padding: 0px;">
+                    <form class="d-flex align-items-center"><a class="btn btn-primary btn-lg" role="button" style="border-radius: 800;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-black);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-card-cap-bg);" href="/resultPage"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></a><input class="form-control form-control-lg flex-shrink-1 form-control-borderless" type="search" placeholder="Start typing..." name="searchBar" style="background: transparent;"><a class="btn btn-primary btn-lg" role="button" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" href="/resultPage"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></a></form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <script src="{% static 'behavior.js' %}"></script>
+    <script src="{% static 'autotype.js' %}"></script>
+
+</body>
+
+</html>
