@@ -34,10 +34,10 @@
         <div class="col-md-10 offset-md-1" style="margin-top: 84;">
             <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
                 <div class="card-body" style="padding: 0px;">
-                    <form class="d-flex align-items-center" id="searchForm" method="get" action="/result.html">
+                    <form class="d-flex align-items-center" id="searchForm" method="get" action="/result.html" name="submittedQuery" form="searchBar_Form">
                         <div class="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
                             <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
-                        </div><input class="form-control form-control-lg" type="search" id="searchText" placeholder="" name="query" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;"><button class="btn btn-primary btn-lg" id="searchButton" type="submit" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" rel="search"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
+                        </div><input class="form-control form-control-lg" type="search" id="searchText" name="query" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
                     </form>
                 </div>
             </div>
@@ -47,6 +47,7 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/autotype.js"></script>
     <script src="assets/js/behavior.js"></script>
+    <script src="assets/js/formSubmisison.js"></script>
 </body>
 
 </html>
