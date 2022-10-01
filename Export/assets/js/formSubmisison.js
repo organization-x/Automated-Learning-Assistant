@@ -1,4 +1,7 @@
-var searchQuery, redirectLink="result.html";
+// Default Vars
+var searchQuery, redirectLink="/result.html";
+// Ajax Vars
+URL = "/calls";
 
 // Function executed whwn submitting the form
 function execute(){
@@ -6,10 +9,28 @@ function execute(){
     var searchBar = document.getElementById('searchText');
     searchQuery = searchBar.value;
     // Printing stuff for debug
-    console.log(searchQuery);
-    alert(search2Param(searchQuery));
+    console.log("URL: ", "/calls");
+    console.log("Query1: ", searchQuery);
+    //alert(search2Param(searchQuery));
+    // Ajax calls
+    console.log("Ajax before");
+  //  upload(searchQuery);
+    console.log("Ajax after");
     // Redirect URL
-    changeURL("result.html", searchQuery);
+    changeURL(redirectLink, searchQuery, false);
+}
+
+// AJAX Call
+function upload(query) {
+    var data = {'query': query};
+    $.post(URL, data, function(response){
+        if(response === 'success') {
+            alert('Yay!');
+        }
+        else {
+            alert('Error! :(');
+        }
+    });
 }
 
 // Event Listerners
@@ -50,9 +71,18 @@ function getURL() {
 
 function splitOnLast(rawString, splitStr) {
     const lastIndex = rawString.lastIndexOf(splitStr);
-    console.log("string slice: ", str.slice(0, lastIndex));
-    return str.slice(0, lastIndex);
+    return rawString.slice(0, lastIndex);
 } 
+
+function giveURL(localPage, params="", redirect=false) {
+    params = "?query=" + params;
+    if (redirect == false){
+        return splitOnLast(document.location.href, '/')+localPage+params;
+    }
+    else{
+        return localPage+params;
+    }
+}
 
 function changeURL(localPage, params="", redirect=false) {
     params = "?query=" + params;

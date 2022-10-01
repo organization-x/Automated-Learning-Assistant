@@ -38,20 +38,23 @@ var autoTypeBackward = function() {
     if (stopCode == true){
             return 0;
         }
-    console.log("Start backwards");
+    if (index ==  keywords[arrCounter].length) {
+        console.log("Start Backwords");
+    }
+    console.log("Backwards");
     if ( index >= 0) {
         searchBar.setAttribute('placeholder', keywords[arrCounter].substr(0, index--));
         timer1 = window.rtimeOut(autoTypeBackward,50);
         //timer1 = setTimeout("autoTypeBackward()", 50);
     } else {
-        timer2 = setTimeout(resetBox, 2500);
+        timer2 = setTimeout(resetBox, 100);
         if ((arrCounter+1) == keywords.length){
             arrCounter = 0;
         }
         else{
             arrCounter += 1;
         }
-		console.log("Word Done");
+		console.log("End Backwords");
     }
 };
 
@@ -59,7 +62,10 @@ var autoTypeForward = function() {
     if (stopCode == true){
             return 0;
         }
-    //console.log("Start forwards");
+    if (index ==  0) {
+        console.log("Start Forwards");
+    }
+    console.log("Forwards");
     if (index <= keywords[arrCounter].length) {
         searchBar.setAttribute('placeholder', keywords[arrCounter].substr(0, index++));
         // timer1 = setTimeout("autoTypeForward()", 50);
@@ -67,13 +73,17 @@ var autoTypeForward = function() {
     } else {
         index -= 1;
         timer2 = setTimeout(autoTypeBackward, 2500);
-		//console.log("Word Done");
+		console.log("End Forwards");
     }
 };
 
 function startTyping(){
-    stopCode = false;
-    autoTypeForward();
+    var searchBar = document.getElementById('searchText');
+    // console.log("Search Bar Name:", searchBar.name);
+    if (searchBar.name != "result"){
+        stopCode = false;
+        autoTypeForward();
+    }
 }
 
 function stopTyping(){

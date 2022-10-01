@@ -4,13 +4,14 @@ function get() {
     var query;
     // Retrieve parameter name
     query = allParams.get("query");
+    // console.log("Query:", query);
     return query;
 }
 
 function setSearchBarValue(){
     // Get Search form value
     var searchBar = document.getElementById('searchText');
-    // console.log(searchBar.name);
+    // console.log("Search Bar Name:", searchBar.name);
     if (searchBar.name == "result"){
         searchBar.setAttribute('value',get());
     }
