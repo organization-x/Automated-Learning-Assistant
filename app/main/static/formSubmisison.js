@@ -6,6 +6,8 @@ function execute(){
     var searchBar = document.getElementById('searchText');
     searchQuery = searchBar.value;
     // Printing stuff for debug
+    query = {'query': searchQuery};
+    $.post("/query/", query);
     console.log(searchQuery);
     alert(search2Param(searchQuery));
     // Redirect URL
