@@ -80,7 +80,7 @@ var autoTypeForward = function() {
 function startTyping(){
     var searchBar = document.getElementById('searchText');
     // console.log("Search Bar Name:", searchBar.name);
-    if (searchBar.name != "result"){
+    if (searchBar != null){
         stopCode = false;
         autoTypeForward();
     }
