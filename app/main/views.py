@@ -4,7 +4,7 @@ import openai
 
 # Create your views here.
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 responses = HttpResponse()
 
@@ -14,17 +14,18 @@ def about(response):
 def results(response):
     query = responses.get('query')
     print(query)
-    p1 = f"Explain in informative terms to a non programmer in 300 words. {query}"
-    p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {query} Include line breaks after each point."
+    p1 = f"Explain  to a non programmer in at least 300 words.{query}"
+    p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {query} Number each point"
+    
     resp = openai.Completion.create(
         model="text-davinci-002",
         prompt= p1,
-        temperature=0.7,
+        temperature=0.15,
         max_tokens=500,
-        top_p=1,
+        top_p=0.5,
         frequency_penalty=0,
-        presence_penalty=0
-)
+        presence_penalty=0.5
+    )
     roadmap = openai.Completion.create(
         model="text-davinci-002",
         prompt= p2,
