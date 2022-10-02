@@ -1,42 +1,20 @@
 // Default Vars
-var searchQuery, redirectLink="/result.html", URL;
+var searchQuery, redirectLink="/resultPage";
+// Ajax Vars
+URL = "/calls";
 
 // Function executed whwn submitting the form
 function execute(){
     // Get User Query
-    var searchBar = document.getElementById("searchText");
-    if (searchBar == null){
-        var searchBar = document.getElementById("searchText_Result");
-    }
+    var searchBar = document.getElementById('searchText');
     searchQuery = searchBar.value;
-    // Setting up redirect URL and form to store data
-    URL = giveURL(redirectLink, search2Param(searchQuery), false);
-    const formBody = {query: searchQuery};
     // Printing stuff for debug
-    console.log("Start debug")
-  //  upload(searchQuery);
-    alert(formBody);
-    POST(formBody, URL);
-    console.log("End debug");
+    query = {'query': searchQuery};
+    $.post("/query/", query);
     // Redirect URL
+    changeURL("/resultPage", searchQuery, true);
 }
-
-// Requests
-
-function POST(formBody, URL) {
-    const options = {
-        method: 'POST',
-        body: JSON.stringify(formBody),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-    fetch(URL, options)
-    .then(res => res.json())
-    .then(res => console.log(res));
-}
-
-// Event Listerners
+// Event Listeners
 function submitButton() {
     var buttonPress = document.getElementById("searchButton");
     buttonPress.addEventListener("click", function(event) {
@@ -47,9 +25,6 @@ function submitButton() {
 
 function submitEnterKey() {
     var submittedQuery = document.getElementById("searchText");
-    if (submittedQuery == null){
-        var submittedQuery = document.getElementById("searchText_Result");
-    }
     submittedQuery.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             execute();
@@ -57,7 +32,6 @@ function submitEnterKey() {
         }
     });
 }
-
 
 submitEnterKey()
 submitButton()
@@ -82,7 +56,7 @@ function splitOnLast(rawString, splitStr) {
 } 
 
 function giveURL(localPage, params="", redirect=false) {
-    params = "?q=" + params;
+    params = "?query=" + params;
     if (redirect == false){
         return splitOnLast(document.location.href, '/')+localPage+params;
     }
@@ -92,29 +66,11 @@ function giveURL(localPage, params="", redirect=false) {
 }
 
 function changeURL(localPage, params="", redirect=false) {
-    params = "?q=" + params;
+    params = "?query=" + params;
     if (redirect == false){
         window.location.href = splitOnLast(document.location.href, '/')+localPage+params;
     }
     else{
         window.location.href = localPage+params;
     }
-}
-
-async function postData(url = '', data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
 }

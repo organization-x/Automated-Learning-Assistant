@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>ALA-Website</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Bitter.css">
     <link rel="stylesheet" href="assets/css/Roboto.css">
     <link rel="stylesheet" href="assets/css/Roboto%20Slab.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="assets/css/Background-Image---Parallax---No-Text.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="assets/css/Landing-Page---Parallax-Background---Logo-Heading-ButtonGIF.css">
     <link rel="stylesheet" href="assets/css/Navbar-Right-Links-Dark-icons.css">
@@ -40,8 +40,8 @@
                     <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
                         <div class="card-body" style="padding: 0px;">
                             <form class="d-flex align-items-center" id="searchForm" method="get" action="/result.html" name="submittedQuery" form="searchBar_Form">
-                                <div class="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
-                                    <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                                <div class="dropdown"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
+                                    <div class="dropdown-menu" id="settings"><a class="dropdown-item">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
                                 </div><input class="form-control form-control-lg" type="search" id="searchText" name="q" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
                             </form>
                         </div>
@@ -56,7 +56,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="assets/js/autotype.js"></script>
     <script src="assets/js/behavior.js"></script>
+    <script src="assets/js/formSubmisison_FetchAPI.js"></script>
     <script src="assets/js/formSubmisison.js"></script>
+    <script src="assets/js/Popup-Modal-with-Cookie-1.js"></script>
+    <script src="assets/js/Popup-Modal-with-Cookie.js"></script>
+    <script src="assets/js/settings.js"></script>
 </body>
 
 </html>
