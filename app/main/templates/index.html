@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{% static 'responsive.css' %}">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'rotate.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="{% static 'landing.css' %}">
 </head>
 
 <body style="backdrop-filter: blur(100px);">
@@ -31,15 +33,20 @@
             </div>
         </div>
     </nav>
-    <div class="row searchBar" id="searchBar">
-        <div class="col-md-10 offset-md-1" style="margin-top: 84;">
-            <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
-                <div class="card-body" style="padding: 0px;">
-                    <form class="d-flex align-items-center" id="searchForm" method="get" action="/resultPage" name="submittedQuery" form="searchBar_Form">
-                        <div class="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
-                            <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
-                        </div><input class="form-control form-control-lg" type="search" id="searchText" name="query" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
-                    </form>
+    <div>
+        <div id="box-2"><img data-aos="fade" data-aos-duration="2500" data-aos-delay="700" src="{% static 'img/ALA.png' %}" width="223" height="257">
+            <h1 data-aos="fade" data-aos-duration="2000" data-aos-delay="1300" id="heading1" style="padding-bottom: 15px;margin-bottom: 0px;">Automated Learning Assistant</h1>
+            <div class="row searchBar" id="searchBar">
+                <div class="col-md-10 offset-md-1" style="margin-top: 84;">
+                    <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
+                        <div class="card-body" style="padding: 0px;">
+                            <form class="d-flex align-items-center" id="searchForm" method="get" action="/resultPage" name="submittedQuery" form="searchBar_Form">
+                                <div class="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
+                                    <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
+                                </div><input class="form-control form-control-lg" type="search" id="searchText" name="query" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,6 +56,8 @@
     <script src="{% static 'behavior.js' %}"></script>
     <script src="{% static 'autotype.js' %}"></script>
     <script src="{% static 'formSubmisison.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="{% static 'bs-init.js' %}"></script>
 </body>
 
 </html>

@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="{% static 'responsive.css' %}">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'rotate.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="{% static 'landing.css' %}">
+
 </head>
 
 <body style="margin-left: 8;color: #000000;">
@@ -49,8 +52,8 @@
     <section style="margin-top: 30px;position: static;">
         <div class="row d-xl-flex justify-content-xl-center">
             <div class="col-md-12 col-xl-5">
-                <h3 style="text-align: center;">Title</h3>
-                <p style="text-align: center;">This is just a simple explanation:<br> {{ query }} <br></p>
+                <h3 style="text-align: center;">{{ query }}</h3>
+                <p style="text-align: center;"> {{ response }} <br></p>
                 <p style="text-align: center;color: var(--bs-blue);font-style: italic;">Link</p>
             </div>
         </div>

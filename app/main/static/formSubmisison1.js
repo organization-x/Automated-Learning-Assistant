@@ -1,7 +1,4 @@
-// Default Vars
 var searchQuery, redirectLink="/resultPage";
-// Ajax Vars
-URL = "/calls";
 
 // Function executed whwn submitting the form
 function execute(){
@@ -11,9 +8,12 @@ function execute(){
     // Printing stuff for debug
     query = {'query': searchQuery};
     $.post("/query/", query);
+    console.log(searchQuery);
+    alert(search2Param(searchQuery));
     // Redirect URL
-    changeURL("/resultPage", searchQuery, true);
+    changeURL("/resultPage", searchQuery);
 }
+
 // Event Listeners
 function submitButton() {
     var buttonPress = document.getElementById("searchButton");
@@ -52,18 +52,9 @@ function getURL() {
 
 function splitOnLast(rawString, splitStr) {
     const lastIndex = rawString.lastIndexOf(splitStr);
-    return rawString.slice(0, lastIndex);
+    console.log("string slice: ", str.slice(0, lastIndex));
+    return str.slice(0, lastIndex);
 } 
-
-function giveURL(localPage, params="", redirect=false) {
-    params = "?query=" + params;
-    if (redirect == false){
-        return splitOnLast(document.location.href, '/')+localPage+params;
-    }
-    else{
-        return localPage+params;
-    }
-}
 
 function changeURL(localPage, params="", redirect=false) {
     params = "?query=" + params;
