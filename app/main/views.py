@@ -4,7 +4,7 @@ import openai
 
 # Create your views here.
 
-openai.api_key = "PUT YOUR API KEY HERE"
+openai.api_key = "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"
 
 responses = HttpResponse()
 
@@ -13,6 +13,7 @@ def about(response):
 
 def results(response):
     query = responses.get('query')
+    print(query)
     p1 = f"Explain in informative terms to a non programmer in 300 words. {query}"
     p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {query} Include line breaks after each point."
     resp = openai.Completion.create(
@@ -43,5 +44,4 @@ def query(request):
     if request.method == 'POST':
         if 'query' in request.POST:
             q = str(request.POST['query'])
-            print(q)
             responses.headers['query'] = q
