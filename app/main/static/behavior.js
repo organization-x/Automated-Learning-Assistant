@@ -3,16 +3,16 @@ function get() {
     var allParams = new URLSearchParams(window.location.search);
     var query;
     // Retrieve parameter name
-    query = allParams.get("query");
+    query = allParams.get("q");
     // console.log("Query:", query);
     return query;
 }
 
 function setSearchBarValue(){
     // Get Search form value
-    var searchBar = document.getElementById('searchText');
+    var searchBar = document.getElementById('searchText_Result');
     // console.log("Search Bar Name:", searchBar.name);
-    if (searchBar.name == "result"){
+    if (searchBar.name == "q"){
         searchBar.setAttribute('value',get());
     }
 }

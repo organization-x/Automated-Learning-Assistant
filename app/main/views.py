@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import openai
-import os
 
 # Create your views here.
 
