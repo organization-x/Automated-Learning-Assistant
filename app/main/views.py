@@ -4,6 +4,8 @@ import openai
 
 # Create your views here.
 
+openai.api_key = "PUT YOUR API KEY HERE"
+
 responses = HttpResponse()
 
 def about(response):
@@ -11,7 +13,6 @@ def about(response):
 
 def results(response):
     query = responses.get('query')
-    openai.api_key = "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"
     p = f"Explain in informative terms to a non programmer in 300 words. {query}"
     resp = openai.Completion.create(
         model="text-davinci-002",

@@ -18,6 +18,9 @@ var keywords = ['How do you write a class in Java?',
                 'How do you write assembly language?',
                 'What is casting in C++?',
                 'How do you define variables in JavaScript?',
+                'What is code optimization?',
+                'What is a function in Python?',
+                'How do environment variables work?',
                 'What is CSS?'];
 var index = 0;
 var arrCounter = 0;
