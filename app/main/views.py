@@ -4,7 +4,7 @@ import openai
 
 # Create your views here.
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 responses = HttpResponse()
 
