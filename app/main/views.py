@@ -2,10 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import asyncio
 import aiohttp
-import json
 from dotenv import load_dotenv
 import os
-import time
 
 load_dotenv()
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
