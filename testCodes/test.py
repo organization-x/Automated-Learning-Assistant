@@ -6,7 +6,7 @@ import os
 import time
 
 load_dotenv()
-set_api_key = os.getenv('OPENAI_API_KEY')
+set_api_key = "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"
 
 
 def getPrompts(searchQuery):

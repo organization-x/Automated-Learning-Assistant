@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import openai
+from dotenv import load_dotenv
+import os
 
 # Create your views here.
 
-openai.api_key = "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"
+load_dotenv()
 
+openai.api_key = os.getenv("OPENAI_API_KEY")
 responses = HttpResponse()
 
 def about(response):
