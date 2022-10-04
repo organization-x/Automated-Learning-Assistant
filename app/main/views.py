@@ -45,7 +45,7 @@ async def get_text(session, url, params):
 
 async def resultsAsync(searchQuery):
     prompts = getPrompts(searchQuery)
-    async with aiohttp.ClientSession(headers={'authorization': f"Bearer {set_api_key}"}) as session:
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
         tasks = []
         for prompt in prompts:
             url = 'https://api.openai.com/v1/engines/text-davinci-002/completions'
