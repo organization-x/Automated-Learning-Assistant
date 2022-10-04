@@ -13,7 +13,7 @@ responses = HttpResponse()
 
 def getPrompts(searchQuery):
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
-    p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery} Include line breaks after each point. "
+    p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery}"
     p3 = f"Return a link with a summary of well formatted code that solves this problem: {searchQuery}"
     prompts = []
     explanation = {
