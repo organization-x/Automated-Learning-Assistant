@@ -1,2 +1,3 @@
-/app/main/.env
-/app/main/__pycache__
+# Stuff to ignore
+*.env
+**/__pycache__
