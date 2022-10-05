@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-
-# remove the line if using os other than Windows
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
