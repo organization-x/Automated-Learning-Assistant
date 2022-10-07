@@ -10,7 +10,7 @@ asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
 
-
+#Get prompts for GPT-3
 def getPrompts(searchQuery):
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
     p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery}"
@@ -36,12 +36,11 @@ def getPrompts(searchQuery):
     prompts.append(roadmap)
     return prompts
 
-
+#Asynchronous functions to call OpenAI API and get text from GPT-3
 async def get_text(session, url, params):
     async with session.post(url, json=params) as resp:
         text = await resp.json()
         return text['choices'][0]['text']
-
 
 async def resultsAsync(searchQuery):
     prompts = getPrompts(searchQuery)
@@ -53,19 +52,22 @@ async def resultsAsync(searchQuery):
         feedbacks = await asyncio.gather(*tasks)
     return {'response': feedbacks[0], 'query': searchQuery, 'roadmap': feedbacks[1]}
 
-
+#Results page
 def results(response):
     searchQuery = responses.get('query')
     numResults = 2
     resps = asyncio.run(resultsAsync(searchQuery))
     return render(response, 'result.html', resps)
 
+#About us page
 def about(response):
     return render(response, 'aboutUs.html')
 
+#Search page
 def search(response):
     return render(response, 'index.html')
 
+#Query view to get query from search page (PLEASE ADVISE IF BETTER WAY)
 def query(request):
     if request.method == 'POST':
         if 'query' in request.POST:
