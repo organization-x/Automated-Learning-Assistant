@@ -1,0 +1,15 @@
+@media (min-width: 992px) {
+  #settingsBody {
+    /*min-width: 400px;*/
+  }
+}
+
+#settingsBody {
+  margin-top: 0px !important;
+  width: 100% !important;
+}
+
+#dropdown {
+  position: static !important;
+}
+
