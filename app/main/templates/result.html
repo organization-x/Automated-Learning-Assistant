@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{% static 'rotate.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="{% static 'landing.css' %}">
+    <link rel="stylesheet" href="{% static 'settings.css' %}">
 
 </head>
 
@@ -36,14 +37,35 @@
                 </div>
             </div>
         </nav>
-        <div class="row searchBar" id="searchBar">
+        <div class="row searchBar" id="searchBar" style="margin-right: 0px;margin-left: 0px;">
             <div class="col-md-10 offset-md-1" style="margin-top: 84;">
                 <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
                     <div class="card-body" style="padding: 0px;">
                         <form class="d-flex align-items-center" id="searchForm" method="get" action="/resultPage" name="submittedQuery" form="searchBar_Form">
-                            <div class="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
-                                <div class="dropdown-menu"><a class="dropdown-item" href="#">First Item</a><a class="dropdown-item" href="#">Second Item</a><a class="dropdown-item" href="#">Third Item</a></div>
-                            </div><input class="form-control form-control-lg" type="search" id="searchText" name="result" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
+                          <div class="dropdown" id="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
+                              <div class="dropdown-menu" id="settingsBody" style="background: transparent;border-radius: 0px;border-color: transparent;border-bottom-width: 0px;border-bottom-color: transparent;">
+                                  <div class="card" id="Card_Settings" style="position: static;">
+                                      <div class="card-body" style="backdrop-filter: blur(43px);">
+                                          <div class="row">
+                                              <div class="col-md-12 d-xxl-flex justify-content-xxl-center" id="Settings_column1">
+                                                  <div class="container d-flex flex-row justify-content-center align-items-start btn-group btn-group-toggle" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary active" value="google">Radio 1<input type="radio" id="settingsColumn1-1" name="btnradio"></label><label class="form-label btn btn-outline-primary">Radio 2<input type="radio" id="settingsColumn1-2" name="btnradio"></label><label class="form-label btn btn-outline-primary">Radio 3<input type="radio" id="settingsColumn1-3" name="btnradio"></label></div>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-12" id="Settings_column2">
+                                                  <div class="container d-flex flex-row justify-content-center align-items-start btn-group btn-group-toggle" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary active" value="google">Radio 1<input type="radio" id="btnradio-1" name="btnradio" for="btnradio1"></label><label class="form-label btn btn-outline-primary">Radio 2<input type="radio" id="btnradio-4" name="btnradio"></label><label class="form-label btn btn-outline-primary">Radio 3<input type="radio" id="btnradio-5" name="btnradio"></label></div>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-md-12" id="Settings_column3">
+                                                  <div class="container d-flex flex-row justify-content-center align-items-start btn-group btn-group-toggle" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary active" value="google">Radio 1<input type="radio" id="btnradio-6" name="btnradio" for="btnradio1"></label><label class="form-label btn btn-outline-primary">Radio 2<input type="radio" id="btnradio-7" name="btnradio"></label><label class="form-label btn btn-outline-primary">Radio 3<input type="radio" id="btnradio-8" name="btnradio"></label></div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <h6 class="dropdown-header">Header</h6>
+                              </div>
+                          </div><input class="form-control form-control-lg" type="search" id="searchText" name="result" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
                         </form>
                     </div>
                 </div>
@@ -51,19 +73,19 @@
         </div>
     </section>
     <section style="margin-top: 30px;position: static;">
-        <div class="row d-xl-flex justify-content-xl-center">
+        <div class="row d-xl-flex justify-content-xl-center" style="margin-right: 0px;margin-left: 0px;">
             <div class="col-md-12 col-xl-5">
                 <h3 style="text-align: center;">{{ query }}</h3>
                 <p style="text-align: center;"> {{ response }} <br></p>
             </div>
         </div>
-        <div class="row d-xl-flex justify-content-xl-center">
+        <div class="row d-xl-flex justify-content-xl-center" style="margin-right: 0px;margin-left: 0px;">
             <div class="col-md-12 col-xl-5">
                 <h3 style="text-align: center;">Roadmap</h3>
                 <p style="text-align: center;">{{ roadmap }}</p>
             </div>
         </div>
-        <div class="row d-xl-flex justify-content-xl-center">
+        <div class="row d-xl-flex justify-content-xl-center" style="margin-right: 0px;margin-left: 0px;">
             <div class="col-md-12 col-xl-5">
                 <div class="row d-xl-flex justify-content-xl-center" style="margin-right: 0px;margin-left: 0px;">
                     <div class="col-md-12 col-xl-12">
