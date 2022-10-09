@@ -55,13 +55,15 @@ async def results_async(searchQuery):
 
 #Results page
 def results(response):
-    if error == False:    
+    error = responses.get('error')
+    print(error)
+    if error == "True":    
+        return render(response, 'error.html')
+    else:
         search_query = responses.get('query')
         numResults = 2
         resps = asyncio.run(results_async(search_query))
         return render(response, 'result.html', resps)
-    else:
-        return render(response, 'error.html')
 
 #About us page
 def about(response):
@@ -81,3 +83,4 @@ def query(request):
                 responses.headers['query'] = q
             else:
                 error = True
+            responses.headers['error'] = error
