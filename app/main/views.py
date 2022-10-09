@@ -11,7 +11,7 @@ set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
 
 #Get prompts for GPT-3
-def getPrompts(searchQuery):
+def get_prompts(searchQuery):
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
     p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery}"
     p3 = f"Return a link with a summary of well formatted code that solves this problem: {searchQuery}"
@@ -42,8 +42,8 @@ async def get_text(session, url, params):
         text = await resp.json()
         return text['choices'][0]['text']
 
-async def resultsAsync(searchQuery):
-    prompts = getPrompts(searchQuery)
+async def results_async(searchQuery):
+    prompts = get_prompts(searchQuery)
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
         tasks = []
         for prompt in prompts:
@@ -54,9 +54,9 @@ async def resultsAsync(searchQuery):
 
 #Results page
 def results(response):
-    searchQuery = responses.get('query')
+    search_query = responses.get('query')
     numResults = 2
-    resps = asyncio.run(resultsAsync(searchQuery))
+    resps = asyncio.run(results_async(search_query))
     return render(response, 'result.html', resps)
 
 #About us page
