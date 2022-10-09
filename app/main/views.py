@@ -1,3 +1,5 @@
+from distutils.log import error
+from pydoc import render_doc
 from django.shortcuts import render
 from django.http import HttpResponse
 import asyncio
@@ -14,7 +16,6 @@ responses = HttpResponse()
 def get_prompts(searchQuery):
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
     p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery}"
-    p3 = f"Return a link with a summary of well formatted code that solves this problem: {searchQuery}"
     prompts = []
     explanation = {
         'prompt': p1,
@@ -54,10 +55,13 @@ async def results_async(searchQuery):
 
 #Results page
 def results(response):
-    search_query = responses.get('query')
-    numResults = 2
-    resps = asyncio.run(results_async(search_query))
-    return render(response, 'result.html', resps)
+    if error == False:    
+        search_query = responses.get('query')
+        numResults = 2
+        resps = asyncio.run(results_async(search_query))
+        return render(response, 'result.html', resps)
+    else:
+        return render(response, 'error.html')
 
 #About us page
 def about(response):
@@ -72,4 +76,8 @@ def query(request):
     if request.method == 'POST':
         if 'query' in request.POST:
             q = str(request.POST['query'])
-            responses.headers['query'] = q
+            error = False
+            if "?" in q:
+                responses.headers['query'] = q
+            else:
+                error = True
