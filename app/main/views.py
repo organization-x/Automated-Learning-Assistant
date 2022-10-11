@@ -6,6 +6,7 @@ import asyncio
 import aiohttp
 from dotenv import load_dotenv
 import os
+from . import resultsdb
 
 load_dotenv()
 asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -62,8 +63,12 @@ def results(response):
     else:
         search_query = responses.get('query')
         numResults = 2
-        resps = asyncio.run(results_async(search_query))
-        return render(response, 'result.html', resps)
+        if search_query in resultsdb.query_results:
+            return render(response, 'result.html', {'response': resultsdb.query_results[search_query][0], 'query': search_query, 'roadmap': resultsdb.query_results[search_query][1]})
+        else:
+            resps = asyncio.run(results_async(search_query))
+            resultsdb.query_results[search_query] = [resps['response'], resps['roadmap']]
+            return render(response, 'result.html', resps)
 
 #About us page
 def about(response):
