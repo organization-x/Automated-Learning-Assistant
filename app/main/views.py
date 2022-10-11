@@ -1,3 +1,19 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import division, print_function, unicode_literals
+
+from sumy.parsers.html import HtmlParser
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lsa import LsaSummarizer as Summarizer
+from sumy.nlp.stemmers import Stemmer
+from sumy.utils import get_stop_words
+
+
+
+import html2text
+
+from bs4 import BeautifulSoup
 from distutils.log import error
 from pydoc import render_doc
 from django.shortcuts import render
@@ -7,11 +23,17 @@ import aiohttp
 from dotenv import load_dotenv
 import os
 from . import resultsdb
+from search_engine_parser.core.engines.google import Search as GoogleSearch
+import nest_asyncio
+
 
 load_dotenv()
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+# asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+nest_asyncio.apply()
 set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
+LANGUAGE = "english"
+SENTENCES_COUNT = 10
 
 #Get prompts for GPT-3
 def get_prompts(searchQuery):
@@ -38,11 +60,121 @@ def get_prompts(searchQuery):
     prompts.append(roadmap)
     return prompts
 
+async def get_links(search_query):
+    engines = [GoogleSearch()]
+
+    # returns a task that gets a list of tasks that grab links 
+    link_tasks = asyncio.run(get_link_handler(engines, search_query, 1))
+
+    # creating a list of tasks that grab the text from the links
+    summaries_tasks = []
+    
+    # creating a list of links
+    links = []
+
+    # for each task that grabbed a list of links
+    for task in link_tasks:
+        # get the results of that task, which is a list of links
+        result = task.result()
+
+        # extend our list of links with the links from that task
+        links.extend(result)
+
+        # look through each link and create a task that generates a summary 
+        for link in result:   
+            summaries_tasks.append(asyncio.create_task(get_text_summary(link)))
+
+    # wait for all the summaries to be generated
+    await asyncio.gather(*summaries_tasks)
+
+    # put each summary into a string with a number, to prompt gpt-3
+    summaries_prompt = ""
+    summaries = []
+    for i, task in enumerate(summaries_tasks):
+        result = task.result()
+        summaries.append(result)
+        summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
+
+    # prompt gpt-3 to choose the best 3 summaries
+    summaries_prompt += "Which 3 of these texts best answer the prompt " + search_query + "? Answer with only numerical digits. Example Response: \"1,7,9\" or \"2,3,4\""
+
+    prompt = {
+        'prompt': summaries_prompt,
+        'temperature': 0.7,
+        'max_tokens': 256,
+        'top_p': 1,
+        'frequency_penalty': 0,
+        'presence_penalty': 0
+    }
+
+    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
+        url = 'https://api.openai.com/v1/engines/text-davinci-002/completions'
+        task = asyncio.ensure_future(get_text(session, url, prompt))
+        nums = await task
+
+    # get the response from gpt-3
+
+    numbers = nums.strip().split(",")
+    
+    # filtering out text just in case GPT-3 returns something weird
+    for num in numbers:
+        num = "".join(filter(str.isdigit, num))
+
+    # create a list of the links and summaries that gpt-3 chose
+    final_links = [links[int(numbers[0])- 1], links[int(numbers[1]) - 1], links[int(numbers[2]) - 1]]
+    final_summaries = [summaries[int(numbers[0]) - 1], summaries[int(numbers[1]) - 1], summaries[int(numbers[2]) - 1]]
+
+    
+    return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
+
+
+
+async def get_link_handler(engines, prompt, num_pages=1):
+    tasks = []
+    for engine in engines:
+        for i in range(1, num_pages + 1):
+            tasks.append(asyncio.create_task(__get_links(engine, prompt, i)))
+    await asyncio.gather(*tasks)
+
+    return tasks
+
+async def __get_links(engine, prompt, page_num):
+
+    try:
+        results = engine.search(prompt, page=page_num)
+
+    except Exception as e:
+        return ""
+
+    final_links = []
+
+    results_links = results['links']
+    for link in results_links:
+        if link not in final_links and 'youtube' not in link:
+            final_links.append(link)
+    return final_links
+
+async def get_text_summary(url):
+    try:
+        parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+    except:
+        return ""
+    stemmer = Stemmer(LANGUAGE)
+
+    summarizer = Summarizer(stemmer)
+    summarizer.stop_words = get_stop_words(LANGUAGE)
+
+    summary = ""
+    for sentence in summarizer(parser.document, SENTENCES_COUNT):
+        summary += str(sentence) + " "
+    return summary
+
 #Asynchronous functions to call OpenAI API and get text from GPT-3
 async def get_text(session, url, params):
     async with session.post(url, json=params) as resp:
         text = await resp.json()
         return text['choices'][0]['text']
+
 
 async def results_async(searchQuery):
     prompts = get_prompts(searchQuery)
@@ -64,11 +196,25 @@ def results(response):
         search_query = responses.get('query')
         numResults = 2
         if search_query in resultsdb.query_results:
-            return render(response, 'result.html', {'response': resultsdb.query_results[search_query][0], 'query': search_query, 'roadmap': resultsdb.query_results[search_query][1]})
+            results = resultsdb.query_results[search_query]
+            return render(response, 'result.html', {'response': results[0], 'query': search_query, 'roadmap': results[1]})
         else:
-            resps = asyncio.run(results_async(search_query))
-            resultsdb.query_results[search_query] = [resps['response'], resps['roadmap']]
-            return render(response, 'result.html', resps)
+
+            loop = asyncio.new_event_loop()
+            # asyncio.set_event_loop(loop)
+            GPT_3_Summary = loop.create_task(results_async(search_query))
+            links_summary = loop.create_task(get_links(search_query))
+            
+            loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
+
+            GPT_3_Summary = GPT_3_Summary.result()
+            links_summary = links_summary.result()
+            
+            gpt3_replies = GPT_3_Summary.update(links_summary)
+
+            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap']]
+
+            return render(response, 'result.html', GPT_3_Summary)
 
 #About us page
 def about(response):
