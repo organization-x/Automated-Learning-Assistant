@@ -90,8 +90,11 @@ async def get_links(search_query):
     summaries = []
     for i, task in enumerate(summaries_tasks):
         result = task.result()
-        summaries.append(result)
-        summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
+        if result.strip() != "":
+            summaries.append(result)
+            summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
+        else:
+            links.remove(links[i])
 
     # prompt gpt-3 to choose the best 3 summaries
     summaries_prompt += "Which 3 of these texts best answer the prompt " + search_query + "? Answer with only numerical digits. Example Response: \"1,7,9\" or \"2,3,4\""
