@@ -98,6 +98,7 @@ async def get_links(search_query):
             summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
         else:
             links.remove(links[i])
+            summaries_tasks.remove(summaries_tasks[i])
             i = i - 1
 
     # prompt gpt-3 to choose the best 3 summaries
@@ -161,7 +162,6 @@ async def __get_links(prompt, page_num):
                 retry += 1
     if results is None:
         return ""
-
 
     final_links = []
 
@@ -230,15 +230,8 @@ def results(response):
             GPT_3_Summary.update(links_summary)
 
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
-            
-            print(f"\n {GPT_3_Summary}\n")
 
             return render(response, 'result.html', GPT_3_Summary)
-
-            #resps = asyncio.run(results_async(search_query))
-            #resultsdb.query_results[search_query] = [resps['response'], resps['roadmap']]
-            
-            #return render(response, 'result.html', resps)
 
 #About us page
 def about(response):
