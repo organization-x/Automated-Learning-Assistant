@@ -1,5 +1,5 @@
 // Default Vars
-var searchQuery, redirectLink="/resultPage";
+var searchQuery, redirectLink="/loading";
 // Ajax Vars
 URL = "/calls";
 
@@ -12,7 +12,7 @@ function execute(){
     query = {'query': searchQuery};
     $.post("/query/", query);
     // Redirect URL
-    changeURL("/resultPage", searchQuery, true);
+    changeURL("/loading", searchQuery, true);
 }
 // Event Listeners
 function submitButton() {
