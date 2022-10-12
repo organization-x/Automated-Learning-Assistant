@@ -61,12 +61,12 @@ def get_prompts(searchQuery):
 
 async def get_links(search_query):
 
-    # returns a task that gets a list of tasks that grab links 
+    # returns a task that gets a list of tasks that grab links
     link_tasks = asyncio.run(get_link_handler(search_query, 1))
 
     # creating a list of tasks that grab the text from the links
     summaries_tasks = []
-    
+
     # creating a list of links
     links = []
 
@@ -78,8 +78,8 @@ async def get_links(search_query):
         # extend our list of links with the links from that task
         links.extend(result)
 
-        # look through each link and create a task that generates a summary 
-        for link in result:   
+        # look through each link and create a task that generates a summary
+        for link in result:
             summaries_tasks.append(asyncio.create_task(get_text_summary(link)))
 
     # wait for all the summaries to be generated
@@ -120,7 +120,7 @@ async def get_links(search_query):
     # get the response from gpt-3
 
     numbers = nums.strip().split(",")
-    
+
     # filtering out text just in case GPT-3 returns something engineweird
     for num in numbers:
         num = "".join(filter(str.isdigit, num))
@@ -129,7 +129,7 @@ async def get_links(search_query):
     final_links = [links[int(numbers[0])- 1], links[int(numbers[1]) - 1], links[int(numbers[2]) - 1]]
     final_summaries = [summaries[int(numbers[0]) - 1], summaries[int(numbers[1]) - 1], summaries[int(numbers[2]) - 1]]
 
-    
+
     return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
 
 async def get_link_handler(prompt, num_pages=1):
@@ -146,17 +146,17 @@ async def __get_links(prompt, page_num):
     while retry < 3:
         try:
             results = GoogleSearch().search(prompt, page=page_num)
-            break; 
+            break;
         except Exception as e:
             retry += 1
             if retry == 2:
                 prompt = prompt[:-1]
     if results is None:
-        retry = 0 
+        retry = 0
         while retry < 3:
             try:
                 results = YahooSearch().search(prompt, page=page_num)
-                break; 
+                break;
             except Exception as e:
                 retry += 1
     if results is None:
@@ -207,7 +207,7 @@ async def results_async(searchQuery):
 def results(response):
     error = responses.get('error')
     print(error)
-    if error == "True":    
+    if error == "True":
         return render(response, 'error.html')
     else:
         search_query = responses.get('query')
@@ -220,12 +220,12 @@ def results(response):
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(results_async(search_query))
             links_summary = loop.create_task(get_links(search_query))
-            
+
             loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
             GPT_3_Summary = GPT_3_Summary.result()
             links_summary = links_summary.result()
-            
+
             # combining the links and the gpt-3 summary
             GPT_3_Summary.update(links_summary)
 
@@ -242,7 +242,8 @@ def results(response):
 
 #About us page
 def about(response):
-    return render(response, 'aboutUs.html')
+    #return render(response, 'aboutUs.html')
+    return render(response, 'loading.html')
 
 #Search page
 def search(response):
