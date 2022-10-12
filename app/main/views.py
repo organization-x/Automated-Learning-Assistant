@@ -88,13 +88,17 @@ async def get_links(search_query):
     # put each summary into a string with a number, to prompt gpt-3
     summaries_prompt = ""
     summaries = []
-    for i, task in enumerate(summaries_tasks):
-        result = task.result()
+
+
+    for i in range(len(summaries_tasks)):
+        result = summaries_tasks[i].result()
+
         if result.strip() != "":
             summaries.append(result)
             summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
         else:
             links.remove(links[i])
+            i = i - 1
 
     # prompt gpt-3 to choose the best 3 summaries
     summaries_prompt += "Which 3 of these texts best answer the prompt " + search_query + "? Answer with only numerical digits. Example Response: \"1,7,9\" or \"2,3,4\""
@@ -128,11 +132,8 @@ async def get_links(search_query):
     
     return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
 
-
-
 async def get_link_handler(prompt, num_pages=1):
     tasks = []
-    # for engine in engines:
     for i in range(1, num_pages + 1):
         tasks.append(asyncio.create_task(__get_links(prompt, i)))
     await asyncio.gather(*tasks)
@@ -225,7 +226,9 @@ def results(response):
             GPT_3_Summary = GPT_3_Summary.result()
             links_summary = links_summary.result()
             
-            gpt3_replies = GPT_3_Summary.update(links_summary)
+            # combining the links and the gpt-3 summary
+            GPT_3_Summary.update(links_summary)
+
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
             
             print(f"\n {GPT_3_Summary}\n")
