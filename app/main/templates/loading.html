@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="{% static 'landing.css' %}">
     <link rel="stylesheet" href="{% static 'loading.css' %}">
+    <link rel="stylesheet" href="{% static 'tilt.css' %}">
 </head>
 
 <body style="background: transparent;">
@@ -35,7 +36,7 @@
           <div class="collapse navbar-collapse" id="navcol-5">
               <ul class="navbar-nav ms-auto">
                   <li class="nav-item"><a class="nav-link active" href="/aboutUs" data-tilt="data-tilt">About Us</a></li>
-              </ul><a class="btn btn-outline-primary ms-md-2" role="button" href="/search">Try Now</a>
+              </ul><a class="btn btn-outline-primary ms-md-2" role="button" href="/search" data-tilt="data-tilt">Try Now</a>
           </div>
       </div>
   </nav>
@@ -70,6 +71,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="{% static 'bs-init.js' %}"></script>
     <script src="{% static 'loading.js' %}"></script>
+    <script src="{% static 'vanilla-tilt.js' %}"></script>
 </body>
 
 </html>
