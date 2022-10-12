@@ -1,7 +1,7 @@
 <!--SEARCH PAGE-->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: #212529;">
 
 <head>
     {% load static %}
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{% static 'settings.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="{% static 'landing.css' %}">
+    <link rel="stylesheet" href="{% static 'tilt.css' %}">
 </head>
 
 <body style="backdrop-filter: blur(100px);">
@@ -39,7 +40,7 @@
         </div>
     </nav>
     <div>
-        <div id="box-2" style="padding-top: 125px;"><img data-aos="fade" data-aos-duration="2500" data-aos-delay="700" src="{% static 'img/ALA.png' %}"  width="223" height="257">
+        <div id="box-2" style="padding-top: 125px;"><img data-aos="fade" data-aos-duration="2500" data-aos-delay="700" src="{% static 'img/ALA.png' %}"  width="223" height="257" data-tilt="data-tilt">
             <h1 data-aos="fade" data-aos-duration="2000" data-aos-delay="700" id="heading1" style="padding-bottom: 25px;margin-bottom: 10px;">Automated Learning Assistant</h1>
             <div class="row searchBar" id="searchBar" style="margin-right: 0px;margin-left: 0px;">
                 <div class="col-md-10 offset-md-1" style="margin-top: 84;">
@@ -83,6 +84,190 @@
             </div>
         </div>
     </div>
+    <section>
+        <div id="box-1" style="padding-top: 60px;background: linear-gradient(#081d2e, #0049af);">
+            <div class="row d-xxl-flex justify-content-xxl-center align-items-xxl-center h-100" style="margin-right: 0px;margin-left: 0px;">
+                <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div style="max-width: 350px;">
+                        <h3 style="text-align: center;color: rgb(255,255,255);">What is the Purpose of this Project?<br></h3>
+                        <p class="my-3" style="color: rgb(255,255,255);"><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Odio euismod lacinia at quis risus. Auctor eu augue ut lectus. Montes nascetur ridiculus mus mauris vitae ultricies leo. Cursus mattis molestie a iaculis at erat. Neque volutpat ac tincidunt vitae semper quis lectus. Nibh venenatis cras sed felis eget velit. Dolor purus non enim praesent elementum facilisis leo vel. Quam viverra orci sagittis eu. Non consectetur a erat nam.<br><br></p>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div style="max-width: 350px;"><img class="img-fluid" src="{% static 'img/blink.gif' %}" width="350" height="350" data-tilt="data-tilt"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="card-section-imagia" style="background: transparent;">
+        <h3 style="text-align: center;color: rgb(255,255,255);">Meet Our Team<br></h3>
+        <div class="container">
+            <div class="row" style="margin-right: 25px;margin-left: 25px;">
+                <div class="col-sm-6 col-md-4">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
+                        <div class="card-imagia">
+                            <div class="front-imagia">
+                                <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Paul.png' %}"></div>
+                                <div class="content-imagia">
+                                    <h3 class="name-imagia">Paul Li</h3>
+                                    <p class="subtitle-imagia">Frontend Developer</p>
+                                    <p class="text-center"><em>Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde etiam quantum ille quem diligas atque adiuves.</em></p>
+                                </div>
+                                <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                            </div>
+                            <div class="back-imagia">
+                                <div class="content-imagia content-back-imagia">
+                                    <div class="cardText">
+                                        <h3 class="text-center">Lorem Ipsum</h3>
+                                        <p class="text-center">Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca. </p>
+                                    </div>
+                                </div>
+                                <div class="footer-imagia">
+                                    <div class="social-imagia text-center"><a href="https://github.com/PaulShiLi"><i class="fa fa-github"></i></a><a href="mailto:paul.shi.li.05@gmail.com"><i class="fa fa-envelope"></i></a><a href="http://discordapp.com/users/556592668348645377"><i class="fab fa-discord"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
+                        <div class="card-imagia">
+                            <div class="front-imagia">
+                                <div class="cover-imagia cover-gradient"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Aashish.png' %}"></div>
+                                <div class="content-imagia">
+                                    <h3 class="name-imagia">Aashish Anantharaman</h3>
+                                    <p class="subtitle-imagia">Frontend Developer</p>
+                                    <p class="text-center"><em>Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde etiam quantum ille quem diligas atque adiuves. </em></p>
+                                </div>
+                                <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                            </div>
+                            <div class="back-imagia">
+                                <div class="content-imagia content-back-imagia">
+                                    <div>
+                                        <h3 class="text-center">Lorem Ipsum</h3>
+                                        <p class="text-center">Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca. </p>
+                                    </div>
+                                </div>
+                                <div class="footer-imagia">
+                                    <div class="social-imagia text-center"><a href="#"><i class="fa fa-github"></i></a><a href="#"><i class="fa fa-instagram"></i></a><a href="http://discordapp.com/users/611195798176137275"><i class="fab fa-discord"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
+                        <div class="card-imagia">
+                            <div class="front-imagia">
+                                <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Ayush.png' %}"></div>
+                                <div class="content-imagia">
+                                    <h3 class="name-imagia">Ayush Shah</h3>
+                                    <p class="subtitle-imagia">Backend Developer</p>
+                                    <p class="text-center"><em>Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde etiam quantum ille quem diligas atque adiuves. </em></p>
+                                </div>
+                                <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                            </div>
+                            <div class="back-imagia">
+                                <div class="content-imagia content-back-imagia">
+                                    <div>
+                                        <h3 class="text-center">Lorem Ipsum</h3>
+                                        <p class="text-center">Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca. </p>
+                                    </div>
+                                </div>
+                                <div class="footer-imagia">
+                                    <div class="social-imagia text-center"><a href="#"><i class="fa fa-github"></i></a><a href="#"><i class="fa fa-instagram"></i></a><a href="http://discordapp.com/users/714878580529823776"><i class="fab fa-discord"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
+                        <div class="card-imagia">
+                            <div class="front-imagia">
+                                <div class="cover-imagia cover-gradient"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Sameer.png' %}"></div>
+                                <div class="content-imagia">
+                                    <h3 class="name-imagia">Sameer Chawla</h3>
+                                    <p class="subtitle-imagia">Backend Developer</p>
+                                    <p class="text-center"><em>Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde etiam quantum ille quem diligas atque adiuves. </em></p>
+                                </div>
+                                <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                            </div>
+                            <div class="back-imagia">
+                                <div class="content-imagia content-back-imagia">
+                                    <div>
+                                        <h3 class="text-center">Lorem Ipsum</h3>
+                                        <p class="text-center">Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca. </p>
+                                    </div>
+                                </div>
+                                <div class="footer-imagia">
+                                    <div class="social-imagia text-center"><a href="#"><i class="fa fa-github"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="http://discordapp.com/users/668945314530721820"><i class="fab fa-discord"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
+                        <div class="card-imagia">
+                            <div class="front-imagia">
+                                <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Aryaman.png' %}"></div>
+                                <div class="content-imagia">
+                                    <h3 class="name-imagia">Aryaman Gupta</h3>
+                                    <p class="subtitle-imagia">Product Manager</p>
+                                    <p class="text-center"><em>Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde etiam quantum ille quem diligas atque adiuves. </em></p>
+                                </div>
+                                <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                            </div>
+                            <div class="back-imagia">
+                                <div class="content-imagia content-back-imagia">
+                                    <div>
+                                        <h3 class="text-center">Lorem Ipsum</h3>
+                                        <p class="text-center">Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca. </p>
+                                    </div>
+                                </div>
+                                <div class="footer-imagia">
+                                    <div class="social-imagia text-center"><a href="#"><i class="fa fa-github"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="http://discordapp.com/users/724051405563887638"><i class="fab fa-discord"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
+                        <div class="card-imagia">
+                            <div class="front-imagia">
+                                <div class="cover-imagia cover-gradient"></div>
+                                <div class="user-imagia"><img src="{% static 'img/Ishaan.png' %}"></div>
+                                <div class="content-imagia">
+                                    <h3 class="name-imagia">Ishaan Variava</h3>
+                                    <p class="subtitle-imagia">Team Leader</p>
+                                    <p class="text-center"><em>Tantum autem cuique tribuendum, primum quantum ipse efficere possis, deinde etiam quantum ille quem diligas atque adiuves. </em></p>
+                                </div>
+                                <div class="footer-imagia"><span><i class="fa fa-plus"></i> More info</span></div>
+                            </div>
+                            <div class="back-imagia">
+                                <div class="content-imagia content-back-imagia">
+                                    <div>
+                                        <h3 class="text-center">Lorem Ipsum</h3>
+                                        <p class="text-center">Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca. </p>
+                                    </div>
+                                </div>
+                                <div class="footer-imagia">
+                                    <div class="social-imagia text-center"><a href="#"><i class="fa fa-github"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="http://discordapp.com/users/662429330940493824"><i class="fab fa-discord"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="{% static 'jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap.min.js' %}"></script>
     <script src="{% static 'behavior.js' %}"></script>
@@ -90,5 +275,6 @@
     <script src="{% static 'formSubmisison.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="{% static 'bs-init.js' %}"></script>
+    <script src="{% static 'vanilla-tilt.js' %}"></script>
 </body>
 </html>
