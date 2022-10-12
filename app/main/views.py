@@ -22,6 +22,7 @@ from dotenv import load_dotenv
 import os
 from . import resultsdb
 from search_engine_parser.core.engines.google import Search as GoogleSearch
+from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 import nest_asyncio
 
 
@@ -59,10 +60,9 @@ def get_prompts(searchQuery):
     return prompts
 
 async def get_links(search_query):
-    engines = [GoogleSearch()]
 
     # returns a task that gets a list of tasks that grab links 
-    link_tasks = asyncio.run(get_link_handler(engines, search_query, 1))
+    link_tasks = asyncio.run(get_link_handler(search_query, 1))
 
     # creating a list of tasks that grab the text from the links
     summaries_tasks = []
@@ -117,7 +117,7 @@ async def get_links(search_query):
 
     numbers = nums.strip().split(",")
     
-    # filtering out text just in case GPT-3 returns something weird
+    # filtering out text just in case GPT-3 returns something engineweird
     for num in numbers:
         num = "".join(filter(str.isdigit, num))
 
@@ -130,22 +130,37 @@ async def get_links(search_query):
 
 
 
-async def get_link_handler(engines, prompt, num_pages=1):
+async def get_link_handler(prompt, num_pages=1):
     tasks = []
-    for engine in engines:
-        for i in range(1, num_pages + 1):
-            tasks.append(asyncio.create_task(__get_links(engine, prompt, i)))
+    # for engine in engines:
+    for i in range(1, num_pages + 1):
+        tasks.append(asyncio.create_task(__get_links(prompt, i)))
     await asyncio.gather(*tasks)
 
     return tasks
 
-async def __get_links(engine, prompt, page_num):
-
-    try:
-        results = engine.search(prompt, page=page_num)
-
-    except Exception as e:
+async def __get_links(prompt, page_num):
+    retry = 0
+    results = None
+    while retry < 3:
+        try:
+            results = GoogleSearch().search(prompt, page=page_num)
+            break; 
+        except Exception as e:
+            retry += 1
+            if retry == 2:
+                prompt = prompt[:-1]
+    if results is None:
+        retry = 0 
+        while retry < 3:
+            try:
+                results = YahooSearch().search(prompt, page=page_num)
+                break; 
+            except Exception as e:
+                retry += 1
+    if results is None:
         return ""
+
 
     final_links = []
 
