@@ -9,8 +9,6 @@ from sumy.summarizers.lsa import LsaSummarizer as Summarizer
 from sumy.nlp.stemmers import Stemmer
 from sumy.utils import get_stop_words
 
-
-
 import html2text
 
 from bs4 import BeautifulSoup
@@ -38,7 +36,7 @@ SENTENCES_COUNT = 10
 #Get prompts for GPT-3
 def get_prompts(searchQuery):
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
-    p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery}"
+    p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery} The steps should be numbered"
     prompts = []
     explanation = {
         'prompt': p1,
@@ -202,19 +200,20 @@ def results(response):
 
             loop = asyncio.new_event_loop()
             # asyncio.set_event_loop(loop)
-            GPT_3_Summary = loop.create_task(results_async(search_query))
-            links_summary = loop.create_task(get_links(search_query))
+            #GPT_3_Summary = loop.create_task(results_async(search_query))
+            #links_summary = loop.create_task(get_links(search_query))
             
-            loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
+            #loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
-            GPT_3_Summary = GPT_3_Summary.result()
-            links_summary = links_summary.result()
+            #GPT_3_Summary = GPT_3_Summary.result()
+            #links_summary = links_summary.result()
             
-            gpt3_replies = GPT_3_Summary.update(links_summary)
+            #gpt3_replies = GPT_3_Summary.update(links_summary)
 
-            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap']]
-
-            return render(response, 'result.html', GPT_3_Summary)
+            resps = asyncio.run(results_async(search_query))
+            resultsdb.query_results[search_query] = [resps['response'], resps['roadmap']]
+            
+            return render(response, 'result.html', resps)
 
 #About us page
 def about(response):
