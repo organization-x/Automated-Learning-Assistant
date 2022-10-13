@@ -90,15 +90,19 @@ async def get_links(search_query):
     summaries = []
 
 
-    for i in range(len(summaries_tasks)):
+    # for i in range(len(summaries_tasks)):
+    i = 0
+    while i < len(summaries_tasks):
+        print(i)
         result = summaries_tasks[i].result()
-
+        print(result)
         if result.strip() != "":
             summaries.append(result)
             summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
+            i += 1
         else:
             links.remove(links[i])
-            i = i - 1
+            summaries_tasks.remove(summaries_tasks[i])
 
     # prompt gpt-3 to choose the best 3 summaries
     summaries_prompt += "Which 3 of these texts best answer the prompt " + search_query + "? Answer with only numerical digits. Example Response: \"1,7,9\" or \"2,3,4\""
@@ -174,7 +178,7 @@ async def __get_links(prompt, page_num):
 async def get_text_summary(url):
     try:
         parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
-    except:
+    except Exception as e:
         return ""
     stemmer = Stemmer(LANGUAGE)
 
