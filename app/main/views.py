@@ -93,9 +93,7 @@ async def get_links(search_query):
     # for i in range(len(summaries_tasks)):
     i = 0
     while i < len(summaries_tasks):
-        print(i)
         result = summaries_tasks[i].result()
-        print(result)
         if result.strip() != "":
             summaries.append(result)
             summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
@@ -210,7 +208,6 @@ async def results_async(searchQuery):
 #Results page
 def results(response):
     error = responses.get('error')
-    print(error)
     if error == "True":
         return render(response, 'error.html')
     else:
@@ -221,27 +218,25 @@ def results(response):
             return render(response, 'result.html', {'response': results[0], 'query': search_query, 'roadmap': results[1]})
         else:
 
-            #loop = asyncio.new_event_loop()
-            #GPT_3_Summary = loop.create_task(results_async(search_query))
-            #links_summary = loop.create_task(get_links(search_query))
-            #loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
+            loop = asyncio.new_event_loop()
+            GPT_3_Summary = loop.create_task(results_async(search_query))
+            links_summary = loop.create_task(get_links(search_query))
+            loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
-            #GPT_3_Summary = GPT_3_Summary.result()
-            #links_summary = links_summary.result()
+            GPT_3_Summary = GPT_3_Summary.result()
+            links_summary = links_summary.result()
 
             # combining the links and the gpt-3 summary
-            #GPT_3_Summary.update(links_summary)
+            GPT_3_Summary.update(links_summary)
 
-            #resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
+            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
             
-            #print(f"\n {GPT_3_Summary}\n")
-
             return render(response, 'result.html', GPT_3_Summary)
 
-            resps = asyncio.run(results_async(search_query))
-            resultsdb.query_results[search_query] = [resps['response'], resps['roadmap']]
+            #resps = asyncio.run(results_async(search_query))
+            #resultsdb.query_results[search_query] = [resps['response'], resps['roadmap']]
             
-            return render(response, 'result.html', resps)
+            #return render(response, 'result.html', resps)
 
 #About us page
 def about(response):
