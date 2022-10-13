@@ -6,7 +6,6 @@ from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer as Summarizer
 from sumy.nlp.stemmers import Stemmer
 from sumy.utils import get_stop_words
-import html2text
 from bs4 import BeautifulSoup
 from distutils.log import error
 from pydoc import render_doc
@@ -16,7 +15,6 @@ import asyncio
 import aiohttp
 from dotenv import load_dotenv
 import os
-from . import resultsdb
 from search_engine_parser.core.engines.google import Search as GoogleSearch
 from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 import nest_asyncio

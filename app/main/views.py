@@ -2,16 +2,6 @@
 from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
 
-from sumy.parsers.html import HtmlParser
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lsa import LsaSummarizer as Summarizer
-from sumy.nlp.stemmers import Stemmer
-from sumy.utils import get_stop_words
-
-import html2text
-
-from bs4 import BeautifulSoup
 from distutils.log import error
 from pydoc import render_doc
 from django.shortcuts import render
@@ -20,8 +10,6 @@ import asyncio
 import aiohttp
 from dotenv import load_dotenv
 import os
-from search_engine_parser.core.engines.google import Search as GoogleSearch
-from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 import nest_asyncio
 
 from . import resultsdb
