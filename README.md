@@ -5,7 +5,7 @@ Initial Setup:
 
 Clone the repo onto your local device using `git clone <link>`  
 cd into the folder `Automated-Learning-Assistant`.  
-Create an .env file with your OpenAI API Key: `OPENAI_API_KEY = 'KEY GOES HERE'`. 
+Create an .env file with your OpenAI API Key: `OPENAI_API_KEY = 'KEY GOES HERE'`.   
 Run the command `pip install -r requirements.txt`  
 cd into `app\main`  and then run the command `python nltk_installer.py` 
 
