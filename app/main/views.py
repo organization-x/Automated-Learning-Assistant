@@ -215,7 +215,7 @@ def results(response):
         numResults = 2
         if search_query in resultsdb.query_results:
             results = resultsdb.query_results[search_query]
-            return render(response, 'result.html', {'response': results[0], 'query': search_query, 'roadmap': results[1]})
+            return render(response, 'result.html', {'response': results[0], 'query': search_query, 'roadmap': results[1], 'link1': results[2], 'link2': results[3], 'summary1': results[4], 'summary2': results[5]})
         else:
 
             loop = asyncio.new_event_loop()
@@ -228,7 +228,7 @@ def results(response):
 
             # combining the links and the gpt-3 summary
             GPT_3_Summary.update(links_summary)
-
+            
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
             
             return render(response, 'result.html', GPT_3_Summary)
@@ -262,3 +262,4 @@ def query(request):
             else:
                 error = True
             responses.headers['error'] = error
+    return render(request, 'loading.html')
