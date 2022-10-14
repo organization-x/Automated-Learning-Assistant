@@ -4,7 +4,7 @@ from __future__ import division, print_function, unicode_literals
 
 from distutils.log import error
 from pydoc import render_doc
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import asyncio
 import aiohttp
@@ -79,4 +79,4 @@ def query(request):
             else:
                 error = True
             responses.headers['error'] = error
-    return render(request, 'loading.html')
+        return redirect('loading')

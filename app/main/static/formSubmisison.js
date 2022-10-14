@@ -1,7 +1,8 @@
 // Default Vars
-var searchQuery, redirectLink="/resultPage";
+var searchQuery, redirectLink="/loading";
 // Ajax Vars
 URL = "/calls";
+
 
 // Function executed whwn submitting the form
 function execute(){
@@ -9,10 +10,16 @@ function execute(){
     var searchBar = document.getElementById('searchText');
     searchQuery = searchBar.value;
     // Printing stuff for debug
-    query = {'query': searchQuery};
-    $.post("/query/", query);
+    fetch("loading")
+    fetch("resultPage", {
+        method: "POST",
+        body: searchQuery
+    })
+    //query = {'query': searchQuery};
+    //$.post("/query/", query);
     // Redirect URL
     changeURL("/resultPage", searchQuery, true);
+
 }
 // Event Listeners
 function submitButton() {
