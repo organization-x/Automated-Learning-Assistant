@@ -1,28 +1,21 @@
-.cd-top1 {
+.cd-top {
   display: inline-block;
   height: 40px;
   width: 40px;
-/*  position: fixed; */
+  position: fixed;
   bottom: 40px;
   right: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
-  background: var(--bs-border-color-translucent) url(img/totop.png) no-repeat center 50%;
+  background: var(--bs-border-color-translucent) url(../img/totop.png) no-repeat center 50%;
   visibility: hidden;
   opacity: 0;
   -webkit-transition: opacity .3s 0s, visibility 0s .3s;
   -moz-transition: opacity .3s 0s, visibility 0s .3s;
   transition: opacity .3s 0s, visibility 0s .3s;
   z-index: 9999;
-}
-
-.cd-top {
-  position: absolute;
-  bottom: 0;
-  visibility: hidden;
-  background: var(--bs-border-color-translucent) url(img/totop.png) no-repeat center 50%;
 }
 
 .cd-top.cd-is-visible, .cd-top.cd-fade-out, .no-touch .cd-top:hover {
@@ -59,4 +52,10 @@
     right: 30px;
     bottom: 30px;
   }
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }

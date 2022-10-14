@@ -10,9 +10,8 @@ jQuery(document).ready(function($){
 
 	//hide or show the "back to top" link
 	$(window).scroll(function(){
-		//alert($(this).scrollTop() + " -- " + offset);
-		 ($(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible cd-fade-out') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
-		if( $(this).scrollTop() > offset_opacity ) {
+		( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible cd-fade-out') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
+		if( $(this).scrollTop() > offset_opacity ) { 
 			$back_to_top.addClass('cd-fade-out');
 		}
 	});
