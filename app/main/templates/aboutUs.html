@@ -1,17 +1,17 @@
-<!--ABOUT US PAGE-->
+<!--SEARCH PAGE-->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background: #212529;">
 
 <head>
     {% load static %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>ALA - About Us</title>
-    <link rel="icon"href="{% static 'img/ALA.png' %}">
+    <title>ALA - Search</title>
+    <link rel="icon" href="{% static 'img/ALA.png' %}">
     <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'fonts/Roboto.css' %}">
     <link rel="stylesheet" href="{% static 'Bitter.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/Roboto.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/Roboto%20Slab.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/all.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/awesome.css' %}">
@@ -21,32 +21,92 @@
     <link rel="stylesheet" href="{% static 'navbar.css' %}">
     <link rel="stylesheet" href="{% static 'icons.css' %}">
     <link rel="stylesheet" href="{% static 'responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'Scroll-to-top-styles.css' %}">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <link rel="stylesheet" href="{% static 'rotate.css' %}">
+    <link rel="stylesheet" href="{% static 'settings.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <link rel="stylesheet" href="{% static 'landing.css' %}">
+    <link rel="stylesheet" href="{% static 'tilt.css' %}">
 </head>
 
-<body style="margin-left: 8;color: #000000;">
-    <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3 sticky-top" style="box-shadow: 0px 0px 7px 5px;margin-bottom: 0px;">
+<body style="backdrop-filter: blur(100px);">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3 sticky-top" id="navbar" style="box-shadow: 0px 0px 7px 5px;margin-bottom: 0px;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: transparent;"><img src="{% static 'img/ALA.png' %}" width="1002" height="1299" style="transform: scale(0.04);"></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-5">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="/aboutUs">About Us</a></li>
-                </ul><a class="btn btn-outline-primary ms-md-2" role="button" href="/search">Try Now</a>
+                    <li class="nav-item"><a class="nav-link active" href="/aboutUs" data-tilt="data-tilt">About Us</a></li>
+                </ul><a class="btn btn-outline-primary ms-md-2" role="button" href="/search" data-tilt="data-tilt">Try Now</a>
             </div>
         </div>
     </nav>
-    <div class="row d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="margin-right: 0px;margin-left: 0px;">
-        <div class="col d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="padding-right: 0px;padding-left: 0px;">
-          <img class="img-fluid" src="{% static 'img/i1.jpg' %}">
+    <div>
+        <div id="box-2" style="padding-top: 125px;"><img data-aos="fade" data-aos-duration="2500" data-aos-delay="700" src="{% static 'img/ALA.png' %}"  width="223" height="257" data-tilt="data-tilt">
+            <h1 data-aos="fade" data-aos-duration="2000" data-aos-delay="700" id="heading1" style="padding-bottom: 25px;margin-bottom: 10px;">Automated Learning Assistant</h1>
+            <div class="row searchBar" id="searchBar" style="margin-right: 0px;margin-left: 0px;">
+                <div class="col-md-10 offset-md-1" style="margin-top: 84;">
+                    <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
+                        <div class="card-body" style="padding: 0px;">
+                            <form class="d-flex align-items-center" id="searchForm" method="get" action="/resultPage" name="submittedQuery" form="searchBar_Form">
+                              <div class="dropdown" id="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
+                                  <div class="dropdown-menu" id="settingsBody" style="background: transparent;border-radius: 0px;border-color: transparent;border-bottom-width: 0px;border-bottom-color: transparent;">
+                                      <div class="card" id="Card_Settings" style="position: static;">
+                                          <div class="card-body" style="backdrop-filter: blur(0px);">
+                                              <div class="row">
+                                                  <div class="col-md-12 d-xxl-flex justify-content-xxl-center" id="Settings_column1">
+                                                      <div class="container d-flex flex-row align-items-start align-items-lg-center btn-group btn-group-toggle" id="searchEngine" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary" value="google" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><img class="img-fluid" src="{% static 'img/Google.png' %}" height="42" width="130"><input type="radio" id="google" name="searchEngine"></label><label class="form-label btn btn-outline-primary" value="bing" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><img class="img-fluid" src="{% static 'img/bing.png' %}" width="76" height="43" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><input type="radio" id="bing" name="searchEngine"></label><label class="form-label btn btn-outline-primary" value="duckduckgo" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><img class="img-fluid" src="{% static 'img/duckduckgo.png' %}" width="76" height="43"><input type="radio" id="duckduckGo-1" name="searchEngine"></label></div>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-12" id="Settings_column2">
+                                                      <div class="container d-flex flex-row justify-content-center align-items-start btn-group btn-group-toggle" id="themes" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary" value="lightTheme">Light<input type="radio" id="lightTheme" name="themes" value="lightTheme"></label><label class="form-label btn btn-outline-primary" value="darkTheme">Dark<input type="radio" id="darkTheme" name="themes"></label></div>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-12" id="Settings_column3">
+                                                      <div class="container">
+                                                          <div class="row">
+                                                              <div class="col d-flex d-sm-flex flex-row justify-content-center align-items-center justify-content-sm-center align-items-sm-center"><label class="col-form-label btn btn-outline-primary" value="roadMap">Roadmap<input type="checkbox" id="checkRoadMap" name="roadMap"></label></div>
+                                                              <div class="col-md-7 d-flex d-md-flex flex-row justify-content-center align-items-center justify-content-md-start align-items-md-center">
+                                                                  <p class="d-md-flex justify-content-md-center align-items-md-center" style="margin-bottom: 0px;width: 138.1406px;"><span style="color: var(--bs-dropdown-link-color);"># of results:</span><br></p><input class="form-control d-md-flex justify-content-md-start" type="number">
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div><input class="form-control form-control-lg" type="search" id="searchText" name="query" style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;" maxlength="150"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <section class="card-section-imagia">
-        <h1 style="color: rgb(0,0,0);">Our team</h1>
+    <section>
+        <div id="box-1" style="padding-top: 60px;background: linear-gradient(#081d2e, #0049af);">
+            <div class="row d-xxl-flex justify-content-xxl-center align-items-xxl-center h-100" style="margin-right: 0px;margin-left: 0px;">
+                <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div style="max-width: 350px;">
+                        <h3 style="text-align: center;color: rgb(255,255,255);">What is the Purpose of this Project?<br></h3>
+                        <p class="my-3" style="color: rgb(255,255,255);"><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Odio euismod lacinia at quis risus. Auctor eu augue ut lectus. Montes nascetur ridiculus mus mauris vitae ultricies leo. Cursus mattis molestie a iaculis at erat. Neque volutpat ac tincidunt vitae semper quis lectus. Nibh venenatis cras sed felis eget velit. Dolor purus non enim praesent elementum facilisis leo vel. Quam viverra orci sagittis eu. Non consectetur a erat nam.<br><br></p>
+                    </div>
+                </div>
+                <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                    <div style="max-width: 350px;"><img class="img-fluid" src="{% static 'img/blink.gif' %}" width="350" height="350" data-tilt="data-tilt"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <a class="cd-top" href="#"> </a>
+    <section class="card-section-imagia" style="background: transparent;">
+        <h3 style="text-align: center;color: rgb(255,255,255);">Meet Our Team<br></h3>
         <div class="container">
-            <div class="row">
+            <div class="row" style="margin-right: 25px;margin-left: 25px;">
                 <div class="col-sm-6 col-md-4">
-                    <div class="card-container-imagia">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
@@ -60,7 +120,7 @@
                             </div>
                             <div class="back-imagia">
                                 <div class="content-imagia content-back-imagia">
-                                    <div>
+                                    <div class="cardText">
                                         <h3 class="text-center">Lorem Ipsum</h3>
                                         <p class="text-center">Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit coloniam Claudius Caesar. Isaura enim antehac nimium potens, olim subversa ut rebellatrix interneciva aegre vestigia claritudinis pristinae monstrat admodum pauca. </p>
                                     </div>
@@ -73,7 +133,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
-                    <div class="card-container-imagia">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia cover-gradient"></div>
@@ -100,7 +160,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
-                    <div class="card-container-imagia">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
@@ -127,7 +187,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
-                    <div class="card-container-imagia">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia cover-gradient"></div>
@@ -154,7 +214,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
-                    <div class="card-container-imagia">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia"><img alt="" src="https://unsplash.it/720/500?image=1067"></div>
@@ -181,7 +241,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
-                    <div class="card-container-imagia">
+                    <div class="card-container-imagia" data-tilt="data-tilt">
                         <div class="card-imagia">
                             <div class="front-imagia">
                                 <div class="cover-imagia cover-gradient"></div>
@@ -210,27 +270,14 @@
             </div>
         </div>
     </section>
-    <div class="container" style="margin-top: 30px;">
-        <div class="row d-xl-flex justify-content-xl-center">
-            <div class="col-md-12 col-xl-5">
-                <h3 style="text-align: center;">What is our Purpose of this Project?<br></h3>
-                <p style="text-align: center;">This is just a simple explanation:<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Odio euismod lacinia at quis risus. Auctor eu augue ut lectus. Montes nascetur ridiculus mus mauris vitae ultricies leo. Cursus mattis molestie a iaculis at erat. Neque volutpat ac tincidunt vitae semper quis lectus. Nibh venenatis cras sed felis eget velit. Dolor purus non enim praesent elementum facilisis leo vel. Quam viverra orci sagittis eu. Non consectetur a erat nam.<br></p>
-            </div>
-        </div>
-        <div class="row d-xl-flex justify-content-xl-center">
-            <div class="col-md-12 col-xl-5">
-                <h3 style="text-align: center;">What did we use?<br></h3>
-                <p style="text-align: center;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat commodo sed egestas egestas fringilla. Odio euismod lacinia at quis risus. Auctor eu augue ut lectus.<br></p>
-            </div>
-        </div>
-    </div>
     <script src="{% static 'jquery.min.js' %}"></script>
-    <script src="{% static 'bs-init.js' %}"></script>
     <script src="{% static 'bootstrap.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="{% static 'behavior.js' %}"></script>
     <script src="{% static 'autotype.js' %}"></script>
-    <script src="{% static 'formSubmisison.js' %}"></script>
-</body>
 
+    <script src="{% static 'formSubmisison.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="{% static 'bs-init.js' %}"></script>
+    <script src="{% static 'vanilla-tilt.js' %}"></script>
+</body>
 </html>
