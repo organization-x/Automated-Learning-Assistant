@@ -15,8 +15,13 @@ function execute(){
     query = {'query': searchQuery};
     $.post("/query/", query);
     // Redirect URL
-    changeURL("/resultPage", searchQuery, true);
+    changeURL("/loading", searchQuery, true);
+    //changeURL("/resultPage", searchQuery, true);
 
+}
+
+function change(){
+    changeURL("/resultPage", searchQuery, true);
 }
 // Event Listeners
 function submitButton() {

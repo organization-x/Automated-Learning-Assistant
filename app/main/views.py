@@ -79,4 +79,4 @@ def query(request):
             else:
                 error = True
             responses.headers['error'] = error
-        return redirect('loading')
+        return redirect('results')
