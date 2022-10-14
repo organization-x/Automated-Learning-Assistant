@@ -10,13 +10,10 @@ function execute(){
     var searchBar = document.getElementById('searchText');
     searchQuery = searchBar.value;
     // Printing stuff for debug
-    fetch("loading")
-    fetch("resultPage", {
-        method: "POST",
-        body: searchQuery
-    })
-    //query = {'query': searchQuery};
-    //$.post("/query/", query);
+    //fetch("loading")
+    changeURL("/loading")
+    query = {'query': searchQuery};
+    $.post("/query/", query);
     // Redirect URL
     changeURL("/resultPage", searchQuery, true);
 
