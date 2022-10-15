@@ -32,7 +32,7 @@ def results(response):
         numResults = 2
         if search_query in resultsdb.query_results:
             results = resultsdb.query_results[search_query]
-            return render(response, 'result.html', {'response': results[0], 'query': search_query, 'roadmap': results[1], 'link1': results[2], 'link2': results[3], 'summary1': results[4], 'summary2': results[5]})
+            return render(response, 'result.html', {'response': results[0], 'query': search_query, 'one': results[1], 'two': results[2], 'three': results[3], 'four': results[4], 'five': results[5], "link1": results[6], "link2": results[7], "summary1": results[8], "summary2": results[9]})
         else:
 
             loop = asyncio.new_event_loop()
@@ -46,7 +46,7 @@ def results(response):
             # combining the links and the gpt-3 summary
             GPT_3_Summary.update(links_summary)
             
-            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
+            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['one'], GPT_3_Summary['two'], GPT_3_Summary['three'], GPT_3_Summary['four'], GPT_3_Summary['five'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
                                                             
             print(f"\n{GPT_3_Summary}\n")
             

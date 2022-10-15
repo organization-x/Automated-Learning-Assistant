@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{% static 'css/landing.css' %}">
     <link rel="stylesheet" href="{% static 'css/loading.css' %}">
     <link rel="stylesheet" href="{% static 'css/tilt.css' %}">
+    <link rel="stylesheet" href="{% static 'css/heroClean.css' %}">
 </head>
 
 <body style="background: transparent;">
@@ -43,8 +44,8 @@
   </nav>
   <div>
       <div class="d-xxl-flex justify-content-xxl-center align-items-xxl-center" id="box-1" style="background: linear-gradient(#3499ff, #3a3985);">
-          <div class="contentText">
-              <h1 style="margin-bottom: 55;">Getting your page ready</h1>
+          <div id="loadingText">
+              <h1 style="margin-bottom: 55px;">Getting your page ready</h1>
               <section class="d-flex d-md-flex flex-row justify-content-center align-items-center justify-content-md-center align-items-md-center">
                   <div class="wave"></div>
                   <div class="wave"></div>
@@ -64,7 +65,6 @@
           </div>
       </div>
   </div>
-
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/behavior.js' %}"></script>
