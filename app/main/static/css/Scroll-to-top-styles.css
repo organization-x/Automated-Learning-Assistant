@@ -3,8 +3,8 @@
   height: 40px;
   width: 40px;
   position: fixed;
-  bottom: 40px;
-  right: 10px;
+  /*bottom: 40px;*/
+  /*right: 10px;*/
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   text-indent: 100%;
@@ -58,4 +58,9 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+.scrollTopAlign {
+  bottom: 40px;
+  right: 10px;
 }
