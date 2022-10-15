@@ -47,15 +47,8 @@ def results(response):
             GPT_3_Summary.update(links_summary)
             
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['one'], GPT_3_Summary['two'], GPT_3_Summary['three'], GPT_3_Summary['four'], GPT_3_Summary['five'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
-                                                            
-            print(f"\n{GPT_3_Summary}\n")
-            
+                                                                        
             return render(response, 'result.html', GPT_3_Summary)
-
-            #resps = asyncio.run(results_async(search_query))
-            #resultsdb.query_results[search_query] = [resps['response'], resps['roadmap']]
-            
-            #return render(response, 'result.html', resps)
 
 #About us page
 def about(response):
