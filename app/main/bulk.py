@@ -30,7 +30,7 @@ SENTENCES_COUNT = 10
 #Get prompts for GPT-3
 def get_prompts(searchQuery):
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
-    p2 = f"Give a roadmap that is a series of instructions that someone should take to solve this question. {searchQuery} The steps should be numbered"
+    p2 = f"Give a roadmap that is a series of 5 steps that someone should take to solve this question. {searchQuery} The steps should be numbered as such: 1. First step, 2. Second step, 3. Third step, etc."
     prompts = []
     explanation = {
         'prompt': p1,
@@ -196,4 +196,10 @@ async def results_async(searchQuery):
             url = 'https://api.openai.com/v1/engines/text-davinci-002/completions'
             tasks.append(asyncio.ensure_future(get_text(session, url, prompt)))
         feedbacks = await asyncio.gather(*tasks)
-    return {'response': feedbacks[0], 'query': searchQuery, 'roadmap': feedbacks[1]}
+    step_one = feedbacks[1].split('\n')[2]
+    step_two = feedbacks[1].split('\n')[3]
+    step_three = feedbacks[1].split('\n')[4]
+    step_four = feedbacks[1].split('\n')[5]
+    step_five = feedbacks[1].split('\n')[6]
+    
+    return {'response': feedbacks[0], 'query': searchQuery, 'roadmap': feedbacks[1], 'one': step_one, 'two': step_two, 'three': step_three, 'four': step_four, 'five': step_five}

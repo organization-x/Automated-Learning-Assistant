@@ -47,6 +47,8 @@ def results(response):
             GPT_3_Summary.update(links_summary)
             
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['roadmap'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
+                                                            
+            print(f"\n{GPT_3_Summary}\n")
             
             return render(response, 'result.html', GPT_3_Summary)
 
