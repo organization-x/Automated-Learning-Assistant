@@ -18,6 +18,11 @@ import os
 from search_engine_parser.core.engines.google import Search as GoogleSearch
 from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 import nest_asyncio
+from nltk.stem import WordNetLemmatizer
+import re
+from sklearn.feature_extraction.text import TfidfVectorizer
+from urllib.request import urlopen
+
 
 load_dotenv()
 #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -26,6 +31,8 @@ set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
 LANGUAGE = "english"
 SENTENCES_COUNT = 10
+lemmatizer = WordNetLemmatizer()
+
 
 #Get prompts for GPT-3
 def get_prompts(searchQuery):
@@ -171,15 +178,14 @@ async def get_text_summary(url):
         parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
     except Exception as e:
         return ""
-    stemmer = Stemmer(LANGUAGE)
-
-    summarizer = Summarizer(stemmer)
-    summarizer.stop_words = get_stop_words(LANGUAGE)
-
-    summary = ""
-    for sentence in summarizer(parser.document, SENTENCES_COUNT):
-        summary += str(sentence) + " "
-    return summary
+    lemmatizer = WordNetLemmatizer()
+    # processed_text = re.sub('[^a-zA-Z]', ' ', parser.document)
+    # processed_text = processed_text.lower()
+    # processed_text = processed_text.split()
+    # processed_text = ' '.join(processed_text)
+    tf_idf_model = TfidfVectorizer(max_features=8)
+    processed_text_tf = tf_idf_model.fit_transform(str(parser.document).split("."))
+    return str(tf_idf_model.get_feature_names())
 
 #Asynchronous functions to call OpenAI API and get text from GPT-3
 async def get_text(session, url, params):
