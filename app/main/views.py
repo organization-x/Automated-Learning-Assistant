@@ -37,7 +37,7 @@ def results(response):
 
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
-            links_summary = loop.create_task(bulk.get_links(search_query))
+            links_summary = loop.create_task(bulk.get_top_gpt_links(search_query))
             loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
             GPT_3_Summary = GPT_3_Summary.result()
