@@ -9,7 +9,6 @@ from sumy.utils import get_stop_words
 from bs4 import BeautifulSoup
 from distutils.log import error
 from pydoc import render_doc
-from django.shortcuts import render
 from django.http import HttpResponse
 import asyncio
 import aiohttp
@@ -30,12 +29,12 @@ SENTENCES_COUNT = 10
 #Get prompts for GPT-3
 def get_prompts(searchQuery):
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
-    p2 = f"Give a roadmap that is a series of 5 steps that someone should take to solve this question. {searchQuery} The steps should be numbered as such: 1. First step, 2. Second step, 3. Third step, etc."
+    p2 = f"Give a roadmap that is a series of 5 steps that someone should take to solve this question. {searchQuery} The steps should be numbered as such: 1. First step, 2. Second step, 3. Third step, 4. Fourth step, 5. Fifth step."
     prompts = []
     explanation = {
         'prompt': p1,
         'temperature': 0.7,
-        'max_tokens': 500,
+        'max_tokens': 350,
         'top_p': 1,
         'frequency_penalty': 0,
         'presence_penalty': 0
@@ -43,7 +42,7 @@ def get_prompts(searchQuery):
     roadmap = {
         'prompt': p2,
         'temperature': 0.7,
-        'max_tokens': 500,
+        'max_tokens': 250,
         'top_p': 1,
         'frequency_penalty': 0,
         'presence_penalty': 0

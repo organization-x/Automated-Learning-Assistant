@@ -10,7 +10,7 @@
     <link rel="icon"href="{% static 'img/ALA.png' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/Bitter.css' %}">
-    <link rel="stylesheet" href="{% static 'fonts/Roboto.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Roboto.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/Roboto%20Slab.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/all.css' %}">
     <link rel="stylesheet" href="{% static 'fonts/awesome.css' %}">
@@ -74,7 +74,7 @@
                                       </div>
                                   </div>
                               </div>
-                          </div><input class="form-control form-control-lg" type="search" id="searchText" name="result" value = "{{ query }}"style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;" maxlength="150"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
+                          </div><input class="form-control form-control-lg" type="search" id="searchText" name="result" value = "{{ query }}"style="border-top-left-radius: 0px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;" maxlength="150" minlength="4"><button class="btn btn-primary btn-lg" id="searchButton" style="border-radius: 800;border-top-left-radius: 0px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 0px;background: var(--bs-card-bg);border-top-color: var(--bs-card-cap-bg);border-right-color: var(--bs-card-cap-bg);border-bottom-color: var(--bs-card-cap-bg);border-left-color: var(--bs-black);" type="button"><i class="fas fa-search" style="color: rgb(0,0,0);"></i></button>
                         </form>
                     </div>
                 </div>
