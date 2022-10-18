@@ -1,11 +1,5 @@
 from __future__ import absolute_import
 from __future__ import division, print_function, unicode_literals
-from sumy.parsers.html import HtmlParser
-from sumy.parsers.plaintext import PlaintextParser
-from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lsa import LsaSummarizer as Summarizer
-from sumy.nlp.stemmers import Stemmer
-from sumy.utils import get_stop_words
 from bs4 import BeautifulSoup
 from distutils.log import error
 from pydoc import render_doc
@@ -17,8 +11,10 @@ import os
 from search_engine_parser.core.engines.google import Search as GoogleSearch
 from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 import nest_asyncio
-from urllib.request import urlopen
+from urllib.request import urlopen, FancyURLopener
 from bs4 import BeautifulSoup
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 load_dotenv()
 #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 nest_asyncio.apply()
@@ -74,54 +70,52 @@ async def get_top_gpt_links(search_query):
 
         # look through each link and create a task that generates a summary
         for link in result:
-            summaries_tasks.append(asyncio.create_task(get_text_summary(link)))
+            summaries_tasks.append(get_text_summary(link))
 
     # wait for all the summaries to be generated
-    await asyncio.gather(*summaries_tasks)
-
     # put each summary into a string with a number, to prompt gpt-3
     summaries_prompt = ""
-    summaries = []
+    summaries = [summaries_task for summaries_task in summaries_tasks]
 
     # for i in range(len(summaries_tasks)):
-    i = 0
-    while i < len(summaries_tasks):
-        result = summaries_tasks[i].result()
-        if result.strip() != "":
-            summaries.append(result)
-            summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
-            i += 1
-        else:
-            links.remove(links[i])
-            summaries_tasks.remove(summaries_tasks[i])
+    # i = 0
+    # while i < len(summaries_tasks):
+    #     result = summaries_tasks[i].result()
+    #     if result.strip() != "":
+    #         summaries.append(result)
+    #         summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
+    #         i += 1
+    #     else:
+    #         links.remove(links[i])
+    #         summaries_tasks.remove(summaries_tasks[i])
 
-    # prompt gpt-3 to choose the best 3 summaries
-    summaries_prompt += "Which 3 of these texts best answer the prompt " + search_query + "? Answer with only numerical digits. Example Response: \"1,7,9\" or \"2,3,4\""
+    # # prompt gpt-3 to choose the best 3 summaries
+    # summaries_prompt += "Which 3 of these texts best answer the prompt " + search_query + "? Answer with only numerical digits. Example Response: \"1,7,9\" or \"2,3,4\""
 
-    prompt = {
-        'prompt': summaries_prompt,
-        'temperature': 0.7,
-        'max_tokens': 256,
-        'top_p': 1,
-        'frequency_penalty': 0,
-        'presence_penalty': 0
-    }
+    # prompt = {
+    #     'prompt': summaries_prompt,
+    #     'temperature': 0.7,
+    #     'max_tokens': 256,
+    #     'top_p': 1,
+    #     'frequency_penalty': 0,
+    #     'presence_penalty': 0
+    # }
 
-    async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
-        url = 'https://api.openai.com/v1/engines/text-davinci-002/completions'
-        task = asyncio.ensure_future(get_text(session, url, prompt))
-        nums = await task
+    # async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
+    #     url = 'https://api.openai.com/v1/engines/text-davinci-002/completions'
+    #     task = asyncio.ensure_future(get_text(session, url, prompt))
+    #     nums = await task
 
-    # get the response from gpt-3
-    numbers = nums.strip().split(",")
+    # # get the response from gpt-3
+    # numbers = nums.strip().split(",")
 
-    # filtering out text just in case GPT-3 returns something weird
-    for num in numbers:
-        num = "".join(filter(str.isdigit, num))
+    # # filtering out text just in case GPT-3 returns something weird
+    # for num in numbers:
+    #     num = "".join(filter(str.isdigit, num))
 
     # create a list of the links and summaries that gpt-3 chose
-    final_links = [links[int(numbers[0])- 1], links[int(numbers[1]) - 1], links[int(numbers[2]) - 1]]
-    final_summaries = [summaries[int(numbers[0]) - 1], summaries[int(numbers[1]) - 1], summaries[int(numbers[2]) - 1]]
+    final_links = [links[0], links[1], links[2]]
+    final_summaries = [summaries[0], summaries[1], summaries[2]]
 
 
     return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
@@ -168,10 +162,14 @@ async def __get_links_from_search_engine(prompt, page_num):
             final_links.append(link)
     return final_links
 #get all text from urls
-async def get_url_text(article_url):
+def get_url_text(article_url):
+    class AppURLopener(FancyURLopener):
+        version = "Mozilla/5.0"
+
     try:
         # test code from stack overflow may or may not work
-        html = urlopen(article_url).read()
+        opener = AppURLopener()
+        html = opener.open(article_url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # kill all script and style elements
@@ -180,7 +178,7 @@ async def get_url_text(article_url):
 
         # get text
         text = soup.get_text()
-
+        
         # break into lines and remove leading and trailing space on each
         lines = (line.strip() for line in text.splitlines())
         # break multi-headlines into a line each
@@ -189,26 +187,36 @@ async def get_url_text(article_url):
         text = '\n'.join(chunk for chunk in chunks if chunk)
         return text
     except Exception as e:
+        print(f"\n\n{e}\n\n")
         return "" 
-async def get_text_summary(url):
+def get_text_summary(url):
     # gets the text of the url
     url_text = get_url_text(url)
-    # ** Current code for Summarization
-    # TODO: Add Summarization code  
-    summary = "This is a place-holder, add summarization code later."
-    # ** Previous code for Sumy Summarization 
-    # try:
-    #     parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
-    # except Exception as e:
-    #     return ""
-    # stemmer = Stemmer(LANGUAGE)
+    # summarizes the text using TF-IDF
+    # print(f"\n\n{url_text}\n\n")
+    text = str(url_text).split("\n")
+    filtered_text = []
+    for i in range(len(text)-10):
+        if len(text[i]) > 5 and len(text[i]) < 400:
+            filtered_text.append(text[i])
 
-    # summarizer = Summarizer(stemmer)
-    # summarizer.stop_words = get_stop_words(LANGUAGE)
-
-    # summary = ""
-    # for sentence in summarizer(parser.document, SENTENCES_COUNT):
-    #     summary += str(sentence) + " "
+    tf_idf_model = TfidfVectorizer(stop_words='english')
+    processed_text_tf = tf_idf_model.fit_transform(filtered_text)
+    scores = processed_text_tf.toarray()
+    one = [0, ""]
+    two = [0, ""]
+    three = [0, ""]
+    for i in range(len(scores)):
+        avg = sum(scores[i]) / len(scores[i])
+        if avg > three[0]:
+            if avg > two[0]:
+                if avg > one[0]:
+                    one = [avg, filtered_text[i]]
+                else:
+                    two = [avg, filtered_text[i]]
+            else:
+                three = [avg, filtered_text[i]]
+    summary = [one[1], two[1], three[1]]
     return summary
 
 #Asynchronous functions to call OpenAI API and get text from GPT-3
