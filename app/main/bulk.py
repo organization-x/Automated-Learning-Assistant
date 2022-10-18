@@ -17,7 +17,8 @@ import os
 from search_engine_parser.core.engines.google import Search as GoogleSearch
 from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 import nest_asyncio
-
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
 load_dotenv()
 #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 nest_asyncio.apply()
@@ -166,20 +167,48 @@ async def __get_links_from_search_engine(prompt, page_num):
         if link not in final_links and 'youtube' not in link:
             final_links.append(link)
     return final_links
-
-async def get_text_summary(url):
+#get all text from urls
+async def get_url_text(article_url):
     try:
-        parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+        # test code from stack overflow may or may not work
+        html = urlopen(article_url).read()
+        soup = BeautifulSoup(html, features="html.parser")
+
+        # kill all script and style elements
+        for script in soup(["script", "style"]):
+            script.extract()    # rip it out
+
+        # get text
+        text = soup.get_text()
+
+        # break into lines and remove leading and trailing space on each
+        lines = (line.strip() for line in text.splitlines())
+        # break multi-headlines into a line each
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        # drop blank lines
+        text = '\n'.join(chunk for chunk in chunks if chunk)
+        return text
     except Exception as e:
-        return ""
-    stemmer = Stemmer(LANGUAGE)
+        return "" 
+async def get_text_summary(url):
+    # gets the text of the url
+    url_text = get_url_text(url)
+    # ** Current code for Summarization
+    # TODO: Add Summarization code  
+    summary = "This is a place-holder, add summarization code later."
+    # ** Previous code for Sumy Summarization 
+    # try:
+    #     parser = HtmlParser.from_url(url, Tokenizer(LANGUAGE))
+    # except Exception as e:
+    #     return ""
+    # stemmer = Stemmer(LANGUAGE)
 
-    summarizer = Summarizer(stemmer)
-    summarizer.stop_words = get_stop_words(LANGUAGE)
+    # summarizer = Summarizer(stemmer)
+    # summarizer.stop_words = get_stop_words(LANGUAGE)
 
-    summary = ""
-    for sentence in summarizer(parser.document, SENTENCES_COUNT):
-        summary += str(sentence) + " "
+    # summary = ""
+    # for sentence in summarizer(parser.document, SENTENCES_COUNT):
+    #     summary += str(sentence) + " "
     return summary
 
 #Asynchronous functions to call OpenAI API and get text from GPT-3
