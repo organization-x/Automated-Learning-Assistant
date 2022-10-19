@@ -31,7 +31,7 @@ def get_prompts(searchQuery):
     explanation = {
         'prompt': p1,
         'temperature': 0.7,
-        'max_tokens': 350,
+        'max_tokens': 300,
         'top_p': 1,
         'frequency_penalty': 0,
         'presence_penalty': 0
@@ -39,7 +39,7 @@ def get_prompts(searchQuery):
     roadmap = {
         'prompt': p2,
         'temperature': 0.7,
-        'max_tokens': 250,
+        'max_tokens': 200,
         'top_p': 1,
         'frequency_penalty': 0,
         'presence_penalty': 0
@@ -179,12 +179,12 @@ def get_url_text(article_url):
         # get text
         text = soup.get_text()
         
-        # break into lines and remove leading and trailing space on each
-        lines = (line.strip() for line in text.splitlines())
-        # break multi-headlines into a line each
-        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-        # drop blank lines
-        text = '\n'.join(chunk for chunk in chunks if chunk)
+        # # break into lines and remove leading and trailing space on each
+        # lines = (line.strip() for line in text.splitlines())
+        # # break multi-headlines into a line each
+        # chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        # # drop blank lines
+        # text = '\n'.join(chunk for chunk in chunks if chunk)
         return text
     except Exception as e:
         print(f"\n\n{e}\n\n")
@@ -194,10 +194,11 @@ def get_text_summary(url):
     url_text = get_url_text(url)
     # summarizes the text using TF-IDF
     # print(f"\n\n{url_text}\n\n")
+    print(f"\n\n{url}\n\n")
     text = str(url_text).split("\n")
     filtered_text = []
-    for i in range(len(text)-10):
-        if len(text[i]) > 5 and len(text[i]) < 400:
+    for i in range(len(text)-5):
+        if len(text[i]) > 5 and len(text[i]) < 300:
             filtered_text.append(text[i])
 
     tf_idf_model = TfidfVectorizer(stop_words='english')
