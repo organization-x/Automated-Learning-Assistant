@@ -190,12 +190,17 @@ def get_text_summary(url):
     # gets the text of the url
     url_text = get_url_text(url)
     # summarizes the text using TF-IDF
-    text = str(url_text).split("\n")
+    text = str(url_text)
+    text = text.replace("\n", ". ")
+    text = text.split(". ")
     filtered_text = []
-    for i in range(len(text)-5):
-        if len(text[i]) > 5 and len(text[i]) < 300:
-            filtered_text.append(text[i])
-
+    for i in range(len(text)-25):
+        if len(text[i+2]) > 15:
+            filtered_text.append(text[i+2])
+            for j in list(text[i+2]):
+                if j.isalpha() == False and j != " " and j != "." and j != "," and j != "!" and j != "?" and j.isnumeric() == False:
+                    filtered_text.pop(-1)
+                    break
     tf_idf_model = TfidfVectorizer(stop_words='english')
     processed_text_tf = tf_idf_model.fit_transform(filtered_text)
     scores = processed_text_tf.toarray()
