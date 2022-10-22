@@ -74,7 +74,7 @@ async def get_top_gpt_links(search_query):
 
     # wait for all the summaries to be generated
     # put each summary into a string with a number, to prompt gpt-3
-    summaries_prompt = ""
+    #summaries_prompt = ""
     summaries = [summaries_task for summaries_task in summaries_tasks]
 
     # for i in range(len(summaries_tasks)):
@@ -166,35 +166,30 @@ def get_url_text(article_url):
     class AppURLopener(FancyURLopener):
         version = "Mozilla/5.0"
 
-    try:
-        # test code from stack overflow may or may not work
-        opener = AppURLopener()
-        html = opener.open(article_url)
-        soup = BeautifulSoup(html, features="html.parser")
+    # test code from stack overflow may or may not work
+    opener = AppURLopener()
+    html = opener.open(article_url)
+    soup = BeautifulSoup(html, features="html.parser")
 
         # kill all script and style elements
-        for script in soup(["script", "style"]):
-            script.extract()    # rip it out
+    for script in soup(["script", "style"]):
+        script.extract()    # rip it out
 
         # get text
-        text = soup.get_text()
+    text = soup.get_text()
         
         # # break into lines and remove leading and trailing space on each
-        # lines = (line.strip() for line in text.splitlines())
+    lines = (line.strip() for line in text.splitlines())
         # # break multi-headlines into a line each
-        # chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
         # # drop blank lines
-        # text = '\n'.join(chunk for chunk in chunks if chunk)
-        return text
-    except Exception as e:
-        print(f"\n\n{e}\n\n")
-        return "" 
+    text = '\n'.join(chunk for chunk in chunks if chunk)
+    return text
+
 def get_text_summary(url):
     # gets the text of the url
     url_text = get_url_text(url)
     # summarizes the text using TF-IDF
-    # print(f"\n\n{url_text}\n\n")
-    print(f"\n\n{url}\n\n")
     text = str(url_text).split("\n")
     filtered_text = []
     for i in range(len(text)-5):
