@@ -19,10 +19,6 @@ function execute(){
     //changeURL("/resultPage", searchQuery, true);
 
 }
-
-function change(){
-    changeURL("/resultPage", searchQuery, true);
-}
 // Event Listeners
 function submitButton() {
     var buttonPress = document.getElementById("searchButton");
