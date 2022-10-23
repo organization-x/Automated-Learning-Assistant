@@ -31,7 +31,9 @@ def results(response):
     else:
         search_query = responses.get('query')
         numResults = 2
-        if search_query in resultsdb.query_results:
+
+        # checking if the results are cached and that at least the first link is valid and not an error
+        if search_query in resultsdb.query_results and resultsdb.query_results[search_query][6] != "":
             results = resultsdb.query_results[search_query]
             return render(response, 'result.html', {'response': results[0], 'query': search_query, 'one': results[1], 'two': results[2], 'three': results[3], 'four': results[4], 'five': results[5], "link1": results[6], "link2": results[7], "summary1": results[8], "summary2": results[9]})
         else:
