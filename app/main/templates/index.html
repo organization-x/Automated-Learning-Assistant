@@ -49,27 +49,22 @@
                     <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
                         <div class="card-body" style="padding: 0px;">
                             <form class="d-flex align-items-center" id="searchForm" method="get" action="/resultPage" name="submittedQuery" form="searchBar_Form">
-                              <div class="dropdown" id="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
+                              <div class="dropdown" id="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="settingButton" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
                                   <div class="dropdown-menu" id="settingsBody" style="background: transparent;border-radius: 0px;border-color: transparent;border-bottom-width: 0px;border-bottom-color: transparent;">
                                       <div class="card" id="Card_Settings" style="position: static;">
                                           <div class="card-body" style="backdrop-filter: blur(0px);">
                                               <div class="row">
-                                                  <div class="col-md-12 d-xxl-flex justify-content-xxl-center" id="Settings_column1">
-                                                      <div class="container d-flex flex-row align-items-start align-items-lg-center btn-group btn-group-toggle" id="searchEngine" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary" value="google" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><img class="img-fluid" src="{% static 'img/Google.png' %}" height="42" width="130"><input type="radio" id="google" name="searchEngine"></label><label class="form-label btn btn-outline-primary" value="bing" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><img class="img-fluid" src="{% static 'img/bing.png' %}" width="76" height="43" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><input type="radio" id="bing" name="searchEngine"></label><label class="form-label btn btn-outline-primary" value="duckduckgo" style="border-top-color: transparent;border-right-color: transparent;border-bottom-color: transparent;border-left-color: transparent;"><img class="img-fluid" src="{% static 'img/duckduckgo.png' %}" width="76" height="43"><input type="radio" id="duckduckGo-1" name="searchEngine"></label></div>
-                                                  </div>
-                                              </div>
-                                              <div class="row">
                                                   <div class="col-md-12" id="Settings_column2">
-                                                      <div class="container d-flex flex-row justify-content-center align-items-start btn-group btn-group-toggle" id="themes" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary" value="lightTheme">Light<input type="radio" id="lightTheme" name="themes" value="lightTheme"></label><label class="form-label btn btn-outline-primary" value="darkTheme">Dark<input type="radio" id="darkTheme" name="themes"></label></div>
+                                                      <div class="container d-flex flex-row justify-content-center align-items-start btn-group btn-group-toggle" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary" id="lightButton">Light<input type="radio" id="light" class="hideRadio" name="themes" value="lightTheme"></label><label class="form-label btn btn-outline-primary active" id="darkButton">Dark<input type="radio" id="dark" class="hideRadio" name="themes" value="darkTheme" checked=""></label></div>
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-12" id="Settings_column3">
                                                       <div class="container">
                                                           <div class="row">
-                                                              <div class="col d-flex d-sm-flex flex-row justify-content-center align-items-center justify-content-sm-center align-items-sm-center"><label class="col-form-label btn btn-outline-primary" value="roadMap">Roadmap<input type="checkbox" id="checkRoadMap" name="roadMap"></label></div>
+                                                              <div class="col d-flex d-sm-flex flex-row justify-content-center align-items-center justify-content-sm-center align-items-sm-center"><label class="col-form-label btn btn-outline-primary active" id="buttonroadMap" roadmap="roadmap">Roadmap</label></div>
                                                               <div class="col-md-7 d-flex d-md-flex flex-row justify-content-center align-items-center justify-content-md-start align-items-md-center">
-                                                                  <p class="d-md-flex justify-content-md-center align-items-md-center" style="margin-bottom: 0px;width: 138.1406px;"><span style="color: var(--bs-dropdown-link-color);"># of results:</span><br></p><input class="form-control d-md-flex justify-content-md-start" type="number">
+                                                                  <p class="d-md-flex justify-content-md-center align-items-md-center" style="margin-bottom: 0px;width: 138.1406px;"><span style="color: var(--bs-dropdown-link-color);"># of results:</span><br></p><input class="form-control d-md-flex justify-content-md-start" type="number" id="numResult" max="4" min="0" value="2">
                                                               </div>
                                                           </div>
                                                       </div>
@@ -280,6 +275,8 @@
     <script src="{% static 'js/formSubmisison.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="{% static 'js/bs-init.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/cookies.js' %}"></script>
     <script src="{% static 'js/vanilla-tilt.js' %}"></script>
 </body>
 </html>
