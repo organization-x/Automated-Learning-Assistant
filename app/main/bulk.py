@@ -162,7 +162,7 @@ async def __get_links_from_search_engine(prompt, page_num=1):
 
     return final_links
 #get all text from urls
-def get_url_text(article_url):
+def get_url_text(url):
     # class AppURLopener(FancyURLopener):
     #     version = "Mozilla/5.0"
 
@@ -185,7 +185,6 @@ def get_url_text(article_url):
     #     # # drop blank lines
     # text = '\n'.join(chunk for chunk in chunks if chunk)
     # return text
-    url = 'https://www.makeuseof.com/create-classes-in-java/'
     html = urlopen(url).read()    
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.get_text()
