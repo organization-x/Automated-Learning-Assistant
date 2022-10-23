@@ -63,18 +63,29 @@ async def get_top_gpt_links(search_query):
 
 
     # creating a list of tasks that grab the text from the links
-    summaries_tasks = []
+    summaries = []
 
     # creating a list of links
     # for each task that grabbed a list of links
     for link in links:
 
-        summaries_tasks.append(get_text_summary(link))
+        # TODO: Make async
+        summaries.append(get_text_summary(link))
+    
+    new_summaries = []
+
+    count = 0
+    for i, summary in enumerate(summaries):
+        if summary != "":
+            new_summaries.append(summary)
+        else:
+            links.pop(i - count)
+            count += 1
 
     # wait for all the summaries to be generated
     # put each summary into a string with a number, to prompt gpt-3
     #summaries_prompt = ""
-    summaries = [summaries_task for summaries_task in summaries_tasks]
+    # summaries = [summaries_task for summaries_task in summaries_tasks]
 
     # for i in range(len(summaries_tasks)):
     # i = 0
@@ -114,7 +125,11 @@ async def get_top_gpt_links(search_query):
 
     # create a list of the links and summaries that gpt-3 chose
     final_links = [links[0], links[1], links[2]]
-    final_summaries = [summaries[0], summaries[1], summaries[2]]
+    final_summaries = [new_summaries[0], new_summaries[1], new_summaries[2]]
+
+    # print(final_links)
+    # print(final_summaries)
+
 
 
     return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
@@ -167,8 +182,10 @@ def get_url_text(url):
     #     version = "Mozilla/5.0"
 
     # # test code from stack overflow may or may not work
-    # opener = AppURLopener()
-    # html = opener.open(article_url)
+    # opener = FancyURLopener()
+
+    
+    # html = opener.open(url)
     # soup = BeautifulSoup(html, features="html.parser")
 
     #     # kill all script and style elements
@@ -185,7 +202,12 @@ def get_url_text(url):
     #     # # drop blank lines
     # text = '\n'.join(chunk for chunk in chunks if chunk)
     # return text
-    html = urlopen(url).read()    
+
+
+    try:
+        html = urlopen(url).read()    
+    except:
+        return ""
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.get_text()
 
@@ -218,6 +240,8 @@ def get_url_text(url):
 def get_text_summary(url):
     # gets the text of the url
     url_text = get_url_text(url)
+    if url_text == "":
+        return ""
     # summarizes the text using TF-IDF
     text = str(url_text)
     text = text.replace("\n", ". ")
