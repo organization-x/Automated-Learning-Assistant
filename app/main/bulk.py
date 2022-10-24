@@ -210,7 +210,7 @@ def get_text_summary(url):
     # summarizes the text using TF-IDF
     text = str(url_text)
     text = text.replace("\n", ". ")
-    text = text.split(". ")
+    text = text.split(".")
     filtered_text = []
     for i in range(len(text)-25):
         if len(text[i+2]) > 15:
