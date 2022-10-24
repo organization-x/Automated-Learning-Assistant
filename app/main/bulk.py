@@ -1,20 +1,21 @@
-from __future__ import absolute_import
-from __future__ import division, print_function, unicode_literals
-from bs4 import BeautifulSoup
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
+import asyncio
+import os
 from distutils.log import error
 from pydoc import render_doc
-from django.http import HttpResponse
-import asyncio
+from urllib.request import FancyURLopener, urlopen
+
 import aiohttp
+import nest_asyncio
+from bs4 import BeautifulSoup
+from cleantext import clean
+from django.http import HttpResponse
 from dotenv import load_dotenv
-import os
 from search_engine_parser.core.engines.google import Search as GoogleSearch
 from search_engine_parser.core.engines.yahoo import Search as YahooSearch
-import nest_asyncio
-from urllib.request import urlopen, FancyURLopener
-from bs4 import BeautifulSoup
 from sklearn.feature_extraction.text import TfidfVectorizer
-from cleantext import clean
 
 load_dotenv()
 #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -49,7 +50,7 @@ def get_prompts(searchQuery):
     prompts.append(roadmap)
     return prompts
 
-async def get_top_gpt_links(search_query):
+async def get_top_gpt_links(search_query, results=3):
 
     # returns a task that gets a list of tasks that grab links
     links = await __get_links_from_search_engine(search_query)
@@ -61,12 +62,15 @@ async def get_top_gpt_links(search_query):
         'summary1': "ERROR: SUMMARY COULD NOT BE GENERATED", 
         'summary2': "ERROR: SUMMARY COULD NOT BE GENERATED"}
 
-
     # creating a list of tasks that grab the text from the links
     summaries = []
 
-    # creating a list of links
-    # for each task that grabbed a list of links
+    if len(links) > results:
+        results = len(links)
+
+    links = links[:results]
+
+    # getting summary for links
     for link in links:
 
         # TODO: Make async
@@ -74,66 +78,50 @@ async def get_top_gpt_links(search_query):
     
     new_summaries = []
 
+
+    # TODO: Clean up results stuff here
     count = 0
     for i, summary in enumerate(summaries):
         if summary != "":
             new_summaries.append(summary)
         else:
+            results -= 1 
             links.pop(i - count)
             count += 1
 
-    # wait for all the summaries to be generated
-    # put each summary into a string with a number, to prompt gpt-3
-    #summaries_prompt = ""
-    # summaries = [summaries_task for summaries_task in summaries_tasks]
 
-    # for i in range(len(summaries_tasks)):
-    # i = 0
-    # while i < len(summaries_tasks):
-    #     result = summaries_tasks[i].result()
-    #     if result.strip() != "":
-    #         summaries.append(result)
-    #         summaries_prompt += str(i + 1) + ") \"" + result[:800] + "\"\n"
-    #         i += 1
-    #     else:
-    #         links.remove(links[i])
-    #         summaries_tasks.remove(summaries_tasks[i])
 
-    # # prompt gpt-3 to choose the best 3 summaries
-    # summaries_prompt += "Which 3 of these texts best answer the prompt " + search_query + "? Answer with only numerical digits. Example Response: \"1,7,9\" or \"2,3,4\""
+    if results == 1:
+        return {'link1': links[0], 
+        'summary1': new_summaries[0]}
+    elif results == 2:
+        return {'link1': links[0], 
+        'link2': links[1],
+        'summary1': new_summaries[0], 
+        'summary2': new_summaries[1]}
+    elif results == 3:
+        return {'link1': links[0], 
+        'link2': links[1],
+        'link3': links[2],
+        'summary1': new_summaries[0], 
+        'summary2': new_summaries[1],
+        'summary3': new_summaries[2]}
+    else:
+        return {'link1': links[0], 
+        'link2': links[1],
+        'link3': links[2],
+        'link4': links[3],
+        'summary1': new_summaries[0], 
+        'summary2': new_summaries[1],
+        'summary3': new_summaries[2],
+        'summary4': new_summaries[3]}
+    
 
-    # prompt = {
-    #     'prompt': summaries_prompt,
-    #     'temperature': 0.7,
-    #     'max_tokens': 256,
-    #     'top_p': 1,
-    #     'frequency_penalty': 0,
-    #     'presence_penalty': 0
-    # }
-
-    # async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
-    #     url = 'https://api.openai.com/v1/engines/text-davinci-002/completions'
-    #     task = asyncio.ensure_future(get_text(session, url, prompt))
-    #     nums = await task
-
-    # # get the response from gpt-3
-    # numbers = nums.strip().split(",")
-
-    # # filtering out text just in case GPT-3 returns something weird
-    # for num in numbers:
-    #     num = "".join(filter(str.isdigit, num))
-
-    # create a list of the links and summaries that gpt-3 chose
+    # create a list of the links and summaries
     final_links = [links[0], links[1], links[2]]
     final_summaries = [new_summaries[0], new_summaries[1], new_summaries[2]]
 
-    # print(final_links)
-    # print(final_summaries)
-
-
-
     return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
-
 
 # this method gets links from the search engine - if google fails it defaults to yahoo
 async def __get_links_from_search_engine(prompt, page_num=1):
@@ -172,40 +160,15 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     for link in results_links:
 
         # ALL LINK FILTRATION SHOULD BE ADDED HERE
-        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')):
+        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link:
             final_links.append(link)
 
     return final_links
 #get all text from urls
 def get_url_text(url):
-    # class AppURLopener(FancyURLopener):
-    #     version = "Mozilla/5.0"
-
-    # # test code from stack overflow may or may not work
-    # opener = FancyURLopener()
-
-    
-    # html = opener.open(url)
-    # soup = BeautifulSoup(html, features="html.parser")
-
-    #     # kill all script and style elements
-    # for script in soup(["script", "style"]):
-    #     script.extract()    # rip it out
-
-    #     # get text
-    # text = soup.get_text()
-        
-    #     # # break into lines and remove leading and trailing space on each
-    # lines = (line.strip() for line in text.splitlines())
-    #     # # break multi-headlines into a line each
-    # chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    #     # # drop blank lines
-    # text = '\n'.join(chunk for chunk in chunks if chunk)
-    # return text
-
 
     try:
-        html = urlopen(url).read()    
+        html = urlopen(url, timeout=1).read()    
     except:
         return ""
     soup = BeautifulSoup(html, 'html.parser')
@@ -226,6 +189,7 @@ def get_url_text(url):
                 replace_with_punct="",
                 lang="en"
                 )
+
     cleaned_text = cleaned_text.split("\n")
 
     for i in range(len(cleaned_text)):
@@ -242,6 +206,7 @@ def get_text_summary(url):
     url_text = get_url_text(url)
     if url_text == "":
         return ""
+
     # summarizes the text using TF-IDF
     text = str(url_text)
     text = text.replace("\n", ". ")
