@@ -196,8 +196,8 @@ def get_url_text(url):
         if len(cleaned_text[i]) < 20:
             cleaned_text[i] = ""
 
-    cleaned_text = list(filter(None, cleaned_text))
-    cleaned_text = "\n".join(cleaned_text)
+    # cleaned_text = list(filter(None, cleaned_text))
+    # cleaned_text = "\n".join(cleaned_text)
 
     return cleaned_text
 
@@ -209,7 +209,7 @@ def get_text_summary(url):
 
     # summarizes the text using TF-IDF
     text = str(url_text)
-    text = text.replace("\n", ". ")
+    text = text.replace("\n", " ")
     text = text.split(".")
     filtered_text = []
     for i in range(len(text)-25):
@@ -235,7 +235,8 @@ def get_text_summary(url):
                     two = [avg, filtered_text[i]]
             else:
                 three = [avg, filtered_text[i]]
-    summary = f"{one[1]}. {two[1]}. {three[1]}"
+    summary = one[1] + ". " + two[1] + ". " + three[1] + "."
+    
     return summary
 
 #Asynchronous functions to call OpenAI API and get text from GPT-3
