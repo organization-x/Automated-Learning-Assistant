@@ -173,6 +173,8 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     return final_links
 #get all text from urls
 def get_url_text(url):
+    
+    print(url)
 
     try:
         html = urlopen(url, timeout=1).read()    
@@ -200,7 +202,7 @@ def get_url_text(url):
     cleaned_text = cleaned_text.split("\n")
 
     for i in range(len(cleaned_text)):
-        if len(cleaned_text[i]) < 20:
+        if len(cleaned_text[i]) < 10:
             cleaned_text[i] = ""
 
     # cleaned_text = list(filter(None, cleaned_text))
