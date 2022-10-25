@@ -167,8 +167,6 @@ async def __get_links_from_search_engine(prompt, page_num=1):
 #get all text from urls
 def get_url_text(url):
     
-    print(url)
-
     try:
         html = urlopen(url, timeout=1).read()    
     except:
@@ -195,11 +193,11 @@ def get_url_text(url):
     cleaned_text = cleaned_text.split("\n")
 
     for i in range(len(cleaned_text)):
-        if len(cleaned_text[i]) < 10:
+        if len(cleaned_text[i]) < 20:
             cleaned_text[i] = ""
 
-    # cleaned_text = list(filter(None, cleaned_text))
-    # cleaned_text = "\n".join(cleaned_text)
+    cleaned_text = list(filter(None, cleaned_text))
+    cleaned_text = "\n".join(cleaned_text)
 
     return cleaned_text
 
@@ -211,7 +209,7 @@ def get_text_summary(url):
 
     # summarizes the text using TF-IDF
     text = str(url_text)
-    text = text.replace("\n", " ")
+    text = text.replace("\n", ". ")
     text = text.split(".")
     filtered_text = []
     for i in range(len(text)-25):
