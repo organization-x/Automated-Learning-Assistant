@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 import os
 import nest_asyncio
 from nltk.corpus import words
+from spellchecker import SpellChecker
 
 from . import resultsdb
 from . import bulk
@@ -26,8 +27,10 @@ SENTENCES_COUNT = 10
 #Results page
 def results(response):
     error = responses.get('error')
-    if error == "True":
-        return render(response, 'error.html')
+    search_query = responses.get('query')
+    if search_query is None:
+        print(f"\n\nError Here\n\n")
+        return redirect('search')
     else:
         search_query = responses.get('query')
         numResults = 2
@@ -72,10 +75,20 @@ def query(request):
     if request.method == 'POST':
         if 'query' in request.POST:
             q = str(request.POST['query'])
-            error = False
-            if "?" in q:
-                responses.headers['query'] = q
+            error = "False"
+            spell = SpellChecker()
+            list_q = q.split()
+            margin=0
+            for i in range(len(list_q)):
+                if list_q[i] == spell.correction(list_q[i]):
+                    margin+=1
+            if margin/len(list_q) < 0.5:
+                print(margin/len(list_q))
+                error = "True"
+                print(f"\n\nError\n\n")
+                return redirect('search')
             else:
-                error = True
-            responses.headers['error'] = error
-        return redirect('results')
+                responses.headers['error'] = error
+                responses.headers['query'] = q
+                print(f"\n\nWorks\n\n")
+                return redirect('loading')

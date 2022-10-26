@@ -10,12 +10,12 @@ function execute(){
     var searchBar = document.getElementById('searchText');
     searchQuery = searchBar.value;
     // Printing stuff for debug
+    changeURL("/query", searchQuery, true);
     //fetch("loading")
-    changeURL("/loading")
+    // changeURL("/loading")
     query = {'query': searchQuery};
     $.post("/query/", query);
     // Redirect URL
-    changeURL("/loading", searchQuery, true);
     //changeURL("/resultPage", searchQuery, true);
 
 }
@@ -43,39 +43,39 @@ submitButton()
 
 // Pass search info
 
-function search2Param(query) {
-    return encodeURI(query);
-}
+// function search2Param(query) {
+//     return encodeURI(query);
+// }
 
-function search2Param(query) {
-    return encodeURI(query);
-}
+// function search2Param(query) {
+//     return encodeURI(query);
+// }
 
-function getURL() {
-    return window.location.href;
-}
+// function getURL() {
+//     return window.location.href;
+// }
 
-function splitOnLast(rawString, splitStr) {
-    const lastIndex = rawString.lastIndexOf(splitStr);
-    return rawString.slice(0, lastIndex);
-} 
+// function splitOnLast(rawString, splitStr) {
+//     const lastIndex = rawString.lastIndexOf(splitStr);
+//     return rawString.slice(0, lastIndex);
+// } 
 
-function giveURL(localPage, params="", redirect=false) {
-    params = "?query=" + params;
-    if (redirect == false){
-        return splitOnLast(document.location.href, '/')+localPage+params;
-    }
-    else{
-        return localPage+params;
-    }
-}
+// function giveURL(localPage, params="", redirect=false) {
+//     params = "?query=" + params;
+//     if (redirect == false){
+//         return splitOnLast(document.location.href, '/')+localPage+params;
+//     }
+//     else{
+//         return localPage+params;
+//     }
+// }
 
-function changeURL(localPage, params="", redirect=false) {
-    params = "?query=" + params;
-    if (redirect == false){
-        window.location.href = splitOnLast(document.location.href, '/')+localPage+params;
-    }
-    else{
-        window.location.href = localPage+params;
-    }
-}
+// function changeURL(localPage, params="", redirect=false) {
+//     params = "?query=" + params;
+//     if (redirect == false){
+//         window.location.href = splitOnLast(document.location.href, '/')+localPage+params;
+//     }
+//     else{
+//         window.location.href = localPage+params;
+//     }
+// }

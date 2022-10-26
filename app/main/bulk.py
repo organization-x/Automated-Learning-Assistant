@@ -6,7 +6,6 @@ import os
 from distutils.log import error
 from pydoc import render_doc
 from urllib.request import FancyURLopener, urlopen
-import enchant
 import aiohttp
 import nest_asyncio
 from bs4 import BeautifulSoup
@@ -28,11 +27,6 @@ SENTENCES_COUNT = 10
 
 #Get prompts for GPT-3
 def get_prompts(searchQuery):
-    #Aryaman's code for text validation(Remove this later)
-    # text_validator = enchant.Dict("en_US")
-    # valid_text = text_validator.check(searchQuery)
-    # if (valid_text == False):
-    #     print("Error: Text is not valid.")
 
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
     p2 = f"Give a roadmap that is a series of 5 steps that someone should take to solve this question. {searchQuery} The steps should be numbered as such: 1. First step, 2. Second step, 3. Third step, 4. Fourth step, 5. Fifth step."

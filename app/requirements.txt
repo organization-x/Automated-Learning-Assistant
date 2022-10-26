@@ -45,3 +45,4 @@ urllib3==1.26.12
 wcwidth==0.2.5
 whitenoise==6.2.0
 yarl==1.8.1
+pyspellchecker==0.7.0
