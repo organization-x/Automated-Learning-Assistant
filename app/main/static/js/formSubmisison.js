@@ -10,7 +10,6 @@ function execute(){
     var searchBar = document.getElementById('searchText');
     searchQuery = searchBar.value;
     // Printing stuff for debug
-    changeURL("/query", searchQuery, true);
     //fetch("loading")
     // changeURL("/loading")
     query = {'query': searchQuery};
