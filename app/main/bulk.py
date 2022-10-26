@@ -9,7 +9,7 @@ from urllib.request import FancyURLopener, urlopen
 import aiohttp
 import nest_asyncio
 from bs4 import BeautifulSoup
-from cleantext import clean
+# from cleantext import clean
 from django.http import HttpResponse
 from dotenv import load_dotenv
 from search_engine_parser.core.engines.google import Search as GoogleSearch
@@ -58,9 +58,9 @@ async def get_top_gpt_links(search_query, results=3):
 
     # a check if links failed to be retrieved
     if links == "":
-        return {'link1': "", 
+        return {'link1': "",
         'link2': "",
-        'summary1': "ERROR: SUMMARY COULD NOT BE GENERATED", 
+        'summary1': "ERROR: SUMMARY COULD NOT BE GENERATED",
         'summary2': "ERROR: SUMMARY COULD NOT BE GENERATED"}
 
     # creating a list of tasks that grab the text from the links
@@ -76,7 +76,7 @@ async def get_top_gpt_links(search_query, results=3):
 
         # TODO: Make async
         summaries.append(get_text_summary(link))
-    
+
     new_summaries = []
 
 
@@ -86,37 +86,37 @@ async def get_top_gpt_links(search_query, results=3):
         if summary != "":
             new_summaries.append(summary)
         else:
-            results -= 1 
+            results -= 1
             links.pop(i - count)
             count += 1
 
 
 
     if results == 1:
-        return {'link1': links[0], 
+        return {'link1': links[0],
         'summary1': new_summaries[0]}
     elif results == 2:
-        return {'link1': links[0], 
+        return {'link1': links[0],
         'link2': links[1],
-        'summary1': new_summaries[0], 
+        'summary1': new_summaries[0],
         'summary2': new_summaries[1]}
     elif results == 3:
-        return {'link1': links[0], 
+        return {'link1': links[0],
         'link2': links[1],
         'link3': links[2],
-        'summary1': new_summaries[0], 
+        'summary1': new_summaries[0],
         'summary2': new_summaries[1],
         'summary3': new_summaries[2]}
     else:
-        return {'link1': links[0], 
+        return {'link1': links[0],
         'link2': links[1],
         'link3': links[2],
         'link4': links[3],
-        'summary1': new_summaries[0], 
+        'summary1': new_summaries[0],
         'summary2': new_summaries[1],
         'summary3': new_summaries[2],
         'summary4': new_summaries[3]}
-    
+
 
     # create a list of the links and summaries
     final_links = [links[0], links[1], links[2]]
@@ -137,10 +137,10 @@ async def __get_links_from_search_engine(prompt, page_num=1):
         except Exception as e:
             retry += 1
             if retry == 2:
-                # removing the last character from the prompt and trying again 
+                # removing the last character from the prompt and trying again
                 # sometimes end punctuation causes google to break
                 prompt = prompt[:-1]
-    
+
     # if google fails, try yahoo
     if results is None:
         retry = 0
@@ -167,30 +167,30 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     return final_links
 #get all text from urls
 def get_url_text(url):
-    
+
     try:
-        html = urlopen(url, timeout=1).read()    
+        html = urlopen(url, timeout=1).read()
     except:
         return ""
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.get_text()
 
-    cleaned_text = clean(text=text,
-                fix_unicode=True,
-                to_ascii=True,
-                lower=False,
-                no_line_breaks=False,
-                no_urls=False,
-                no_emails=False,
-                no_phone_numbers=False,
-                no_numbers=False,
-                no_digits=False,
-                no_currency_symbols=False,
-                no_punct=False,
-                replace_with_punct="",
-                lang="en"
-                )
-
+#    cleaned_text = clean(text=text,
+#                fix_unicode=True,
+#                to_ascii=True,
+#                lower=False,
+#                no_line_breaks=False,
+#                no_urls=False,
+#                no_emails=False,
+#                no_phone_numbers=False,
+#                no_numbers=False,
+#                no_digits=False,
+#                no_currency_symbols=False,
+#                no_punct=False,
+#                replace_with_punct="",
+#                lang="en"
+#                )
+    cleaned_text = text
     cleaned_text = cleaned_text.split("\n")
 
     for i in range(len(cleaned_text)):
@@ -237,7 +237,7 @@ def get_text_summary(url):
             else:
                 three = [avg, filtered_text[i]]
     summary = one[1] + ". " + two[1] + ". " + three[1] + "."
-    
+
     return summary
 
 #Asynchronous functions to call OpenAI API and get text from GPT-3
@@ -260,5 +260,5 @@ async def results_async(searchQuery):
     step_three = feedbacks[1].split('\n')[4]
     step_four = feedbacks[1].split('\n')[5]
     step_five = feedbacks[1].split('\n')[6]
-    
+
     return {'response': feedbacks[0], 'query': searchQuery, 'roadmap': feedbacks[1], 'one': step_one, 'two': step_two, 'three': step_three, 'four': step_four, 'five': step_five}
