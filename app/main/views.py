@@ -28,7 +28,7 @@ SENTENCES_COUNT = 10
 def results(response):
     error = responses.get('error')
     search_query = responses.get('query')
-    if search_query is None:
+    if search_query is None or error == "True":
         print(f"\n\nError Here\n\n")
         return redirect('search')
     else:
@@ -85,6 +85,7 @@ def query(request):
             if margin/len(list_q) < 0.5:
                 print(margin/len(list_q))
                 error = "True"
+                responses.headers['error'] = error
                 print(f"\n\nError\n\n")
                 return redirect('search')
             else:
