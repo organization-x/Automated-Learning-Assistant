@@ -14,6 +14,7 @@ function execute(){
     // changeURL("/loading")
     query = {'query': searchQuery};
     $.post("/query/", query);
+    changeURL("/loading", searchQuery, true);
     // Redirect URL
     //changeURL("/resultPage", searchQuery, true);
 
