@@ -13,6 +13,17 @@ function execute(){
     //fetch("loading")
     // changeURL("/loading")
     query = {'query': searchQuery};
+
+    /*
+    Get Cookies
+    */
+    var roadmap, numResults;
+    roadmap = getCookie("roadmap");
+    numResults = getCookie("numResults");
+
+    /*
+    Post Data
+    */
     $.post("/query/", query);
     changeURL("/loading", searchQuery, true);
     // Redirect URL
@@ -58,7 +69,7 @@ function getURL() {
 function splitOnLast(rawString, splitStr) {
     const lastIndex = rawString.lastIndexOf(splitStr);
     return rawString.slice(0, lastIndex);
-} 
+}
 
 function giveURL(localPage, params="", redirect=false) {
     params = "?query=" + params;
@@ -78,4 +89,20 @@ function changeURL(localPage, params="", redirect=false) {
     else{
         window.location.href = localPage+params;
     }
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
