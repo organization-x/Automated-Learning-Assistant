@@ -12,7 +12,6 @@ function execute(){
     // Printing stuff for debug
     //fetch("loading")
     // changeURL("/loading")
-    query = {'query': searchQuery};
 
     /*
     Get Cookies
@@ -21,12 +20,9 @@ function execute(){
     roadmap = getCookie("roadmap");
     numResults = getCookie("numResults");
     tilting = getCookie("tilting");
-    query("roadmap") = roadmap;
-    query("numResults") = numResults;
-    query("tilting") = tilting;
-    /*
-    Post Data
-    */
+    query = {'query': searchQuery, 'roadmap': roadmap, 'numResults': numResults, 'tilting': tilting};
+    // Post Data
+    // */
     $.post("/query/", query);
     changeURL("/loading", searchQuery, true);
     // Redirect URL

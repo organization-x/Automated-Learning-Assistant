@@ -29,11 +29,11 @@ def results(response):
     error = responses.get('error')
     search_query = responses.get('query')
     if search_query is None or error == "True":
-        print(f"\n\nError Here\n\n")
+        # print(f"\n\nError Here\n\n")
         return redirect('search')
     else:
         search_query = responses.get('query')
-        numResults = responses.get('numResults')
+        num_results = int(responses.get('numResults'))
         roadmap = responses.get('roadmap')
         tilting = responses.get('tilting')
 
@@ -45,14 +45,14 @@ def results(response):
 
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
-            links_summary = loop.create_task(bulk.get_top_gpt_links(search_query, results=numResults))
+            links_summary = loop.create_task(bulk.get_top_gpt_links(search_query, results=num_results))
             loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
             GPT_3_Summary = GPT_3_Summary.result()
             links_summary, links = links_summary.result()
 
             # combining the links and the gpt-3 summary
-            print(GPT_3_Summary, links)
+            # print(GPT_3_Summary, links)
 
             #GPT_3_Summary.update(links_summary)
 
@@ -75,7 +75,7 @@ def results(response):
                     htmlCodes.append(template.replace('{', '{{').replace('}', '}}'))
             upload = {'resultsList': '\n'.join(htmlCodes)}
             GPT_3_Summary.update(upload)
-            print(f"\n\n{GPT_3_Summary['response']}\n\n")
+            # print(f"\n\n{GPT_3_Summary['response']}\n\n")
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['one'], GPT_3_Summary['two'], GPT_3_Summary['three'], GPT_3_Summary['four'], GPT_3_Summary['five'], GPT_3_Summary['resultsList']]
                                                                         
             return render(response, 'result.html', GPT_3_Summary)
@@ -116,7 +116,7 @@ def query(request):
                 if list_q[i] == spell.correction(list_q[i]):
                     margin+=1
             if margin/len(list_q) < 0.5:
-                print(margin/len(list_q))
+                # print(margin/len(list_q))
                 error = "True"
                 responses.headers['error'] = error
                 print(f"\n\nError\n\n")
