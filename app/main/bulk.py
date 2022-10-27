@@ -90,32 +90,32 @@ async def get_top_gpt_links(search_query, results=3):
             links.pop(i - count)
             count += 1
 
-
-
-    if results == 1:
-        return {'link1': links[0],
-        'summary1': new_summaries[0]}
-    elif results == 2:
-        return {'link1': links[0],
-        'link2': links[1],
-        'summary1': new_summaries[0],
-        'summary2': new_summaries[1]}
-    elif results == 3:
-        return {'link1': links[0],
-        'link2': links[1],
-        'link3': links[2],
-        'summary1': new_summaries[0],
-        'summary2': new_summaries[1],
-        'summary3': new_summaries[2]}
-    else:
-        return {'link1': links[0],
-        'link2': links[1],
-        'link3': links[2],
-        'link4': links[3],
-        'summary1': new_summaries[0],
-        'summary2': new_summaries[1],
-        'summary3': new_summaries[2],
-        'summary4': new_summaries[3]}
+    # Returns: tuple(list<string>, list<string>)
+    return [new_summaries[n] for n in range(len(new_summaries))], [links[i].replace(' ', '_') if links[i][0] != ' ' else(links[1:].replace(' ', '_')) for i in range(len(links))]
+    # if results == 1:
+    #     return {'link1': links[0],
+    #     'summary1': new_summaries[0]}
+    # elif results == 2:
+    #     return {'link1': links[0],
+    #     'link2': links[1],
+    #     'summary1': new_summaries[0],
+    #     'summary2': new_summaries[1]}
+    # elif results == 3:
+    #     return {'link1': links[0],
+    #     'link2': links[1],
+    #     'link3': links[2],
+    #     'summary1': new_summaries[0],
+    #     'summary2': new_summaries[1],
+    #     'summary3': new_summaries[2]}
+    # else:
+    #     return {'link1': links[0],
+    #     'link2': links[1],
+    #     'link3': links[2],
+    #     'link4': links[3],
+    #     'summary1': new_summaries[0],
+    #     'summary2': new_summaries[1],
+    #     'summary3': new_summaries[2],
+    #     'summary4': new_summaries[3]}
 
 
     # create a list of the links and summaries

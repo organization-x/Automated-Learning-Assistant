@@ -43,16 +43,39 @@ def results(response):
 
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
-            links_summary = loop.create_task(bulk.get_top_gpt_links(search_query))
+            links_summary = loop.create_task(bulk.get_top_gpt_links(search_query, results=numResults))
             loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
             GPT_3_Summary = GPT_3_Summary.result()
-            links_summary = links_summary.result()
+            links_summary, links = links_summary.result()
 
             # combining the links and the gpt-3 summary
-            GPT_3_Summary.update(links_summary)
- 
-            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['one'], GPT_3_Summary['two'], GPT_3_Summary['three'], GPT_3_Summary['four'], GPT_3_Summary['five'], GPT_3_Summary['link1'], GPT_3_Summary['link2'], GPT_3_Summary['summary1'], GPT_3_Summary['summary2']]
+            print(GPT_3_Summary, links)
+
+            #GPT_3_Summary.update(links_summary)
+
+
+            # Get HTML Code Generated
+            # Get HTML Code Generated
+            htmlCodes = []
+            # for n in range(len(links_summary)):
+            for n in range(numResults):
+                template = f'<div class="row d-xl-flex justify-content-xl-center" style="margin-right: 0px;margin-left: 0px;">\n' \
+                           f'<div class="col-md-12 col-xl-12">\n' \
+                           f'<h3 style="text-align: center;">Result No. {n+1}</h3>' \
+                           f'<p style="text-align: left;">Summary:<br>{links_summary[n] }</p>\n' \
+                           f'<div class="row"><div class="col" style="text-align: center">\n' \
+                           f'<button class="btn btn-primary" onclick="window.open(\'{ links[n] }\', \'_blank\')" target="_blank" type="button">' \
+                           f'Link</button></div></div>\n</div>\n</div>'
+                # if (n + 1) != len(links_summary):
+                if (n+1) != numResults:
+                    htmlCodes.append(template.replace('{', '{{').replace('}', '}}') + '\n<br>')
+                else:
+                    htmlCodes.append(template.replace('{', '{{').replace('}', '}}'))
+            upload = {'resultsList': '\n'.join(htmlCodes)}
+            GPT_3_Summary.update(upload)
+            print(f"\n\n{GPT_3_Summary['response']}\n\n")
+            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['one'], GPT_3_Summary['two'], GPT_3_Summary['three'], GPT_3_Summary['four'], GPT_3_Summary['five'], GPT_3_Summary['resultsList']]
                                                                         
             return render(response, 'result.html', GPT_3_Summary)
 
