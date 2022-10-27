@@ -21,7 +21,7 @@ function settings(){
     numResults = numResultGet();
     tilting = tiltingGet();
     // Upload to cookies
-    cookieCreate_Time(radioButton, roadmap, numResults);
+    cookieCreate_Time(radioButton, roadmap, numResults, tilting);
     console.log("Radio Button: " + radioButton);
     console.log("Roadmap: " + roadmap);
     console.log("Tilting: " + tilting);
@@ -71,7 +71,7 @@ function cookieStart() {
     const resultCheck = document.cookie.indexOf("numResults=");
     const tiltingCheck = document.cookie.indexOf("tilting=");
     if (radioCheck <= -1 || roadCheck <= -1 || resultCheck <= -1 || tiltingCheck <= -1) {
-        cookieCreate_Time(radioButtonGet(), roadmapGet(), numResultGet());
+        cookieCreate_Time(radioButtonGet(), roadmapGet(), numResultGet(), tiltingGet());
     }
     else {
         radioButton = getCookie("radioButton");
