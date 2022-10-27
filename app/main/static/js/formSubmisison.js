@@ -20,7 +20,7 @@ function execute(){
     var roadmap, numResults;
     roadmap = getCookie("roadmap");
     numResults = getCookie("numResults");
-
+    tilting = getCookie("tilting");
     /*
     Post Data
     */
