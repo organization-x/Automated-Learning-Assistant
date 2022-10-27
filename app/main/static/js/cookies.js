@@ -19,10 +19,12 @@ function settings(){
     radioButton = radioButtonGet();
     roadmap = roadmapGet();
     numResults = numResultGet();
+    tilting = tiltingGet();
     // Upload to cookies
     cookieCreate_Time(radioButton, roadmap, numResults);
     console.log("Radio Button: " + radioButton);
     console.log("Roadmap: " + roadmap);
+    console.log("Tilting: " + tilting);
     console.log("Num Results: " + numResults);
     console.log("Cookie Created: " + document.cookie);
 }
@@ -32,10 +34,11 @@ Cookies Section
 */
 
 // Never Expire Cookie
-function cookieCreate_Time(radioButton, roadmap, numResults){
+function cookieCreate_Time(radioButton, roadmap, numResults, tilting){
     const daysToExpire = new Date(2147483647 * 1000).toUTCString();
     document.cookie = "radioButton=" + radioButton + ";" +' expires=' + daysToExpire + "; path=/";
     document.cookie = "roadmap=" + roadmap + ";" +' expires=' + daysToExpire + "; path=/";
+    document.cookie = "tilting=" + tilting + ";" +' expires=' + daysToExpire + "; path=/";
     document.cookie = "numResults=" + numResults + ";" +' expires=' + daysToExpire + "; path=/";
     console.log(document.cookie);
 }
@@ -62,22 +65,24 @@ function cookieStart() {
     // Long CookieString
     // Cookie names
     var cookieString;
-    var radioButton, roadmap, numResults;
-    var temp_radioButton, temp_roadmap, temp_numResults;
+    var radioButton, roadmap, numResults, tilting;
     const radioCheck = document.cookie.indexOf("radioButton=");
     const roadCheck = document.cookie.indexOf("roadmap=");
     const resultCheck = document.cookie.indexOf("numResults=");
-    if (radioCheck <= -1 || roadCheck <= -1 || resultCheck <= -1) {
+    const tiltingCheck = document.cookie.indexOf("tilting=");
+    if (radioCheck <= -1 || roadCheck <= -1 || resultCheck <= -1 || tiltingCheck <= -1) {
         cookieCreate_Time(radioButtonGet(), roadmapGet(), numResultGet());
     }
     else {
         radioButton = getCookie("radioButton");
         roadmap = getCookie("roadmap");
         numResults = getCookie("numResults");
+        tilting = getCookie("tilting");
         // Apply cookie to document
         // Themes
         radioButtonSet(radioButton);
         roadmapSet(roadmap);
+        tiltingSet(tilting);
         numResultSet(numResults);
     }
 }
@@ -139,6 +144,25 @@ function roadmapSet(value){
         buttonPress.classList.remove('active');
     }
 }
+function tiltingSet(value){
+    var tilting = document.querySelector('#buttonTilting');
+    var buttonPress = document.getElementById("buttonTilting");
+    console.log("Value before: " + value);
+    if (value == "true"){
+        value = "tilting";
+    }
+    else {
+        value = "";
+    }
+    console.log("Value: " + value);
+    tilting.setAttribute('tilting', value);
+    if (tilting.getAttribute('tilting') == "tilting" && hasClass(buttonPress, 'active') == false){
+        buttonPress.classList.add('active');
+    }
+    else if (tilting.getAttribute('tilting') != "tilting" && hasClass(buttonPress, 'active') == true) {
+        buttonPress.classList.remove('active');
+    }
+}
 function numResultSet(value){
     if (value > 4){
         value = 4;
@@ -160,6 +184,15 @@ function radioButtonGet(){
 function roadmapGet(){
     var roadMap = document.querySelector('#buttonroadMap');
     if (roadMap.getAttribute('roadmap') == "roadmap"){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+function tiltingGet(){
+    var tilting = document.querySelector('#buttonTilting');
+    if (tilting.getAttribute('tilting') == "tilting"){
         return true;
     }
     else {

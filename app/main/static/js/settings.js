@@ -19,14 +19,14 @@ function darkToggle() {
 function roadMapToggle() {
     var roadMap = document.querySelector('#buttonroadMap');
     var buttonPress = document.getElementById("buttonroadMap");
-    
+
     if (roadMap.getAttribute('roadmap') == "roadmap" && hasClass(buttonPress, 'active') == false){
         buttonPress.classList.add('active');
     }
     else if (roadMap.getAttribute('roadmap') != "roadmap" && hasClass(buttonPress, 'active') == true) {
         buttonPress.classList.remove('active');
     }
-    
+
     buttonPress.addEventListener("click", function(event) {
         if (roadMap.getAttribute('roadmap') != "roadmap"){
             buttonPress.classList.add('active');
@@ -38,6 +38,29 @@ function roadMapToggle() {
         }
     });
 }
+function tiltingToggle() {
+    var tilting = document.querySelector('#buttonTilting');
+    var buttonPress = document.getElementById("buttonTilting");
+
+    if (tilting.getAttribute('tilting') == "tilting" && hasClass(buttonPress, 'active') == false){
+        buttonPress.classList.add('active');
+    }
+    else if (tilting.getAttribute('tilting') != "tilting" && hasClass(buttonPress, 'active') == true) {
+        buttonPress.classList.remove('active');
+    }
+
+    buttonPress.addEventListener("click", function(event) {
+        if (tilting.getAttribute('tilting') != "tilting"){
+            buttonPress.classList.add('active');
+            tilting.setAttribute('tilting', 'tilting');
+        }
+        else if (tilting.getAttribute('tilting') == "tilting") {
+            buttonPress.classList.remove('active');
+            tilting.setAttribute('tilting', '');
+        }
+    });
+}
+
 
 function hasClass(el,classname){
       if(el.classList.contains(classname)){
@@ -51,5 +74,6 @@ function runEventTogglers() {
     lightToggle();
     darkToggle();
     roadMapToggle();
+    tiltingToggle();
 }
 runEventTogglers();
