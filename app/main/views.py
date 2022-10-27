@@ -61,10 +61,10 @@ def results(response):
             # for n in range(len(links_summary)):
             for n in range(numResults):
                 template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="border-width: 0px;border-left-width: 0px;">\n' \
-                           f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="{n}" name="body" style="background: #b4b3b3;border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-                           f'<h3 id="{n}" name="title" style="text-align: center;">Result No. {n+1}<br></h3>\n' \
+                           f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: #b4b3b3;border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
+                           f'<h3 id="title_{n}" name="title" style="text-align: center;">Result No. {n+1}<br></h3>\n' \
                            f'<p style="text-align: center;"><br>Summary:<br>{links_summary[n] }<br></p>\n' \
-                           f'<button class="btn btn-primary" id="{n}" name="button" onclick="window.open(\'{ links[n] }\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
+                           f'<button class="btn btn-primary" id="button_{n}" name="button" onclick="window.open(\'{ links[n] }\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
                            f'</div>\n</div>'
                 # if (n + 1) != len(links_summary):
                 if (n+1) != numResults:
