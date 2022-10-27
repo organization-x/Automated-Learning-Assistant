@@ -33,7 +33,9 @@ def results(response):
         return redirect('search')
     else:
         search_query = responses.get('query')
-        numResults = 2
+        numResults = responses.get('numResults')
+        roadmap = responses.get('roadmap')
+        tilting = responses.get('tilting')
 
         # checking if the results are cached and that at least the first link is valid and not an error
         if search_query in resultsdb.query_results and resultsdb.query_results[search_query][6] != "":
@@ -95,6 +97,15 @@ def loading(response):
 def query(request):
     error = False
     if request.method == 'POST':
+        if 'numResults' in request.POST:
+            numResults = request.POST['numResults']
+            responses.headers['numResults'] = numResults
+        if 'roadmap' in request.POST:
+            roadmap = request.POST['roadmap']
+            responses.headers['roadmap'] = roadmap
+        if 'tilting' in request.POST:
+            tilting = request.POST['tilting']
+            responses.headers['tilting'] = tilting
         if 'query' in request.POST:
             q = str(request.POST['query'])
             error = "False"

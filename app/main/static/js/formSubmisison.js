@@ -21,6 +21,9 @@ function execute(){
     roadmap = getCookie("roadmap");
     numResults = getCookie("numResults");
     tilting = getCookie("tilting");
+    query("roadmap") = roadmap;
+    query("numResults") = numResults;
+    query("tilting") = tilting;
     /*
     Post Data
     */
