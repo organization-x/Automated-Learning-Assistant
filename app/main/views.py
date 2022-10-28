@@ -24,6 +24,72 @@ responses = HttpResponse()
 LANGUAGE = "english"
 SENTENCES_COUNT = 10
 
+def buildTemplate(search_query, numResults, roadmap, tilting, links_summary:list, links:list, GPT_3_Summary):
+    # Background color
+    color = "#6495ed"
+    # Get HTML Code Generated
+    htmlCodes = []
+    # Summary
+    if tilting == "true":
+        htmlCodes.append(
+            f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="border-width: 0px;border-left-width: 0px;">\n' \
+            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_explanation" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
+            f'<h3 class="textHeading" name="title" id="title_explanation" style="text-align: center;">{ search_query }</h3>\n' \
+            f'<p style="text-align: center;"> { GPT_3_Summary["response"] } <br></p>\n' \
+            f'</div>\n</div>\n'
+        )
+        # Roadmap
+        if roadmap == "true":
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="border-width: 0px;border-left-width: 0px;">\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_roadmap" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
+                       f'<h3 class="textHeading" name="title" id="title_roadmap" style="text-align: center;">Roadmap</h3>\n' \
+                       f'<p style="text-align: left;">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
+                       f'</div>\n</div>\n'
+            htmlCodes.append(template)
+        # Results + Relevant Links
+        for n in range(numResults):
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="border-width: 0px;border-left-width: 0px;">\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList contentText" id="body_{n}" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
+                       f'<h3 class="textHeading" id="title_{n}" name="title" style="text-align: center;">Result No. {n + 1}<br></h3>\n' \
+                       f'<p style="text-align: center;"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
+                       f'<button class="btn btn-primary textHeading" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
+                       f'</div>\n</div>'
+            # if (n + 1) != len(links_summary):
+            if (n + 1) != numResults:
+                htmlCodes.append(template + '\n<br>')
+            else:
+                htmlCodes.append(template)
+    else:
+        htmlCodes.append(
+            f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="border-width: 0px;border-left-width: 0px;">\n' \
+            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_explanation" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
+            f'<h3 name="title" id="title_explanation" style="text-align: center;">{ search_query }</h3>\n' \
+            f'<p style="text-align: center;"> { GPT_3_Summary["response"] } <br></p>\n' \
+            f'</div>\n</div>\n'
+        )
+        # Roadmap
+        if roadmap == "true":
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="border-width: 0px;border-left-width: 0px;">\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_roadmap" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
+                       f'<h3 name="title" id="title_roadmap" style="text-align: center;">Roadmap</h3>\n' \
+                       f'<p style="text-align: left;">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
+                       f'</div>\n</div>\n'
+            htmlCodes.append(template)
+        # Results + Relevant Links
+        for n in range(numResults):
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="border-width: 0px;border-left-width: 0px;">\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
+                       f'<h3 id="title_{n}" name="title" style="text-align: center;">Result No. {n + 1}<br></h3>\n' \
+                       f'<p style="text-align: center;"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
+                       f'<button class="btn btn-primary" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
+                       f'</div>\n</div>'
+            # if (n + 1) != len(links_summary):
+            if (n + 1) != numResults:
+                htmlCodes.append(template + '\n<br>')
+            else:
+                htmlCodes.append(template)
+    return {'resultsList': '\n'.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes])}
+
 #Results page
 def results(response):
     error = responses.get('error')
@@ -33,19 +99,38 @@ def results(response):
         return redirect('search')
     else:
         search_query = responses.get('query')
-        num_results = int(responses.get('numResults'))
+        numResults = int(responses.get('numResults'))
         roadmap = responses.get('roadmap')
         tilting = responses.get('tilting')
 
         # checking if the results are cached and that at least the first link is valid and not an error
-        if search_query in resultsdb.query_results and resultsdb.query_results[search_query][6] != "":
-            results = resultsdb.query_results[search_query]
-            return render(response, 'result.html', {'response': results[0], 'query': search_query, 'one': results[1], 'two': results[2], 'three': results[3], 'four': results[4], 'five': results[5], "link1": results[6], "link2": results[7], "summary1": results[8], "summary2": results[9]})
-        else:
+        try:
+            if search_query in resultsdb.query_results and resultsdb.query_results[search_query][6] != "":
+                results = resultsdb.query_results[search_query]
+                return render(response, 'result.html', {'response': results[0], 'query': search_query, 'one': results[1], 'two': results[2], 'three': results[3], 'four': results[4], 'five': results[5], "link1": results[6], "link2": results[7], "summary1": results[8], "summary2": results[9]})
+            else:
 
+                loop = asyncio.new_event_loop()
+                GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
+                links_summary = loop.create_task(bulk.get_top_gpt_links(search_query, results=numResults))
+                loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
+
+                GPT_3_Summary = GPT_3_Summary.result()
+                links_summary, links = links_summary.result()
+
+                # combining the links and the gpt-3 summary
+                # print(GPT_3_Summary, links)
+
+                # Get HTML Code Generated
+                GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, links_summary, links, GPT_3_Summary))
+                # print(f"\n\n{GPT_3_Summary['response']}\n\n")
+                resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
+
+                return render(response, 'result.html', GPT_3_Summary)
+        except Exception:
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
-            links_summary = loop.create_task(bulk.get_top_gpt_links(search_query, results=num_results))
+            links_summary = loop.create_task(bulk.get_top_gpt_links(search_query, results=numResults))
             loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
             GPT_3_Summary = GPT_3_Summary.result()
@@ -54,30 +139,12 @@ def results(response):
             # combining the links and the gpt-3 summary
             # print(GPT_3_Summary, links)
 
-            #GPT_3_Summary.update(links_summary)
-
-
             # Get HTML Code Generated
-            # Get HTML Code Generated
-            htmlCodes = []
-            # for n in range(len(links_summary)):
-            for n in range(numResults):
-                template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="border-width: 0px;border-left-width: 0px;">\n' \
-                           f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: #b4b3b3;border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-                           f'<h3 id="title_{n}" name="title" style="text-align: center;">Result No. {n+1}<br></h3>\n' \
-                           f'<p style="text-align: center;"><br>Summary:<br>{links_summary[n] }<br></p>\n' \
-                           f'<button class="btn btn-primary" id="button_{n}" name="button" onclick="window.open(\'{ links[n] }\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
-                           f'</div>\n</div>'
-                # if (n + 1) != len(links_summary):
-                if (n+1) != numResults:
-                    htmlCodes.append(template.replace('{', '{{').replace('}', '}}') + '\n<br>')
-                else:
-                    htmlCodes.append(template.replace('{', '{{').replace('}', '}}'))
-            upload = {'resultsList': '\n'.join(htmlCodes)}
-            GPT_3_Summary.update(upload)
+            GPT_3_Summary.update(
+                buildTemplate(search_query, numResults, roadmap, tilting, links_summary, links, GPT_3_Summary))
             # print(f"\n\n{GPT_3_Summary['response']}\n\n")
-            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['one'], GPT_3_Summary['two'], GPT_3_Summary['three'], GPT_3_Summary['four'], GPT_3_Summary['five'], GPT_3_Summary['resultsList']]
-                                                                        
+            resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
+
             return render(response, 'result.html', GPT_3_Summary)
 
 #About us page
