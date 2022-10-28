@@ -27,6 +27,7 @@ SENTENCES_COUNT = 10
 def buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summary:list, links:list, GPT_3_Summary):
     # Background color
     color = ""
+    print(colors)
     if colors == "light":
         color = "#9edaff"
     else:
@@ -107,7 +108,7 @@ def results(response):
         roadmap = responses.get('roadmap')
         tilting = responses.get('tilting')
         colors = responses.get('colors')
-
+        print(f"Color: {colors}")
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
             if search_query in resultsdb.query_results and resultsdb.query_results[search_query][6] != "":
@@ -178,6 +179,9 @@ def query(request):
         if 'tilting' in request.POST:
             tilting = request.POST['tilting']
             responses.headers['tilting'] = tilting
+        if 'colors' in request.POST:
+            colors = request.POST['colors']
+            responses.headers['colors'] = colors
         if 'query' in request.POST:
             q = str(request.POST['query'])
             error = "False"
