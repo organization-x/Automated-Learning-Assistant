@@ -16,7 +16,7 @@ function execute(){
     /*
     Get Cookies
     */
-    var roadmap, numResults, tilting;
+    var roadmap, numResults, tilting, colors;
     roadmap = getCookie("roadmap");
     numResults = getCookie("numResults");
     tilting = getCookie("tilting");
