@@ -18,16 +18,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 # initializes pyenchant object
 load_dotenv()
-# asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 nest_asyncio.apply()
 set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
 LANGUAGE = "english"
 SENTENCES_COUNT = 10
 
-# Get prompts for GPT-3
-
-
+# Sets up GPT API call to generate summary and roadmap
 def get_prompts(searchQuery):
 
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
@@ -53,8 +50,8 @@ def get_prompts(searchQuery):
     prompts.append(roadmap)
     return prompts
 
-
-async def get_top_gpt_links(search_query, results):
+# grabs the top links, and summaries them 
+async def get_summaries_and_links(search_query, num_results):
 
     # returns a task that gets a list of tasks that grab links
     links = await __get_links_from_search_engine(search_query)
@@ -74,18 +71,12 @@ async def get_top_gpt_links(search_query, results):
 
     # getting summary for links
     for link in links:
-
         summaries_task.append(asyncio.create_task(get_text_summary(link)))
 
     final_summaries = []
     final_links = []
 
-
-
-    # done, pending = await asyncio.wait(asyncio.gather(*summaries_task), timeout=5)
-    # print(done)
-
-    print(len(summaries_task))
+    # getting the summaries, trying to reach the desired results num
     for num, task in enumerate(summaries_task):
         await task
         if task.done():
@@ -95,56 +86,19 @@ async def get_top_gpt_links(search_query, results):
 
             summaries_task.remove(task)
 
-        if len(final_summaries) == results:
+        if len(final_summaries) == num_results:
             break
 
-        # print(final_summaries)
-        # await asyncio.sleep(5)
+    num_results = len(final_summaries)
 
-    # print(len(final_summaries))
-    # print(len(final_links))
-    # print(results)
-    # print(len(links))
-
-    results = len(final_summaries)
-
-    return final_links, final_summaries, results
-
-#     if results == 1:
-#         return f
-#         {'link1': final_links[0]}, {'summary1': final_summaries[0]}
-#     elif results == 2:
-#         return {'link1': final_links[0],
-#                 'link2': final_links[1]},
-#                 {'summary1': final_summaries[0],
-#                 'summary2': final_summaries[1]}
-#     elif results == 3:
-#         return {'link1': final_links[0],
-#                 'link2': final_links[1],
-#                 'link3': final_links[2]},{'summary1': final_summaries[0],
-# 'summary2': final_summaries[1],
-# 'summary3': final_summaries[2]}
-#     return {'link1': final_links[0],
-#             'link2': final_links[1],
-#             'link3': final_links[2],
-#             'link4': final_links[3]},
-#             {'summary1': final_summaries[0],
-#             'summary2': final_summaries[1],
-#             'summary3': final_summaries[2],
-#             'summary4': final_summaries[3]}
-
-    # # create a list of the links and summaries
-    # final_links = [links[0], links[1], links[2]]
-    # final_summaries = [new_summaries[0], new_summaries[1], new_summaries[2]]
-
-    # return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
+    return final_links, final_summaries, num_results
 
 # this method gets links from the search engine - if google fails it defaults to yahoo
-
-
 async def __get_links_from_search_engine(prompt, page_num=1):
     retry = 0
     results = None
+
+    prompt = prompt.strip()
 
     # try to get links from google
     while retry < 3:
@@ -176,27 +130,24 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     results_links = results['links']
 
     for link in results_links:
-
-        # ALL LINK FILTRATION SHOULD BE ADDED HERE
+        # filtering out 'bad' links
         if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link:
             final_links.append(link)
 
     return final_links
-# get all text from urls
+
+# get text given a url 
 import urllib.request
 user_agent = 'Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion'
 def get_url_text(url):
 
     try:
-
         request = urllib.request.Request(url)
         request.add_header('User-Agent', user_agent)
-        html = urlopen(request, timeout=5).read()
+        html = urlopen(request, timeout=1).read()
     except:
-        print("Error opening url:" + url)
         return ""
 
-    print("URL: " + url + " was opened successfully")
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.get_text()
 
@@ -266,14 +217,12 @@ async def get_text_summary(url):
     return summary
 
 # Asynchronous functions to call OpenAI API and get text from GPT-3
-
-
 async def get_text(session, url, params):
     async with session.post(url, json=params) as resp:
         text = await resp.json()
         return text['choices'][0]['text']
 
-
+# main function to call OpenAI API and get text from GPT-3
 async def results_async(searchQuery):
     prompts = get_prompts(searchQuery)
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
