@@ -127,7 +127,7 @@ def results(response):
                 # print(GPT_3_Summary, links)
 
                 # Get HTML Code Generated
-                GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, links_summary, links, GPT_3_Summary))
+                GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summary, links, GPT_3_Summary))
                 # print(f"\n\n{GPT_3_Summary['response']}\n\n")
                 resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
 
@@ -146,7 +146,7 @@ def results(response):
 
             # Get HTML Code Generated
             GPT_3_Summary.update(
-                buildTemplate(search_query, numResults, roadmap, tilting, links_summary, links, GPT_3_Summary))
+                buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summary, links, GPT_3_Summary))
             # print(f"\n\n{GPT_3_Summary['response']}\n\n")
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
 
