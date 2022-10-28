@@ -26,7 +26,7 @@ SENTENCES_COUNT = 10
 
 def buildTemplate(search_query, numResults, roadmap, tilting, links_summary:list, links:list, GPT_3_Summary):
     # Background color
-    color = "#6495ed"
+    color = "#9edaff"
     # Get HTML Code Generated
     htmlCodes = []
     # Summary
