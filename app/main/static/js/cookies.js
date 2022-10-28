@@ -4,6 +4,15 @@ To do list:
 2) If user has data stored in cookies, transfer the values from cookies to HTML
 3) If user close settings, take the data from settings
 */
+// Get theme colors
+const lightPrimary = "#FFFFFF";
+const darkPrimary = "#232A36";
+const lightSecondary = "#9edaff";
+const darkSecondary = "#41474c";
+const lightText = "#000000";
+const darkText = "#FFFFFF";
+
+
 
 // If settingClicked == true, then settings popup shows
 var settingClicked = 0, buttonClicked=false;
@@ -27,7 +36,7 @@ function settings(){
     console.log("Tilting: " + tilting);
     console.log("Num Results: " + numResults);
     console.log("Cookie Created: " + document.cookie);
-    changeTheme(radioButton);
+    setTheme(getCookie("primaryColors"), getCookie("secondaryColors"), getCookie("textColors"));
 }
 
 /*
@@ -41,6 +50,16 @@ function cookieCreate_Time(radioButton, roadmap, numResults, tilting){
     document.cookie = "roadmap=" + roadmap + ";" +' expires=' + daysToExpire + "; path=/";
     document.cookie = "tilting=" + tilting + ";" +' expires=' + daysToExpire + "; path=/";
     document.cookie = "numResults=" + numResults + ";" +' expires=' + daysToExpire + "; path=/";
+    if (radioButton == "light"){
+      document.cookie = "primaryColors=" + lightPrimary + ";" +' expires=' + daysToExpire + "; path=/";
+      document.cookie = "secondaryColors=" + lightSecondary + ";" +' expires=' + daysToExpire + "; path=/";
+      document.cookie = "textColors=" + lightText + ";" +' expires=' + daysToExpire + "; path=/";
+    }
+    else {
+      document.cookie = "primaryColors=" + darkPrimary + ";" +' expires=' + daysToExpire + "; path=/";
+      document.cookie = "secondaryColors=" + darkSecondary + ";" +' expires=' + daysToExpire + "; path=/";
+      document.cookie = "textColors=" + darkText + ";" +' expires=' + daysToExpire + "; path=/";
+    }
     console.log(document.cookie);
 }
 
@@ -85,7 +104,7 @@ function cookieStart() {
         roadmapSet(roadmap);
         tiltingSet(tilting);
         numResultSet(numResults);
-        changeTheme(radioButton);
+        setTheme(getCookie("primaryColors"), getCookie("secondaryColors"), getCookie("textColors"));
     }
 }
 
@@ -269,13 +288,21 @@ function addClassNameListener(elemId, targetChange, funcDoAfter) {
 }
 
 // Change themes
-function changeTheme(theme) {
-  console.log("Theme:" + theme);
-  if (theme == "dark"){
-    document.body.style.backgroundColor = "#232a36";
+function setTheme(primaryColor, secondaryColor, textColor) {
+  document.body.style.backgroundColor = primaryColor;
+  // Change secondary colors
+  var boxes = document.getElementsByName('body');
+  for(var index=0;index < boxes.length;index++){
+    document.getElementById(boxes[index].id).style['background'] = secondaryColor;
   }
-  else {
-    document.body.style.backgroundColor = "#FFFFFF";
+  // Change text colors
+  var texts = document.getElementsByName('text');
+  for(var index=0;index < texts.length;index++){
+    document.getElementById(texts[index].id).style['color'] = textColor;
+  }
+  var titles = document.getElementsByName('title');
+  for(var index=0;index < titles.length;index++){
+    document.getElementById(titles[index].id).style['color'] = textColor;
   }
 }
 

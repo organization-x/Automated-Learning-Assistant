@@ -16,7 +16,7 @@ function execute(){
     /*
     Get Cookies
     */
-    var roadmap, numResults, tilting, theme, primaryColors;
+    var roadmap, numResults, tilting, theme, primaryColors, secondaryColors, textColors;
     roadmap = getCookie("roadmap");
     numResults = getCookie("numResults");
     tilting = getCookie("tilting");
@@ -24,8 +24,7 @@ function execute(){
     primaryColors = getCookie("primaryColors");
     secondaryColors = getCookie("secondaryColors");
     textColors = getCookie("textColors");
-
-    query = {'query': searchQuery, 'roadmap': roadmap, 'numResults': numResults, 'tilting': tilting, 'theme': theme, 'primaryColors': primaryColors, 'secondaryColors':secondaryColors, 'textColors', textColors};
+    query = {'query': searchQuery, 'roadmap': roadmap, 'numResults': numResults, 'tilting': tilting, 'theme': theme, 'primaryColors': primaryColors, 'secondaryColors': secondaryColors, 'textColors': textColors};
     // Post Data
     // */
     $.post("/query/", query);

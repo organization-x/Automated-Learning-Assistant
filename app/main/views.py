@@ -24,39 +24,33 @@ responses = HttpResponse()
 LANGUAGE = "english"
 SENTENCES_COUNT = 10
 
-def buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summary:list, links:list, GPT_3_Summary):
-    # Background color
-    color = ""
-    print(colors)
-    if colors == "light":
-        color = "#9edaff"
-    else:
-        color = "#FFFFFF"
+def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary:list, links:list, GPT_3_Summary):
+    headingColors = textColors
     # Get HTML Code Generated
     htmlCodes = []
     # Summary
     if tilting == "true":
         htmlCodes.append(
             f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_explanation" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
-            f'<h3 class="textHeading" name="title" id="title_explanation" style="text-align: center;">{ search_query }</h3>\n' \
-            f'<p style="text-align: center;"> { GPT_3_Summary["response"] } <br></p>\n' \
+            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_explanation" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
+            f'<h3 class="textHeading" name="title" id="title_explanation" style="text-align: center; color: {headingColors};">{ search_query }</h3>\n' \
+            f'<p name="text" id="textExplanation" style="text-align: center; color: {textColors};"> { GPT_3_Summary["response"] } <br></p>\n' \
             f'</div>\n</div>\n'
         )
         # Roadmap
         if roadmap == "true":
             template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_roadmap" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
-                       f'<h3 class="textHeading" name="title" id="title_roadmap" style="text-align: center;">Roadmap</h3>\n' \
-                       f'<p style="text-align: left;">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_roadmap" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
+                       f'<h3 name="title" id="title_roadmap" class="textHeading" style="text-align: center; color: {headingColors};">Roadmap</h3>\n' \
+                       f'<p name="text" id="textRoadmap" style="text-align: left; color: {textColors};">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
                        f'</div>\n</div>\n'
             htmlCodes.append(template)
         # Results + Relevant Links
         for n in range(numResults):
             template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList contentText" id="body_{n}" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
-                       f'<h3 class="textHeading" id="title_{n}" name="title" style="text-align: center;">Result No. {n + 1}<br></h3>\n' \
-                       f'<p style="text-align: center;"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList contentText" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
+                       f'<h3 name="title" id="title_{n}" class="textHeading" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>\n' \
+                       f'<p name="text" id="textSummary_{n}" style="text-align: center; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
                        f'<button class="btn btn-primary textHeading" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
                        f'</div>\n</div>'
             # if (n + 1) != len(links_summary):
@@ -67,25 +61,25 @@ def buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summ
     else:
         htmlCodes.append(
             f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_explanation" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-            f'<h3 name="title" id="title_explanation" style="text-align: center;">{ search_query }</h3>\n' \
-            f'<p style="text-align: center;"> { GPT_3_Summary["response"] } <br></p>\n' \
+            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_explanation" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
+            f'<h3 name="title" id="title_explanation" style="text-align: center; color: {headingColors};">{ search_query }</h3>\n' \
+            f'<p name="text" id="textExplanation" style="text-align: center; color: {textColors};"> { GPT_3_Summary["response"] } <br></p>\n' \
             f'</div>\n</div>\n'
         )
         # Roadmap
         if roadmap == "true":
             template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_roadmap" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-                       f'<h3 name="title" id="title_roadmap" style="text-align: center;">Roadmap</h3>\n' \
-                       f'<p style="text-align: left;">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_roadmap" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
+                       f'<h3 name="title" id="title_roadmap" style="text-align: center; color: {headingColors};">Roadmap</h3>\n' \
+                       f'<p name="text" id="textRoadmap" style="text-align: left; color: {textColors};">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
                        f'</div>\n</div>\n'
             htmlCodes.append(template)
         # Results + Relevant Links
         for n in range(numResults):
             template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: {color};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-                       f'<h3 id="title_{n}" name="title" style="text-align: center;">Result No. {n + 1}<br></h3>\n' \
-                       f'<p style="text-align: center;"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
+                       f'<h3 id="title_{n}" name="title" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>\n' \
+                       f'<p name="text" id="textSummary_{n}" style="text-align: center; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
                        f'<button class="btn btn-primary" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
                        f'</div>\n</div>'
             # if (n + 1) != len(links_summary):
@@ -107,8 +101,11 @@ def results(response):
         numResults = int(responses.get('numResults'))
         roadmap = responses.get('roadmap')
         tilting = responses.get('tilting')
-        colors = responses.get('colors')
-        print(f"Color: {colors}")
+        # Get colors
+        primaryColors = responses.get('primaryColors')
+        secondaryColors = responses.get('secondaryColors')
+        textColors = responses.get('textColors')
+        print(f"primaryColors: {primaryColors}, secondaryColors: {secondaryColors}, textColors: {textColors}")
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
             if search_query in resultsdb.query_results and resultsdb.query_results[search_query][6] != "":
@@ -128,7 +125,7 @@ def results(response):
                 # print(GPT_3_Summary, links)
 
                 # Get HTML Code Generated
-                GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summary, links, GPT_3_Summary))
+                GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary, links, GPT_3_Summary))
                 # print(f"\n\n{GPT_3_Summary['response']}\n\n")
                 resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
 
@@ -147,7 +144,7 @@ def results(response):
 
             # Get HTML Code Generated
             GPT_3_Summary.update(
-                buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summary, links, GPT_3_Summary))
+                buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary, links, GPT_3_Summary))
             # print(f"\n\n{GPT_3_Summary['response']}\n\n")
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
 
@@ -179,9 +176,15 @@ def query(request):
         if 'tilting' in request.POST:
             tilting = request.POST['tilting']
             responses.headers['tilting'] = tilting
-        if 'colors' in request.POST:
-            colors = request.POST['colors']
-            responses.headers['colors'] = colors
+        if 'primaryColors' in request.POST:
+            primaryColors = request.POST['primaryColors']
+            responses.headers['primaryColors'] = primaryColors
+        if 'secondaryColors' in request.POST:
+            secondaryColors = request.POST['secondaryColors']
+            responses.headers['secondaryColors'] = secondaryColors
+        if 'textColors' in request.POST:
+            textColors = request.POST['textColors']
+            responses.headers['textColors'] = textColors
         if 'query' in request.POST:
             q = str(request.POST['query'])
             error = "False"
