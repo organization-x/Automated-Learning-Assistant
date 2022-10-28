@@ -18,14 +18,16 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 # initializes pyenchant object
 load_dotenv()
-#asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+# asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 nest_asyncio.apply()
 set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
 LANGUAGE = "english"
 SENTENCES_COUNT = 10
 
-#Get prompts for GPT-3
+# Get prompts for GPT-3
+
+
 def get_prompts(searchQuery):
 
     p1 = f"Explain in informative terms to a non programmer in 300 words. {searchQuery}"
@@ -51,7 +53,8 @@ def get_prompts(searchQuery):
     prompts.append(roadmap)
     return prompts
 
-async def get_top_gpt_links(search_query, results=3):
+
+async def get_top_gpt_links(search_query, results):
 
     # returns a task that gets a list of tasks that grab links
     links = await __get_links_from_search_engine(search_query)
@@ -59,72 +62,86 @@ async def get_top_gpt_links(search_query, results=3):
     # a check if links failed to be retrieved
     if links == "":
         return {'link1': "",
-        'link2': "",
-        'summary1': "ERROR: SUMMARY COULD NOT BE GENERATED",
-        'summary2': "ERROR: SUMMARY COULD NOT BE GENERATED"}
+                'link2': "",
+                'summary1': "ERROR: SUMMARY COULD NOT BE GENERATED",
+                'summary2': "ERROR: SUMMARY COULD NOT BE GENERATED"}
+
+
+    print("Length of links: " + str(len(links)))
 
     # creating a list of tasks that grab the text from the links
-    summaries = []
-
-    if len(links) > results:
-        results = len(links)
-
-    links = links[:results]
+    summaries_task = []
 
     # getting summary for links
     for link in links:
 
-        # TODO: Make async
-        summaries.append(get_text_summary(link))
+        summaries_task.append(asyncio.create_task(get_text_summary(link)))
 
-    new_summaries = []
-
-
-    # TODO: Clean up results stuff here
-    count = 0
-    for i, summary in enumerate(summaries):
-        if summary != "":
-            new_summaries.append(summary)
-        else:
-            results -= 1
-            links.pop(i - count)
-            count += 1
-
-    # Returns: tuple(list<string>, list<string>)
-    return [new_summaries[n] for n in range(len(new_summaries))], [links[i].replace(' ', '_') if links[i][0] != ' ' else(links[1:].replace(' ', '_')) for i in range(len(links))]
-    # if results == 1:
-    #     return {'link1': links[0],
-    #     'summary1': new_summaries[0]}
-    # elif results == 2:
-    #     return {'link1': links[0],
-    #     'link2': links[1],
-    #     'summary1': new_summaries[0],
-    #     'summary2': new_summaries[1]}
-    # elif results == 3:
-    #     return {'link1': links[0],
-    #     'link2': links[1],
-    #     'link3': links[2],
-    #     'summary1': new_summaries[0],
-    #     'summary2': new_summaries[1],
-    #     'summary3': new_summaries[2]}
-    # else:
-    #     return {'link1': links[0],
-    #     'link2': links[1],
-    #     'link3': links[2],
-    #     'link4': links[3],
-    #     'summary1': new_summaries[0],
-    #     'summary2': new_summaries[1],
-    #     'summary3': new_summaries[2],
-    #     'summary4': new_summaries[3]}
+    final_summaries = []
+    final_links = []
 
 
-    # create a list of the links and summaries
-    final_links = [links[0], links[1], links[2]]
-    final_summaries = [new_summaries[0], new_summaries[1], new_summaries[2]]
 
-    return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
+    # done, pending = await asyncio.wait(asyncio.gather(*summaries_task), timeout=5)
+    # print(done)
+
+    print(len(summaries_task))
+    for num, task in enumerate(summaries_task):
+        await task
+        if task.done():
+            if not(task.result() == ""):
+                final_summaries.append(task.result())
+                final_links.append(links[num])
+
+            summaries_task.remove(task)
+
+        if len(final_summaries) == results:
+            break
+
+        # print(final_summaries)
+        # await asyncio.sleep(5)
+
+    # print(len(final_summaries))
+    # print(len(final_links))
+    # print(results)
+    # print(len(links))
+
+    results = len(final_summaries)
+
+    return final_links, final_summaries, results
+
+#     if results == 1:
+#         return f
+#         {'link1': final_links[0]}, {'summary1': final_summaries[0]}
+#     elif results == 2:
+#         return {'link1': final_links[0],
+#                 'link2': final_links[1]},
+#                 {'summary1': final_summaries[0],
+#                 'summary2': final_summaries[1]}
+#     elif results == 3:
+#         return {'link1': final_links[0],
+#                 'link2': final_links[1],
+#                 'link3': final_links[2]},{'summary1': final_summaries[0],
+# 'summary2': final_summaries[1],
+# 'summary3': final_summaries[2]}
+#     return {'link1': final_links[0],
+#             'link2': final_links[1],
+#             'link3': final_links[2],
+#             'link4': final_links[3]},
+#             {'summary1': final_summaries[0],
+#             'summary2': final_summaries[1],
+#             'summary3': final_summaries[2],
+#             'summary4': final_summaries[3]}
+
+    # # create a list of the links and summaries
+    # final_links = [links[0], links[1], links[2]]
+    # final_summaries = [new_summaries[0], new_summaries[1], new_summaries[2]]
+
+    # return {'link1': final_links[0], 'link2': final_links[1], 'summary1': final_summaries[0], 'summary2': final_summaries[1]}
 
 # this method gets links from the search engine - if google fails it defaults to yahoo
+
+
 async def __get_links_from_search_engine(prompt, page_num=1):
     retry = 0
     results = None
@@ -151,7 +168,7 @@ async def __get_links_from_search_engine(prompt, page_num=1):
             except Exception as e:
                 retry += 1
 
-    #if both google and yahoo fail, return an empty list
+    # if both google and yahoo fail, return an empty list
     if results is None:
         return ""
 
@@ -161,36 +178,43 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     for link in results_links:
 
         # ALL LINK FILTRATION SHOULD BE ADDED HERE
-        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link:
+        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link:
             final_links.append(link)
 
     return final_links
-#get all text from urls
+# get all text from urls
+import urllib.request
+user_agent = 'Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion'
 def get_url_text(url):
 
     try:
-        html = urlopen(url, timeout=1).read()
+
+        request = urllib.request.Request(url)
+        request.add_header('User-Agent', user_agent)
+        html = urlopen(request, timeout=5).read()
     except:
+        print("Error opening url:" + url)
         return ""
+
+    print("URL: " + url + " was opened successfully")
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.get_text()
 
     cleaned_text = clean(text=text,
-               fix_unicode=True,
-               to_ascii=True,
-               lower=False,
-               no_line_breaks=False,
-               no_urls=False,
-               no_emails=False,
-               no_phone_numbers=False,
-               no_numbers=False,
-               no_digits=False,
-               no_currency_symbols=False,
-               no_punct=False,
-               replace_with_punct="",
-               lang="en"
-               )
-    cleaned_text = text
+                         fix_unicode=True,
+                         to_ascii=True,
+                         lower=False,
+                         no_line_breaks=False,
+                         no_urls=False,
+                         no_emails=False,
+                         no_phone_numbers=False,
+                         no_numbers=False,
+                         no_digits=False,
+                         no_currency_symbols=False,
+                         no_punct=False,
+                         replace_with_punct="",
+                         lang="en"
+                         )
     cleaned_text = cleaned_text.split("\n")
 
     for i in range(len(cleaned_text)):
@@ -202,7 +226,8 @@ def get_url_text(url):
 
     return cleaned_text
 
-def get_text_summary(url):
+
+async def get_text_summary(url):
     # gets the text of the url
     url_text = get_url_text(url)
     if url_text == "":
@@ -240,7 +265,9 @@ def get_text_summary(url):
 
     return summary
 
-#Asynchronous functions to call OpenAI API and get text from GPT-3
+# Asynchronous functions to call OpenAI API and get text from GPT-3
+
+
 async def get_text(session, url, params):
     async with session.post(url, json=params) as resp:
         text = await resp.json()

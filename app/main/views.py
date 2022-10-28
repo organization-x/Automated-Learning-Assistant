@@ -119,17 +119,15 @@ def results(response):
                 loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
                 GPT_3_Summary = GPT_3_Summary.result()
-                links_summary, links = links_summary.result()
-
-                # combining the links and the gpt-3 summary
-                # print(GPT_3_Summary, links)
+                links, links_summary, numResults = links_summary.result()
 
                 # Get HTML Code Generated
                 GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary, links, GPT_3_Summary))
-                # print(f"\n\n{GPT_3_Summary['response']}\n\n")
+                
                 resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
 
                 return render(response, 'result.html', GPT_3_Summary)
+
         except Exception:
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
@@ -137,22 +135,17 @@ def results(response):
             loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
             GPT_3_Summary = GPT_3_Summary.result()
-            links_summary, links = links_summary.result()
+            links, links_summary, numResults = links_summary.result()
 
-            # combining the links and the gpt-3 summary
-            # print(GPT_3_Summary, links)
-
-            # Get HTML Code Generated
             GPT_3_Summary.update(
                 buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary, links, GPT_3_Summary))
-            # print(f"\n\n{GPT_3_Summary['response']}\n\n")
+
             resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
 
             return render(response, 'result.html', GPT_3_Summary)
 
 #About us page
 def about(response):
-    #return render(response, 'aboutUs.html')
     return render(response, 'loading.html')
 
 #Search page
@@ -203,5 +196,4 @@ def query(request):
             else:
                 responses.headers['error'] = error
                 responses.headers['query'] = q
-                print(f"\n\nWorks\n\n")
                 return redirect('loading')
