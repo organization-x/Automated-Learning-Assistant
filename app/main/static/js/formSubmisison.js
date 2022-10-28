@@ -16,12 +16,16 @@ function execute(){
     /*
     Get Cookies
     */
-    var roadmap, numResults, tilting, colors;
+    var roadmap, numResults, tilting, theme, primaryColors;
     roadmap = getCookie("roadmap");
     numResults = getCookie("numResults");
     tilting = getCookie("tilting");
-    colors = getCookie("radioButton");
-    query = {'query': searchQuery, 'roadmap': roadmap, 'numResults': numResults, 'tilting': tilting, 'colors': colors};
+    theme = getCookie("radioButton");
+    primaryColors = getCookie("primaryColors");
+    secondaryColors = getCookie("secondaryColors");
+    textColors = getCookie("textColors");
+
+    query = {'query': searchQuery, 'roadmap': roadmap, 'numResults': numResults, 'tilting': tilting, 'theme': theme, 'primaryColors': primaryColors, 'secondaryColors':secondaryColors, 'textColors', textColors};
     // Post Data
     // */
     $.post("/query/", query);
