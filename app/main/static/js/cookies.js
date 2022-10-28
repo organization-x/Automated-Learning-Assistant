@@ -27,6 +27,7 @@ function settings(){
     console.log("Tilting: " + tilting);
     console.log("Num Results: " + numResults);
     console.log("Cookie Created: " + document.cookie);
+    changeTheme(radioButton);
 }
 
 /*
@@ -84,6 +85,7 @@ function cookieStart() {
         roadmapSet(roadmap);
         tiltingSet(tilting);
         numResultSet(numResults);
+        changeTheme(radioButton);
     }
 }
 
@@ -264,6 +266,17 @@ function addClassNameListener(elemId, targetChange, funcDoAfter) {
             }
         }
     },10);
+}
+
+// Change themes
+function changeTheme(theme) {
+  console.log("Theme:" + theme);
+  if (theme == "dark"){
+    document.body.style.backgroundColor = "#232a36";
+  }
+  else {
+    document.body.style.backgroundColor = "#FFFFFF";
+  }
 }
 
 // Activate listeners

@@ -1,7 +1,7 @@
 <!--SEARCH PAGE-->
 
 <!DOCTYPE html>
-<html lang="en" style="background: #212529;">
+<html lang="en">
 
 <head>
     {% load static %}
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{% static 'css/heroClean.css' %}">
 </head>
 
-<body style="backdrop-filter: blur(100px);">
+<body style="backdrop-filter: blur(100px); background: transparent;">
     <nav class="navbar navbar-dark navbar-expand-md bg-dark py-3 sticky-top" id="navbar" style="box-shadow: 0px 0px 7px 5px;margin-bottom: 0px;">
         <div class="container"><a class="navbar-brand d-flex align-items-center" href="/"><span class="bs-icon-sm bs-icon-rounded bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon" style="background: transparent;"><img src="{% static 'img/ALA.png' %}" width="1002" height="1299" style="transform: scale(0.04);"></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-5">
@@ -50,10 +50,10 @@
                     <div class="card m-auto" style="max-width: 850px;border-top-left-radius: 800px;border-top-right-radius: 800px;border-bottom-right-radius: 800px;border-bottom-left-radius: 800px;">
                         <div class="card-body" style="padding: 0px;">
                             <form class="d-flex align-items-center" id="searchForm" method="get" action="/resultPage" name="submittedQuery" form="searchBar_Form">
-                              <div class="dropdown" id="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="settingButton" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: transparent;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
+                              <div class="dropdown" id="dropdown" style="border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;border-right-color: rgb(0,0,0);"><button class="btn btn-outline-primary btn-lg" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside" id="settingButton" type="button" style="background: transparent;border-color: transparent;border-top-color: transparent;border-right-color: var(--bs-black);border-bottom-color: transparent;border-left-color: #FFFFFF;border-radius: 800px;border-top-left-radius: 800px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;border-bottom-left-radius: 800px;"><i class="icon ion-android-settings" style="color: rgb(0,0,0);"></i></button>
                                   <div class="dropdown-menu" id="settingsBody" style="background: transparent;border-radius: 0px;border-color: transparent;border-bottom-width: 0px;border-bottom-color: transparent;">
                                       <div class="card" id="Card_Settings" style="position: static;">
-                                          <div class="card-body" style="backdrop-filter: blur(0px);">
+                                          <div class="card-body" style="background: #FFFFFF; backdrop-filter: blur(0px);">
                                               <div class="row">
                                                   <div class="col-md-12" id="Settings_column2">
                                                       <div class="container d-flex flex-row justify-content-center align-items-start btn-group btn-group-toggle" data-bs-toggle="buttons"><label class="form-label btn btn-outline-primary" id="lightButton">Light<input type="radio" id="light" class="hideRadio" name="themes" value="lightTheme"></label><label class="form-label btn btn-outline-primary active" id="darkButton">Dark<input type="radio" id="dark" class="hideRadio" name="themes" value="darkTheme" checked=""></label></div>
