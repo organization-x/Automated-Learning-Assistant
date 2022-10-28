@@ -20,7 +20,8 @@ function execute(){
     roadmap = getCookie("roadmap");
     numResults = getCookie("numResults");
     tilting = getCookie("tilting");
-    query = {'query': searchQuery, 'roadmap': roadmap, 'numResults': numResults, 'tilting': tilting};
+    colors = getCookie("radioButton");
+    query = {'query': searchQuery, 'roadmap': roadmap, 'numResults': numResults, 'tilting': tilting, 'colors': colors};
     // Post Data
     // */
     $.post("/query/", query);

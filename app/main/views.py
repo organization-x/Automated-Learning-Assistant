@@ -24,9 +24,13 @@ responses = HttpResponse()
 LANGUAGE = "english"
 SENTENCES_COUNT = 10
 
-def buildTemplate(search_query, numResults, roadmap, tilting, links_summary:list, links:list, GPT_3_Summary):
+def buildTemplate(search_query, numResults, roadmap, tilting, colors, links_summary:list, links:list, GPT_3_Summary):
     # Background color
-    color = "#9edaff"
+    color = ""
+    if colors == "light":
+        color = "#9edaff"
+    else:
+        color = "#FFFFFF"
     # Get HTML Code Generated
     htmlCodes = []
     # Summary
@@ -102,6 +106,7 @@ def results(response):
         numResults = int(responses.get('numResults'))
         roadmap = responses.get('roadmap')
         tilting = responses.get('tilting')
+        colors = responses.get('colors')
 
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
