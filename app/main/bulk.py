@@ -9,7 +9,7 @@ from urllib.request import FancyURLopener, urlopen
 import aiohttp
 import nest_asyncio
 from bs4 import BeautifulSoup
-# from cleantext import clean
+from cleantext import clean
 from django.http import HttpResponse
 from dotenv import load_dotenv
 from search_engine_parser.core.engines.google import Search as GoogleSearch
@@ -175,21 +175,21 @@ def get_url_text(url):
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.get_text()
 
-#    cleaned_text = clean(text=text,
-#                fix_unicode=True,
-#                to_ascii=True,
-#                lower=False,
-#                no_line_breaks=False,
-#                no_urls=False,
-#                no_emails=False,
-#                no_phone_numbers=False,
-#                no_numbers=False,
-#                no_digits=False,
-#                no_currency_symbols=False,
-#                no_punct=False,
-#                replace_with_punct="",
-#                lang="en"
-#                )
+    cleaned_text = clean(text=text,
+               fix_unicode=True,
+               to_ascii=True,
+               lower=False,
+               no_line_breaks=False,
+               no_urls=False,
+               no_emails=False,
+               no_phone_numbers=False,
+               no_numbers=False,
+               no_digits=False,
+               no_currency_symbols=False,
+               no_punct=False,
+               replace_with_punct="",
+               lang="en"
+               )
     cleaned_text = text
     cleaned_text = cleaned_text.split("\n")
 
