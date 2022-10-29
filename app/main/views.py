@@ -115,7 +115,7 @@ def results(response):
 
                 loop = asyncio.new_event_loop()
                 GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
-                links_summary = loop.create_task(bulk.get_summaries_and_links(search_query, results=numResults))
+                links_summary = loop.create_task(bulk.get_summaries_and_links(search_query, num_results=numResults))
                 loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
                 GPT_3_Summary = GPT_3_Summary.result()
@@ -131,7 +131,7 @@ def results(response):
         except Exception:
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
-            links_summary = loop.create_task(bulk.get_summaries_and_links(search_query, results=numResults))
+            links_summary = loop.create_task(bulk.get_summaries_and_links(search_query, num_results=numResults))
             loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
 
             GPT_3_Summary = GPT_3_Summary.result()
