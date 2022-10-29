@@ -3,3 +3,4 @@
 **/__pycache__
 **/migration
 *.DS_Store
+**/.vscode
