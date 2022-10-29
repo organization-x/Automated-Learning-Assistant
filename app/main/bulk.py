@@ -87,6 +87,7 @@ async def get_summaries_and_links(search_query, num_results):
             break
 
     num_results = len(final_summaries)
+    
 
     return final_links, final_summaries, num_results
 
@@ -114,7 +115,10 @@ async def __get_links_from_search_engine(prompt, page_num=1):
         retry = 0
         while retry < 3:
             try:
-                results = YahooSearch().search(prompt, page=page_num)
+                results = []
+
+                for i in range(1, 4):
+                    results.extend(YahooSearch().search(prompt, page=i)['links'])
                 break
             except Exception as e:
                 retry += 1
@@ -124,13 +128,12 @@ async def __get_links_from_search_engine(prompt, page_num=1):
         return ""
 
     final_links = []
-    results_links = results['links']
+    results_links = results
 
     for link in results_links:
         # filtering out 'bad' links
         if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link:
             final_links.append(link)
-
     return final_links
 
 # get text given a url 

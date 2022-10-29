@@ -89,6 +89,7 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
                 htmlCodes.append(template)
     return {'resultsList': '\n'.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes])}
 
+import time; 
 #Results page
 def results(response):
     error = responses.get('error')
@@ -108,6 +109,7 @@ def results(response):
         print(f"primaryColors: {primaryColors}, secondaryColors: {secondaryColors}, textColors: {textColors}")
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
+            start_time = time.time()
             if search_query in resultsdb.query_results and resultsdb.query_results[search_query][6] != "":
                 results = resultsdb.query_results[search_query]
                 return render(response, 'result.html', {'response': results[0], 'query': search_query, 'one': results[1], 'two': results[2], 'three': results[3], 'four': results[4], 'five': results[5], "link1": results[6], "link2": results[7], "summary1": results[8], "summary2": results[9]})
@@ -125,7 +127,9 @@ def results(response):
                 GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary, links, GPT_3_Summary))
                 
                 resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
-
+                
+                print(f"Time taken: {time.time() - start_time}")
+                
                 return render(response, 'result.html', GPT_3_Summary)
 
         except Exception:
