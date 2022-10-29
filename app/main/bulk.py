@@ -103,6 +103,7 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     while retry < 3:
         try:
             results = GoogleSearch().search(prompt, page=page_num)
+            results_links = results['links']
             break
         except Exception as e:
             retry += 1
@@ -120,6 +121,7 @@ async def __get_links_from_search_engine(prompt, page_num=1):
 
                 for i in range(1, 4):
                     results.extend(YahooSearch().search(prompt, page=i)['links'])
+                results_links = results
                 break
             except Exception as e:
                 retry += 1
@@ -129,7 +131,7 @@ async def __get_links_from_search_engine(prompt, page_num=1):
         return ""
 
     final_links = []
-    results_links = results
+    
 
     for link in results_links:
         # filtering out 'bad' links
