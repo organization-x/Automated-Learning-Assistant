@@ -63,9 +63,6 @@ async def get_summaries_and_links(search_query, num_results):
                 'summary1': "ERROR: SUMMARY COULD NOT BE GENERATED",
                 'summary2': "ERROR: SUMMARY COULD NOT BE GENERATED"}
 
-
-    print("Length of links: " + str(len(links)))
-
     # creating a list of tasks that grab the text from the links
     summaries_task = []
 
