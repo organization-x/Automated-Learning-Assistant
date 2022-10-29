@@ -16,6 +16,7 @@ from search_engine_parser.core.engines.google import Search as GoogleSearch
 from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 from sklearn.feature_extraction.text import TfidfVectorizer
 from spellchecker import SpellChecker
+import time
 
 # initializes pyenchant object
 load_dotenv()
@@ -53,6 +54,7 @@ def get_prompts(searchQuery):
 
 # grabs the top links, and summaries them 
 async def get_summaries_and_links(search_query, num_results):
+    print(f"Getting summaries and links start: {time.time()}")
 
     # returns a task that gets a list of tasks that grab links
     links = await __get_links_from_search_engine(search_query)
@@ -89,6 +91,7 @@ async def get_summaries_and_links(search_query, num_results):
 
     num_results = len(final_summaries)
     
+    print(f"Getting summaries and links end: {time.time()}")
 
     return final_links, final_summaries, num_results
 

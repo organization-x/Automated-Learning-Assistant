@@ -16,6 +16,7 @@ from spellchecker import SpellChecker
 
 from . import resultsdb
 from . import bulk
+import time
 
 load_dotenv()
 #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -89,9 +90,9 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
                 htmlCodes.append(template)
     return {'resultsList': '\n'.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes])}
 
-import time;
 #Results page
 def results(response):
+    print(f"Start of results page: {time.time()}")
     error = responses.get('error')
     search_query = responses.get('query')
     if search_query is None or error == "True":
@@ -119,6 +120,8 @@ def results(response):
                 GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
                 links_summary = loop.create_task(bulk.get_summaries_and_links(search_query, num_results=numResults))
                 loop.run_until_complete(asyncio.gather(GPT_3_Summary, links_summary))
+                
+                print(f"End of asyncs: {time.time()}")
 
                 GPT_3_Summary = GPT_3_Summary.result()
                 links, links_summary, numResults = links_summary.result()
@@ -162,6 +165,7 @@ def loading(response):
 
 #Query view to get query from search page (PLEASE ADVISE IF BETTER WAY)
 def query(request):
+    print(f"Start of query: {time.time()}")
     error = False
     if request.method == 'POST':
         if 'numResults' in request.POST:
@@ -200,4 +204,5 @@ def query(request):
             else:
                 responses.headers['error'] = error
                 responses.headers['query'] = q
+                print(f"End of query: {time.time()}")
                 return redirect('loading')
