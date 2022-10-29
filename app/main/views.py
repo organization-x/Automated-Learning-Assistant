@@ -51,7 +51,7 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
                        f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList contentText" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
                        f'<h3 name="title" id="title_{n}" class="textHeading" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>\n' \
                        f'<p name="text" id="textSummary_{n}" style="text-align: center; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
-                       f'<button class="btn btn-primary textHeading" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
+                       f'<a href={links[n]}><button class="btn btn-primary textHeading" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button></a>\n' \
                        f'</div>\n</div>'
             # if (n + 1) != len(links_summary):
             if (n + 1) != numResults:
@@ -80,7 +80,7 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
                        f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
                        f'<h3 id="title_{n}" name="title" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>\n' \
                        f'<p name="text" id="textSummary_{n}" style="text-align: center; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
-                       f'<button class="btn btn-primary" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button>\n' \
+                       f'<a href={links[n]}><button class="btn btn-primary" id="button_{n}" name="button" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button></a>\n' \
                        f'</div>\n</div>'
             # if (n + 1) != len(links_summary):
             if (n + 1) != numResults:
@@ -89,7 +89,7 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
                 htmlCodes.append(template)
     return {'resultsList': '\n'.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes])}
 
-import time; 
+import time;
 #Results page
 def results(response):
     error = responses.get('error')
@@ -125,11 +125,11 @@ def results(response):
 
                 # Get HTML Code Generated
                 GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary, links, GPT_3_Summary))
-                
+
                 resultsdb.query_results[search_query] = [GPT_3_Summary['response'], GPT_3_Summary['resultsList']]
-                
+
                 print(f"Time taken: {time.time() - start_time}")
-                
+
                 return render(response, 'result.html', GPT_3_Summary)
 
         except Exception:
