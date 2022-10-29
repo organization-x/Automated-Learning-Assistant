@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from search_engine_parser.core.engines.google import Search as GoogleSearch
 from search_engine_parser.core.engines.yahoo import Search as YahooSearch
 from sklearn.feature_extraction.text import TfidfVectorizer
+from spellchecker import SpellChecker
 
 # initializes pyenchant object
 load_dotenv()
@@ -67,7 +68,7 @@ async def get_top_gpt_links(search_query, results):
                 'summary2': "ERROR: SUMMARY COULD NOT BE GENERATED"}
 
 
-    print("Length of links: " + str(len(links)))
+    # print("Length of links: " + str(len(links)))
 
     # creating a list of tasks that grab the text from the links
     summaries_task = []
@@ -85,7 +86,7 @@ async def get_top_gpt_links(search_query, results):
     # done, pending = await asyncio.wait(asyncio.gather(*summaries_task), timeout=5)
     # print(done)
 
-    print(len(summaries_task))
+    # print(len(summaries_task))
     for num, task in enumerate(summaries_task):
         await task
         if task.done():
@@ -196,7 +197,7 @@ def get_url_text(url):
         print("Error opening url:" + url)
         return ""
 
-    print("URL: " + url + " was opened successfully")
+    # print("URL: " + url + " was opened successfully")
     soup = BeautifulSoup(html, 'html.parser')
     text = soup.get_text()
 
@@ -238,13 +239,18 @@ async def get_text_summary(url):
     text = text.replace("\n", ". ")
     text = text.split(".")
     filtered_text = []
-    for i in range(len(text)-25):
-        if len(text[i+2]) > 15:
-            filtered_text.append(text[i+2])
-            for j in list(text[i+2]):
-                if j.isalpha() == False and j != " " and j != "." and j != "," and j != "!" and j != "?" and j.isnumeric() == False:
-                    filtered_text.pop(-1)
+    spell = SpellChecker()
+    for i in range(len(text)-20):
+        words = text[i].split()
+        for word in words:
+            if word == spell.correction(word):
+                    filtered_text.append(text[i])
                     break
+        # for j in list(text[i]):
+        #     if j.isalpha() == False and j != " " and j != "." and j != "," and j != "!" and j != "?" and j.isnumeric() == False:
+        #         filtered_text.pop(-1)
+        #         break
+
     tf_idf_model = TfidfVectorizer(stop_words='english')
     processed_text_tf = tf_idf_model.fit_transform(filtered_text)
     scores = processed_text_tf.toarray()
