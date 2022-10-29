@@ -70,8 +70,10 @@ async def get_summaries_and_links(search_query, num_results):
     summaries_task = []
 
     # getting summary for links
+    print(f"Getting summaries start: {time.time()}")
     for link in links:
         summaries_task.append(asyncio.create_task(get_text_summary(link)))
+    print(f"Getting summaries end: {time.time()}")
 
     final_summaries = []
     final_links = []
@@ -97,6 +99,8 @@ async def get_summaries_and_links(search_query, num_results):
 
 # this method gets links from the search engine - if google fails it defaults to yahoo
 async def __get_links_from_search_engine(prompt, page_num=1):
+    
+    print(f"Getting links start: {time.time()}")
     retry = 0
     results = None
 
@@ -138,15 +142,16 @@ async def __get_links_from_search_engine(prompt, page_num=1):
 
     for link in results_links:
         # filtering out 'bad' links
-        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link:
+        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link and not(link.endswith('.html')):
             final_links.append(link)
+    print(f'Getting links end: {time.time()}')
     return final_links
 
 # get text given a url 
 import urllib.request
 user_agent = 'Mozilla/5.0 (platform; rv:geckoversion) Gecko/geckotrail Firefox/firefoxversion'
 def get_url_text(url):
-
+    
     try:
         request = urllib.request.Request(url)
         request.add_header('User-Agent', user_agent)
@@ -180,6 +185,7 @@ def get_url_text(url):
 
     cleaned_text = list(filter(None, cleaned_text))
     cleaned_text = "\n".join(cleaned_text)
+    
 
     return cleaned_text
 
@@ -195,36 +201,37 @@ async def get_text_summary(url):
     text = text.replace("\n", ". ")
     text = text.split(".")
     filtered_text = []
-    spell = SpellChecker()
-    for i in range(len(text)-20):
-        words = text[i].split()
-        for word in words:
-            if word == spell.correction(word):
-                    filtered_text.append(text[i])
+    for i in range(len(text)-25):
+        if len(text[i+2]) > 15:
+            filtered_text.append(text[i+2])
+            for j in list(text[i+2]):
+                if j.isalpha() == False and j != " " and j != "." and j != "," and j != "!" and j != "?" and j.isnumeric() == False:
+                    filtered_text.pop(-1)
                     break
-        # for j in list(text[i]):
-        #     if j.isalpha() == False and j != " " and j != "." and j != "," and j != "!" and j != "?" and j.isnumeric() == False:
-        #         filtered_text.pop(-1)
-        #         break
-
+                
     tf_idf_model = TfidfVectorizer(stop_words='english')
     processed_text_tf = tf_idf_model.fit_transform(filtered_text)
     scores = processed_text_tf.toarray()
     one = [0, ""]
     two = [0, ""]
     three = [0, ""]
+    spell = SpellChecker()
     for i in range(len(scores)):
         avg = sum(scores[i]) / len(scores[i])
-        if avg > three[0]:
-            if avg > two[0]:
-                if avg > one[0]:
-                    one = [avg, filtered_text[i]]
-                else:
-                    two = [avg, filtered_text[i]]
-            else:
+        margin = 0
+        for j in range(len(filtered_text[i].split(" "))):
+            if filtered_text[i].split(" ")[j] not in spell.unknown(filtered_text[i].split(" ")):
+                margin += 1
+        if margin / len(filtered_text[i].split(" ")) > 0.5:
+            if avg > one[0]:
+                one = [avg, filtered_text[i]]
+            elif avg > two[0]:
+                two = [avg, filtered_text[i]]
+            elif avg > three[0]:
                 three = [avg, filtered_text[i]]
-    summary = one[1] + ". " + two[1] + ". " + three[1] + "."
 
+    summary = one[1] + ". <br>" + two[1] + ". <br>" + three[1] + "."
+    
     return summary
 
 # Asynchronous functions to call OpenAI API and get text from GPT-3
@@ -235,6 +242,7 @@ async def get_text(session, url, params):
 
 # main function to call OpenAI API and get text from GPT-3
 async def results_async(searchQuery):
+    print(f'Getting results start: {time.time()}')
     prompts = get_prompts(searchQuery)
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
         tasks = []
@@ -247,5 +255,7 @@ async def results_async(searchQuery):
     step_three = feedbacks[1].split('\n')[4]
     step_four = feedbacks[1].split('\n')[5]
     step_five = feedbacks[1].split('\n')[6]
+    
+    print(f'Getting results end: {time.time()}')
 
     return {'response': feedbacks[0], 'query': searchQuery, 'roadmap': feedbacks[1], 'one': step_one, 'two': step_two, 'three': step_three, 'four': step_four, 'five': step_five}

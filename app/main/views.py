@@ -51,7 +51,7 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
             template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
                        f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList contentText" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
                        f'<h3 name="title" id="title_{n}" class="textHeading" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>\n' \
-                       f'<p name="text" id="textSummary_{n}" style="text-align: center; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
+                       f'<p name="text" id="textSummary_{n}" style="text-align: left; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
                        f'<a id="button_{n}" name="button" href={links[n]} target="_blank"><button class="btn btn-primary textHeading" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button></a>\n' \
                        f'</div>\n</div>'
             # if (n + 1) != len(links_summary):
