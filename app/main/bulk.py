@@ -181,10 +181,10 @@ def get_url_text(url):
 
     for i in range(len(cleaned_text)):
         if len(cleaned_text[i]) < 20:
-            cleaned_text[i] = ""
+            cleaned_text[i] = " "
 
     cleaned_text = list(filter(None, cleaned_text))
-    cleaned_text = "\n".join(cleaned_text)
+    cleaned_text = "\n ".join(cleaned_text)
     
 
     return cleaned_text
@@ -195,7 +195,6 @@ async def get_text_summary(url):
     url_text = get_url_text(url)
     if url_text == "":
         return ""
-
     # summarizes the text using TF-IDF
     text = str(url_text)
     text = text.replace("\n", " ")
@@ -222,7 +221,7 @@ async def get_text_summary(url):
         for j in range(len(filtered_text[i].split(" "))):
             if filtered_text[i].split(" ")[j] not in spell.unknown(filtered_text[i].split(" ")):
                 margin += 1
-        if margin / len(filtered_text[i].split(" ")) > 0.5:
+        if margin / len(filtered_text[i].split(" ")) > 0.8:
             if avg > one[0]:
                 one = [avg, filtered_text[i]]
             elif avg > two[0]:
