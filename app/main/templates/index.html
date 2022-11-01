@@ -40,6 +40,21 @@
 .clearfix {
     background-color: transparent;
 }
+.gradientSet {
+  background: linear-gradient(to right, rgba(18,51,68, 1), rgba(15,42,73, 1) 41%, rgba(7,33,70, 1) 50%, rgba(0,21,71, 1) 68%, rgba(1,18,34, 1) 98%);
+  position: relative;
+}
+
+.gradientSet::before {
+  position: absolute;
+  content: "";
+  height: 43px;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(transparent 0%, #FFFFFF 100%);
+}
+
 </style>
 
 <body style="backdrop-filter: blur(100px); background: transparent;">
@@ -95,10 +110,10 @@
             <p data-aos="fade" data-aos-duration="2000" data-aos-delay="700" id="heading1" style="padding-bottom: 25px;margin-bottom: 10px; color:#FFFFFF">Empowering students to learn faster and smarter</p>
         </div>
     </div>
-    <div style="min-height: 20vh;max-height: auto;background: linear-gradient(90deg, #123344, #0f2a49 41%, #072146 50%, #001547 68%, #011222 98%);">
+    <div name="gradientSet" class="gradientSet" style="min-height: 20vh;max-height: auto;transform: translateY(-10vh);">
     <div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="border-width: 0px;border-left-width: 0px;background: transparent;padding-top: 43px;">
         <div name="body" id="attributionsBody" class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" style="background: #FFFFFF;border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">
-            <h3 name="title" id="attributionsText" style="text-align: center; color: 000000">Product Affiliated To:</h3>
+            <h3 name="title" id="attributionsText" style="text-align: center; color: 000000">Connections</h3>
         </div>
     </div>
     <div class="row" style="margin-right: 0px;margin-left: 0px;padding-bottom: 43px;">
@@ -106,9 +121,6 @@
             <div class="card d-xl-flex d-xxl-flex justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" style="border-width: 0px;border-left-width: 0px;background: transparent;">
                 <div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" style="border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;background-blend-mode: lighten;"><a class="text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center" href="https://github.com/PaulShiLi/Automated-Learning-Assistant" target="_blank"><img class="img-fluid" src="{% static '/img/github-Logo.png' %}" style="width: 25vw;" /></a></div>
             </div>
-        </div>
-        <div class="col d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center" style="padding-right: 0px;padding-left: 0px;">
-            <div class="card d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="border-width: 0px;border-left-width: 0px;background: transparent;"><a class="text-center" href="#" target="_blank"><img class="img-fluid" src="{% static '/img/productHunt-Logo.png' %}" style="width: 15vw;" /></a></div>
         </div>
         <div class="col d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center" style="padding-right: 0px;padding-left: 0px;">
             <div class="card d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="border-width: 0px;border-left-width: 0px;background: transparent;"><a class="text-center" href="https://www.ai-camp.org/" target="_blank"><img class="img-fluid" src="{% static '/img/ai_camp_logo.png' %}" style="width: 10vw;" /></a></div>

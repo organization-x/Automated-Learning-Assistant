@@ -304,6 +304,8 @@ function setTheme(primaryColor, secondaryColor, textColor) {
   for(var index=0;index < titles.length;index++){
     document.getElementById(titles[index].id).style['color'] = textColor;
   }
+  // Change Website gradient in index
+  $('[name=gradientSet]').append('<style>.gradientSet::before{position: absolute; content: ""; height: 43px; width: 100%; bottom: 0; left: 0; background: linear-gradient(transparent 0%,' + primaryColor + ' 100%);}</style>')
 }
 
 // Activate listeners
