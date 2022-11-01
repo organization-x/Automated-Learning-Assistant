@@ -54,8 +54,6 @@ def get_prompts(searchQuery):
 
 # grabs the top links, and summaries them 
 async def get_summaries_and_links(search_query, num_results):
-    print(f"Getting summaries and links start: {time.time()}")
-
     # returns a task that gets a list of tasks that grab links
     links = await __get_links_from_search_engine(search_query)
 
@@ -70,10 +68,8 @@ async def get_summaries_and_links(search_query, num_results):
     summaries_task = []
 
     # getting summary for links
-    print(f"Getting summaries start: {time.time()}")
     for link in links:
         summaries_task.append(asyncio.create_task(get_text_summary(link)))
-    print(f"Getting summaries end: {time.time()}")
 
     final_summaries = []
     final_links = []
@@ -93,14 +89,11 @@ async def get_summaries_and_links(search_query, num_results):
 
     num_results = len(final_summaries)
     
-    print(f"Getting summaries and links end: {time.time()}")
-
     return final_links, final_summaries, num_results
 
 # this method gets links from the search engine - if google fails it defaults to yahoo
 async def __get_links_from_search_engine(prompt, page_num=1):
     
-    print(f"Getting links start: {time.time()}")
     retry = 0
     results = None
 
@@ -142,9 +135,8 @@ async def __get_links_from_search_engine(prompt, page_num=1):
 
     for link in results_links:
         # filtering out 'bad' links
-        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link and not(link.endswith('.html')) and 'educationworld' not in link and 'medium.com' not in link:
+        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link and not(link.endswith('.html')) and 'educationworld' not in link and 'medium.com' not in link and 'quora' not in link:
             final_links.append(link)
-    print(f'Getting links end: {time.time()}')
     return final_links
 
 # get text given a url 
@@ -196,7 +188,6 @@ async def get_text_summary(url):
     if url_text == "":
         return ""
     # summarizes the text using TF-IDF
-    filtered_text1 = []
     text = str(url_text)
     text = text.replace("\n", " ")
     text = text.split(".")
@@ -243,7 +234,6 @@ async def get_text(session, url, params):
 
 # main function to call OpenAI API and get text from GPT-3
 async def results_async(searchQuery):
-    print(f'Getting results start: {time.time()}')
     prompts = get_prompts(searchQuery)
     async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=False), headers={'authorization': f"Bearer {set_api_key}"}) as session:
         tasks = []
@@ -257,6 +247,4 @@ async def results_async(searchQuery):
     step_four = feedbacks[1].split('\n')[5]
     step_five = feedbacks[1].split('\n')[6]
     
-    print(f'Getting results end: {time.time()}')
-
     return {'response': feedbacks[0], 'query': searchQuery, 'roadmap': feedbacks[1], 'one': step_one, 'two': step_two, 'three': step_three, 'four': step_four, 'five': step_five}
