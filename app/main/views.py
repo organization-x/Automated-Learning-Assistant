@@ -88,7 +88,7 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
                 htmlCodes.append(template + '\n<br>')
             else:
                 htmlCodes.append(template)
-    return {'resultsList': '\n'.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes])}
+    return {'resultsList': '\n'.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes]), 'numResults': numResults}
 
 #Results page
 def results(response):
@@ -109,8 +109,10 @@ def results(response):
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
             start_time = time.time()
-            if search_query in resultsdb.query_results:
+            if search_query in resultsdb.query_results and numResults <= resultsdb.query_results[search_query]['numResults']:
                 results = resultsdb.query_results[search_query]
+                if results['numResults'] > numResults:
+                    results['resultsList'] = buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, results['links_summary'], results['links'], results)
                 return render(response, 'result.html', results)
             else:
                 loop = asyncio.new_event_loop()
@@ -124,13 +126,16 @@ def results(response):
                 # Get HTML Code Generated
                 GPT_3_Summary.update(buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, links_summary, links, GPT_3_Summary))
 
+                GPT_3_Summary['links_summary'] = links_summary
+                GPT_3_Summary['links'] = links
                 resultsdb.query_results[search_query] = GPT_3_Summary
-
+                                
                 print(f"Time taken: {time.time() - start_time}")
 
                 return render(response, 'result.html', GPT_3_Summary)
 
-        except Exception:
+        except Exception as e:
+            print(e)
             loop = asyncio.new_event_loop()
             GPT_3_Summary = loop.create_task(bulk.results_async(search_query))
             links_summary = loop.create_task(bulk.get_summaries_and_links(search_query, num_results=numResults))
