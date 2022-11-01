@@ -3,8 +3,8 @@
 import os
 import sys
 from django.core.management.commands.runserver import Command as runserver
-runserver.default_addr = "127.0.0.1"
-# runserver.default_addr = "0.0.0.0"
+#runserver.default_addr = "127.0.0.1"
+runserver.default_addr = "0.0.0.0"
 
 def main():
     """Run administrative tasks."""
