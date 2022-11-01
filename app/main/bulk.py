@@ -142,7 +142,7 @@ async def __get_links_from_search_engine(prompt, page_num=1):
 
     for link in results_links:
         # filtering out 'bad' links
-        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link and not(link.endswith('.html')):
+        if link not in final_links and 'youtube' not in link and not(link.endswith('.pdf')) and 'khanacademy' not in link and 'blog' not in link and not(link.endswith('.html')) and 'educationworld' not in link and 'medium.com' not in link:
             final_links.append(link)
     print(f'Getting links end: {time.time()}')
     return final_links
@@ -196,6 +196,7 @@ async def get_text_summary(url):
     if url_text == "":
         return ""
     # summarizes the text using TF-IDF
+    filtered_text1 = []
     text = str(url_text)
     text = text.replace("\n", " ")
     text = text.split(".")
@@ -218,16 +219,17 @@ async def get_text_summary(url):
     for i in range(len(scores)):
         avg = sum(scores[i]) / len(scores[i])
         margin = 0
-        for j in range(len(filtered_text[i].split(" "))):
-            if filtered_text[i].split(" ")[j] not in spell.unknown(filtered_text[i].split(" ")):
-                margin += 1
-        if margin / len(filtered_text[i].split(" ")) > 0.8:
-            if avg > one[0]:
-                one = [avg, filtered_text[i]]
-            elif avg > two[0]:
-                two = [avg, filtered_text[i]]
-            elif avg > three[0]:
-                three = [avg, filtered_text[i]]
+        if avg > three[0]:
+            for j in range(len(filtered_text[i].split(" "))):
+                if filtered_text[i].split(" ")[j] not in spell.unknown(filtered_text[i].split(" ")):
+                    margin += 1
+            if margin / len(filtered_text[i].split(" ")) > 0.7:
+                if avg > one[0]:
+                    one = [avg, filtered_text[i]]
+                elif avg > two[0]:
+                    two = [avg, filtered_text[i]]
+                else:
+                    three = [avg, filtered_text[i]]
 
     summary = one[1] + ". <br>" + two[1] + ". <br>" + three[1] + "."
     
