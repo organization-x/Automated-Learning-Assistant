@@ -55,4 +55,4 @@ If the page is not added to the nav, it will not show up on the site.
 ## Pushing the Docs 
 
 No special actions have to be taken when pushing the docs. 
-Make sure to push to the main branch, and from there, Github Workflows will compile and put the website up. 
+Just push, and from there, Github Workflows will compile and put the website up. 
