@@ -1,0 +1,34 @@
+# Navigation
+nav:
+    - 'index.md'
+  
+# Project information
+site_name: Automated Learning Assistant Wiki
+site_url: 
+site_author: 
+
+extra_css:
+    - 'extra.css'
+# Theme
+theme:
+  name: material
+  logo: assets/logo.webp
+  favicon: assets/favicon.ico
+  features:
+    - navigation.tabs
+  palette:
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: default
+      toggle:
+        icon: material/brightness-4
+        name: Switch to normal (dark) mode 
+        
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-7
+        name: Switch to psychopath (light) mode
+

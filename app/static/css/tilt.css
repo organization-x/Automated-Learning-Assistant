@@ -1,9 +1,0 @@
-.contentText {
-  transform-style: preserve-3d;
-  transform: perspective(1000px);
-}
-
-.textHeading {
-  transform: translateZ(20px);
-}
-
