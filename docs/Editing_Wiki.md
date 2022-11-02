@@ -28,7 +28,7 @@ Compile the Site by running:
     mkdocs serve
 ```
 
-If everything is setup correctly, a local website should be created <a href="http://127.0.0.1:8000//" target="_blank">here</a>.
+If everything is setup correctly, a local website should be created <a href="http://127.0.0.1:8000/Automated-Learning-Assistant/" target="_blank">here</a>.
 
 ## Writing Docs
 
