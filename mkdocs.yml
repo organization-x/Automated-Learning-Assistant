@@ -1,11 +1,12 @@
 # Navigation
 nav:
     - 'index.md'
+    - 'Editing The Wiki Setup' : 'Editing_Wiki.md'
   
 # Project information
 site_name: Automated Learning Assistant Wiki
-site_url: 
-site_author: 
+site_url: https://paulshili.github.io/Automated-Learning-Assistant/
+site_author: GPT-3 Student Feedback Team
 
 extra_css:
     - 'extra.css'
