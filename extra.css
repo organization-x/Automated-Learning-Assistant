@@ -1,0 +1,49 @@
+/* h1 {
+    color: white !important;
+}
+h2 {
+    color: white !important;
+}
+h3 {
+    color: white !important;
+}
+p {
+    color: white !important;
+}
+
+a {
+    color: hotpink !important;
+  }
+
+.md-nav__title {
+    color: white !important;
+} */
+
+/* Header */ 
+.md-header, .md-tabs {
+    background-color: #000000;
+}
+
+/* .md-sidebar--primary {
+    display: none !important;
+  }
+  .md-sidebar--secondary {
+    display: none !important;
+  } */
+
+:root > * {
+    --md-primary-fg-color:        #00a5f7;
+    --md-primary-fg-color--light: #00ff6a;
+    --md-primary-fg-color--dark:  #90030C;
+  }
+
+  
+/* 
+.md-main {
+    background-color: #000000;
+} */
+
+/* Header Items */ 
+/* .md-tabs__item {
+    color: #FFFFFF;
+} */
