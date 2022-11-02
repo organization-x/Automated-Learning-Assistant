@@ -32,63 +32,63 @@ def buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, sec
     # Summary
     if tilting == "true":
         htmlCodes.append(
-            f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_explanation" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
-            f'<h3 class="textHeading" name="title" id="title_explanation" style="text-align: center; color: {headingColors};">{ search_query }</h3>\n' \
-            f'<p name="text" id="textExplanation" style="text-align: center; color: {textColors};"> { GPT_3_Summary["response"] } <br></p>\n' \
-            f'</div>\n</div>\n'
+            f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="background: transparent; border-width: 0px;border-left-width: 0px;">' \
+            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_explanation" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">' \
+            f'<h3 class="textHeading" name="title" id="title_explanation" style="text-align: center; color: {headingColors};">{ search_query }</h3>' \
+            f'<p name="text" id="textExplanation" style="text-align: center; color: {textColors};"> { GPT_3_Summary["response"] } <br></p>' \
+            f'</div></div>'
         )
         # Roadmap
         if roadmap == "true":
-            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_roadmap" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
-                       f'<h3 name="title" id="title_roadmap" class="textHeading" style="text-align: center; color: {headingColors};">Roadmap</h3>\n' \
-                       f'<p name="text" id="textRoadmap" style="text-align: left; color: {textColors};">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
-                       f'</div>\n</div>\n'
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="background: transparent; border-width: 0px;border-left-width: 0px;">' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 contentText" id="body_roadmap" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">' \
+                       f'<h3 name="title" id="title_roadmap" class="textHeading" style="text-align: center; color: {headingColors};">Roadmap</h3>' \
+                       f'<p name="text" id="textRoadmap" style="text-align: left; color: {textColors};">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>' \
+                       f'</div></div>'
             htmlCodes.append(template)
         # Results + Relevant Links
         for n in range(numResults):
-            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList contentText" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">\n' \
-                       f'<h3 name="title" id="title_{n}" class="textHeading" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>\n' \
-                       f'<p name="text" id="textSummary_{n}" style="text-align: left; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
-                       f'<a id="button_{n}" name="button" href={links[n]} target="_blank"><button class="btn btn-primary textHeading" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button></a>\n' \
-                       f'</div>\n</div>'
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="background: transparent; border-width: 0px;border-left-width: 0px;">' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList contentText" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;" data-tilt="data-tilt">' \
+                       f'<h3 name="title" id="title_{n}" class="textHeading" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>' \
+                       f'<p name="text" id="textSummary_{n}" style="text-align: left; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>' \
+                       f'<a id="button_{n}" name="button" href={links[n]} target="_blank"><button class="btn btn-primary textHeading" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button></a>' \
+                       f'</div></div>'
             # if (n + 1) != len(links_summary):
             if (n + 1) != numResults:
-                htmlCodes.append(template + '\n<br>')
+                htmlCodes.append(template + '<br>')
             else:
                 htmlCodes.append(template)
     else:
         htmlCodes.append(
-            f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_explanation" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-            f'<h3 name="title" id="title_explanation" style="text-align: center; color: {headingColors};">{ search_query }</h3>\n' \
-            f'<p name="text" id="textExplanation" style="text-align: center; color: {textColors};"> { GPT_3_Summary["response"] } <br></p>\n' \
-            f'</div>\n</div>\n'
+            f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Explanation" style="background: transparent; border-width: 0px;border-left-width: 0px;">' \
+            f'<div class="card-body d-flex d-xxl-flex flex-column align-items-center align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_explanation" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">' \
+            f'<h3 name="title" id="title_explanation" style="text-align: center; color: {headingColors};">{ search_query }</h3>' \
+            f'<p name="text" id="textExplanation" style="text-align: center; color: {textColors};"> { GPT_3_Summary["response"] } <br></p>' \
+            f'</div></div>'
         )
         # Roadmap
         if roadmap == "true":
-            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_roadmap" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-                       f'<h3 name="title" id="title_roadmap" style="text-align: center; color: {headingColors};">Roadmap</h3>\n' \
-                       f'<p name="text" id="textRoadmap" style="text-align: left; color: {textColors};">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>\n' \
-                       f'</div>\n</div>\n'
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" id="Roadmap" style="background: transparent; border-width: 0px;border-left-width: 0px;">' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12" id="body_roadmap" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">' \
+                       f'<h3 name="title" id="title_roadmap" style="text-align: center; color: {headingColors};">Roadmap</h3>' \
+                       f'<p name="text" id="textRoadmap" style="text-align: left; color: {textColors};">{ GPT_3_Summary["one"] }<br>{ GPT_3_Summary["two"] }<br>{ GPT_3_Summary["three"] }<br>{ GPT_3_Summary["four"] }<br>{ GPT_3_Summary["five"] }</p>' \
+                       f'</div></div>'
             htmlCodes.append(template)
         # Results + Relevant Links
         for n in range(numResults):
-            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="background: transparent; border-width: 0px;border-left-width: 0px;">\n' \
-                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">\n' \
-                       f'<h3 id="title_{n}" name="title" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>\n' \
-                       f'<p name="text" id="textSummary_{n}" style="text-align: left; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>\n' \
-                       f'<a id="button_{n}" name="button" href={links[n]} target="_blank"><button class="btn btn-primary" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button></a>\n' \
-                       f'</div>\n</div>'
+            template = f'<div class="card d-flex d-sm-flex d-md-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center" style="background: transparent; border-width: 0px;border-left-width: 0px;">' \
+                       f'<div class="card-body d-flex d-xxl-flex flex-column align-items-sm-center align-items-lg-center justify-content-xxl-center align-items-xxl-center col-xl-5 col-md-12 resultList" id="body_{n}" name="body" style="background: {secondaryColors};border-top-width: 2px;border-top-left-radius: 16px;border-bottom-right-radius: 16px;border-top-right-radius: 16px;border-bottom-left-radius: 16px;margin-bottom: 16px;max-width: 60vw;">' \
+                       f'<h3 id="title_{n}" name="title" style="text-align: center; color: {headingColors};">Result No. {n + 1}<br></h3>' \
+                       f'<p name="text" id="textSummary_{n}" style="text-align: left; color: {textColors};"><br>Summary:<br>{links_summary[n]}<br></p>' \
+                       f'<a id="button_{n}" name="button" href={links[n]} target="_blank"><button class="btn btn-primary" onclick="window.open(\'{links[n]}\', \'_blank\')" target="_blank" type="button">Link</button></a>' \
+                       f'</div></div>'
             # if (n + 1) != len(links_summary):
             if (n + 1) != numResults:
-                htmlCodes.append(template + '\n<br>')
+                htmlCodes.append(template + '<br>')
             else:
                 htmlCodes.append(template)
-    return {'resultsList': '\n'.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes]), 'numResults': numResults}
+    return {'resultsList': ''.join([entry.replace('{', '{{').replace('}', '}}') for entry in htmlCodes]), 'numResults': numResults}
 
 #Results page
 def results(response):
@@ -129,7 +129,7 @@ def results(response):
                 GPT_3_Summary['links_summary'] = links_summary
                 GPT_3_Summary['links'] = links
                 resultsdb.query_results[search_query] = GPT_3_Summary
-                                
+
                 print(f"Time taken: {time.time() - start_time}")
 
                 return render(response, 'result.html', GPT_3_Summary)
