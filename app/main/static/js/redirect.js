@@ -2,18 +2,19 @@
 function setRedirect(query) {
   results = getCookie("numResults");
   currentUrl = getURL();
-  console.log(splitOnLast(currentUrl, "/"));
+  console.log(getQuery(currentUrl)); // Returns http://127.0.0.1:8000/loading
+  document.getElementsByTagName("meta")[2].setAttribute("content", "0; URL=/resultPage/" + "?query=" + getQuery(currentUrl) + "?numResults=" + results);
   //document.querySelector('meta[name="viewport"]').setAttribute("content", "width=device-width, initial-scale=1.0");
 }
 setRedirect();
 
 // Functions to use
 function search2Param(query) {
-    return encodeURI(query);
+    return encodeURIComponent(query);
 }
 
 function param2Search(query) {
-    return encodeURI(query);
+    return decodeURIComponent(query);
 }
 
 function getURL() {
@@ -24,6 +25,12 @@ function splitOnLast(rawString, splitStr) {
     const lastIndex = rawString.lastIndexOf(splitStr);
     return rawString.slice(0, lastIndex);
 }
+
+function getQuery(rawString) {
+    const lastIndex = rawString.lastIndexOf("/");
+    return rawString.replace(rawString.slice(0, lastIndex), "").replace("/?query=", "");
+}
+
 
 function getCookie(cname) {
   let name = cname + "=";
