@@ -97,7 +97,7 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     retry = 0
     results = None
 
-    prompt = prompt.strip()
+    prompt = prompt.strip() + " + article"
 
     # try to get links from google
     while retry < 3:
@@ -190,6 +190,8 @@ async def get_text_summary(url):
     # summarizes the text using TF-IDF
     text = str(url_text)
     text = text.replace("\n", " ")
+    print(text)
+    print("---------------------------------------------------")
     text = text.split(".")
     filtered_text = []
     for i in range(len(text)-25):
@@ -199,7 +201,9 @@ async def get_text_summary(url):
                 if j.isalpha() == False and j != " " and j != "." and j != "," and j != "!" and j != "?" and j.isnumeric() == False:
                     filtered_text.pop(-1)
                     break
-                
+    print(filtered_text)
+    if filtered_text == []:
+        return "Error fetching text"
     tf_idf_model = TfidfVectorizer(stop_words='english')
     processed_text_tf = tf_idf_model.fit_transform(filtered_text)
     scores = processed_text_tf.toarray()

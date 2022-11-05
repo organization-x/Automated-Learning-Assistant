@@ -187,7 +187,10 @@ def query(request):
             textColors = request.POST['textColors']
             responses.headers['textColors'] = textColors
         if 'query' in request.POST:
-            q = str(request.POST['query'])
+            q = str(request.POST['query']).strip()
+            if q == '':
+                error = "True"
+                return redirect('search')
             error = "False"
             spell = SpellChecker()
             list_q = q.split()
