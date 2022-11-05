@@ -190,8 +190,6 @@ async def get_text_summary(url):
     # summarizes the text using TF-IDF
     text = str(url_text)
     text = text.replace("\n", " ")
-    print(text)
-    print("---------------------------------------------------")
     text = text.split(".")
     filtered_text = []
     for i in range(len(text)-25):
@@ -201,7 +199,6 @@ async def get_text_summary(url):
                 if j.isalpha() == False and j != " " and j != "." and j != "," and j != "!" and j != "?" and j.isnumeric() == False:
                     filtered_text.pop(-1)
                     break
-    print(filtered_text)
     if filtered_text == []:
         return "Error fetching text"
     tf_idf_model = TfidfVectorizer(stop_words='english')
