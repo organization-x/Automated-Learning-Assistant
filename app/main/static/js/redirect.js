@@ -3,7 +3,8 @@ function setRedirect(query) {
   results = getCookie("numResults");
   currentUrl = getURL();
   console.log(getQuery(currentUrl)); // Returns http://127.0.0.1:8000/loading
-  document.getElementsByTagName("meta")[2].setAttribute("content", "0; URL=/resultPage/" + "?query=" + getQuery(currentUrl) + "?numResults=" + results);
+  var numResult_param = "?numResults=" + results, query_param = "?query=" + getQuery(currentUrl);
+  document.getElementsByTagName("meta")[2].setAttribute("content", "0; URL=/resultPage/" + numResult_param + query_param);
   //document.querySelector('meta[name="viewport"]').setAttribute("content", "width=device-width, initial-scale=1.0");
 }
 setRedirect();
