@@ -29,13 +29,13 @@ SENTENCES_COUNT = 10
 # Sets up GPT API call to generate summary and roadmap
 def get_prompts(searchQuery):
 
-    p1 = f"Explain in informative terms to a non programmer in 200 words. {searchQuery}"
+    p1 = f"Explain in informative terms to a non programmer in 200 words. {searchQuery} \n"
     p2 = f"Give a roadmap that is a series of 5 steps that someone should take to solve this question. {searchQuery} The steps should be numbered as such: 1. First step, 2. Second step, 3. Third step, 4. Fourth step, 5. Fifth step."
     prompts = []
     explanation = {
         'prompt': p1,
         'temperature': 0.7,
-        'max_tokens': 200,
+        'max_tokens': 100,
         'top_p': 1,
         'frequency_penalty': 0,
         'presence_penalty': 0
@@ -43,7 +43,7 @@ def get_prompts(searchQuery):
     roadmap = {
         'prompt': p2,
         'temperature': 0.7,
-        'max_tokens': 150,
+        'max_tokens': 75,
         'top_p': 1,
         'frequency_penalty': 0,
         'presence_penalty': 0

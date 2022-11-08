@@ -108,10 +108,9 @@ def results(response):
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
             start_time = time.time()
-            if search_query in resultsdb.query_results and numResults <= resultsdb.query_results[search_query]['numResults'] and tilting == resultsdb.query_results[search_query]['tilting'] and roadmap == resultsdb.query_results[search_query]['roadmap']:
+            if search_query in resultsdb.query_results and numResults <= resultsdb.query_results[search_query]['numResults']:
                 results = resultsdb.query_results[search_query]
-                if results['numResults'] > numResults and tilting == resultsdb.query_results[search_query]['tilting'] and roadmap == resultsdb.query_results[search_query]['roadmap']:
-                    results['resultsList'] = buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, results['links_summary'], results['links'], results)
+                results['resultsList'] = buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, results['links_summary'], results['links'], results)
                 return render(response, 'result.html', results)
             else:
                 loop = asyncio.new_event_loop()
