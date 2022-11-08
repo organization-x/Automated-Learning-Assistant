@@ -54,6 +54,9 @@ def get_prompts(searchQuery):
 
 # grabs the top links, and summaries them 
 async def get_summaries_and_links(search_query, num_results):
+    
+    if num_results == 0:
+        return [], [], 0
     # returns a task that gets a list of tasks that grab links
     links = await __get_links_from_search_engine(search_query)
 

@@ -105,13 +105,12 @@ def results(response):
         primaryColors = responses.get('primaryColors')
         secondaryColors = responses.get('secondaryColors')
         textColors = responses.get('textColors')
-        print(f"primaryColors: {primaryColors}, secondaryColors: {secondaryColors}, textColors: {textColors}")
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
             start_time = time.time()
-            if search_query in resultsdb.query_results and numResults <= resultsdb.query_results[search_query]['numResults']:
+            if search_query in resultsdb.query_results and numResults <= resultsdb.query_results[search_query]['numResults'] and tilting == resultsdb.query_results[search_query]['tilting'] and roadmap == resultsdb.query_results[search_query]['roadmap']:
                 results = resultsdb.query_results[search_query]
-                if results['numResults'] > numResults:
+                if results['numResults'] > numResults and tilting == resultsdb.query_results[search_query]['tilting'] and roadmap == resultsdb.query_results[search_query]['roadmap']:
                     results['resultsList'] = buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, results['links_summary'], results['links'], results)
                 return render(response, 'result.html', results)
             else:
@@ -129,8 +128,6 @@ def results(response):
                 GPT_3_Summary['links_summary'] = links_summary
                 GPT_3_Summary['links'] = links
                 resultsdb.query_results[search_query] = GPT_3_Summary
-
-                print(f"Time taken: {time.time() - start_time}")
 
                 return render(response, 'result.html', GPT_3_Summary)
 
@@ -165,7 +162,6 @@ def loading(response):
 
 #Query view to get query from search page (PLEASE ADVISE IF BETTER WAY)
 def query(request):
-    print(f"Start of query: {time.time()}")
     error = False
     if request.method == 'POST':
         if 'numResults' in request.POST:
@@ -199,13 +195,10 @@ def query(request):
                 if list_q[i] == spell.correction(list_q[i]):
                     margin+=1
             if margin/len(list_q) < 0.5:
-                # print(margin/len(list_q))
                 error = "True"
                 responses.headers['error'] = error
-                print(f"\n\nError\n\n")
                 return redirect('search')
             else:
                 responses.headers['error'] = error
                 responses.headers['query'] = q
-                print(f"End of query: {time.time()}")
                 return redirect('loading')
