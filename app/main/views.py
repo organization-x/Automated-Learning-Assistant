@@ -107,10 +107,9 @@ def results(response):
         textColors = responses.get('textColors')
         # checking if the results are cached and that at least the first link is valid and not an error
         try:
-            start_time = time.time()
             if search_query in resultsdb.query_results and numResults <= resultsdb.query_results[search_query]['numResults']:
                 results = resultsdb.query_results[search_query]
-                results['resultsList'] = buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, results['links_summary'], results['links'], results)
+                results['resultsList'] = buildTemplate(search_query, numResults, roadmap, tilting, primaryColors, secondaryColors, textColors, results['links_summary'], results['links'], results)['resultsList']
                 return render(response, 'result.html', results)
             else:
                 loop = asyncio.new_event_loop()
