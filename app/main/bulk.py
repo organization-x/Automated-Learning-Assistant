@@ -95,7 +95,7 @@ async def get_summaries_and_links(search_query, num_results):
     return final_links, final_summaries, num_results
 
 # this method gets links from the search engine - if google fails it defaults to yahoo
-async def __get_links_from_search_engine(prompt, page_num=1):
+async def __get_links_from_search_engine(prompt):
     
     retry = 0
     results = None
@@ -105,8 +105,11 @@ async def __get_links_from_search_engine(prompt, page_num=1):
     # try to get links from google
     while retry < 3:
         try:
-            results = GoogleSearch().search(prompt, page=page_num)
-            results_links = results['links']
+            results = []
+
+            for i in range(1, 3):
+                results.extend(GoogleSearch().search(prompt, page=i)['links'])
+            results_links = results
             break
         except Exception as e:
             retry += 1
