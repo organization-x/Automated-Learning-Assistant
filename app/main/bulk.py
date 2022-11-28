@@ -25,7 +25,7 @@ set_api_key = os.getenv('OPENAI_API_KEY')
 responses = HttpResponse()
 LANGUAGE = "english"
 SENTENCES_COUNT = 10
-
+# test comment
 # Sets up GPT API call to generate summary and roadmap
 def get_prompts(searchQuery):
 
